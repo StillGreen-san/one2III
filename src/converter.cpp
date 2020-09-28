@@ -3,9 +3,11 @@
  * @brief implementation file for conversion functions
  */
 
+#include <vector>
+
 #include "converter.hpp"
 
-std::string runLengthEncode(const std::string_view _number) 
+std::string runLengthEncode(std::string_view _number) 
 {
 	size_t size = _number.size();
 	if(size == 0) return {};
@@ -34,5 +36,22 @@ std::string runLengthEncode(const std::string_view _number)
 
 std::string romanNumerals(std::string_view _number) 
 {
-	return {};
+	if(_number.size() > 4 || _number.size() < 1 || (_number.size() == 4 && _number[0] > '3')) return {};
+	static const std::vector<std::pair<unsigned, const char*>> roman{
+		{1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"},
+		{100, "C"}, {90, "XC"}, {50, "L"}, {40, "XL"},
+		{10, "X"}, {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"}
+	};
+	std::string converted{};
+	unsigned number = std::stoul(std::string(_number)); //TODO find way without converting?
+	for(auto& r : roman)
+	{
+		while(number >= r.first)
+		{
+			number -= r.first;
+			converted += r.second;
+		}
+		if(!number) break;
+	}
+	return converted;
 }

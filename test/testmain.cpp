@@ -39,7 +39,7 @@ TEST_CASE("romanNumerals")
 	CHECK(romanNumerals("789") == "DCCLXXXIX");
 	CHECK(romanNumerals("1009") == "MIX");
 	CHECK(romanNumerals("1066") == "MLXVI");
-	CHECK(romanNumerals("1776") == "MDCCLXXVI ");
+	CHECK(romanNumerals("1776") == "MDCCLXXVI");
 	CHECK(romanNumerals("1918") == "MCMXVIII");
 	CHECK(romanNumerals("1954") == "MCMLIV");
 	CHECK(romanNumerals("2014") == "MMXIV");
