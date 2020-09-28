@@ -1,6 +1,4 @@
-one2III
-
-
+# one2III
 
 given a string of digits and a list of conversion rules
 
@@ -8,9 +6,7 @@ split the string into all possible substrings
 
 convert every substring using every possible conversion rule
 
-
-
-possible rules:
+## possible rules:
 
 - number: just take the number as is
 - first in conway sequence: 112 -> 2112 (two ones, one two)
@@ -18,9 +14,7 @@ possible rules:
 - words in eng: 321 -> three hundred twenty one
 - combinations ?
 
-
-
-123, conway, roman:
+## e.g. 123 with rules conway & roman:
 
 - 123
   - 111213 , CXXIII
