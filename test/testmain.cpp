@@ -28,3 +28,22 @@ TEST_CASE("runLengthEncode")
 	CHECK(runLengthEncode("1111122111111211") == "5 1 2 2 6 1 1 2 2 1");
 	CHECK(runLengthEncode("1000000000033333333333") == "1 1 10 0 11 3");
 }
+
+TEST_CASE("romanNumerals")
+{
+	CHECK(romanNumerals("") == "");
+	CHECK(romanNumerals("39") == "XXXIX");
+	CHECK(romanNumerals("160") == "CLX");
+	CHECK(romanNumerals("207") == "CCVII");
+	CHECK(romanNumerals("246") == "CCXLVI");
+	CHECK(romanNumerals("789") == "DCCLXXXIX");
+	CHECK(romanNumerals("1009") == "MIX");
+	CHECK(romanNumerals("1066") == "MLXVI");
+	CHECK(romanNumerals("1776") == "MDCCLXXVI ");
+	CHECK(romanNumerals("1918") == "MCMXVIII");
+	CHECK(romanNumerals("1954") == "MCMLIV");
+	CHECK(romanNumerals("2014") == "MMXIV");
+	CHECK(romanNumerals("2421") == "MMCDXXI");
+	CHECK(romanNumerals("3999") == "MMMCMXCIX");
+	CHECK(romanNumerals("5432") == "");
+}

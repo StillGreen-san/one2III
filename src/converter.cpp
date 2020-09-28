@@ -31,3 +31,8 @@ std::string runLengthEncode(const std::string_view _number)
 		.append(1, _number[size-1]);
 	return encoded;
 }
+
+std::string romanNumerals(std::string_view _number) 
+{
+	return {};
+}

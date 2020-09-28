@@ -14,3 +14,11 @@
  * @return std::string
  */
 std::string runLengthEncode(std::string_view _number);
+
+/**
+ * @brief returns a number sequence as roman numerals, number 0 <=> 3999
+ * 
+ * @param _number
+ * @return std::string
+ */
+std::string romanNumerals(std::string_view _number);
