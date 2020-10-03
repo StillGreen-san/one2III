@@ -16,9 +16,9 @@
 std::string runLengthEncode(std::string_view _number);
 
 /**
- * @brief returns a number sequence as roman numerals, number 0 <=> 3999
+ * @brief returns a number sequence as roman numerals
  * 
- * @param _number
+ * @param _number 0 <=> 3999
  * @return std::string
  */
 std::string romanNumerals(std::string_view _number);
@@ -26,7 +26,7 @@ std::string romanNumerals(std::string_view _number);
 /**
  * @brief returns a number in english words
  * 
- * @param _number 
+ * @param _number 0 <=> 999
  * @return std::string 
  */
 std::string numberToEnglish(std::string_view _number);
