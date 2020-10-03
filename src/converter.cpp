@@ -44,7 +44,7 @@ std::string romanNumerals(std::string_view _number)
 		{10, "X"}, {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"}
 	};
 	std::string converted{};
-	unsigned short number = std::stoul(std::string(_number)); //TODO find way without converting?
+	unsigned short number = static_cast<unsigned short>(std::stoul(std::string(_number))); //TODO find way without converting?
 	for(auto& r : roman)
 	{
 		while(number >= r.first)
