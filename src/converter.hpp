@@ -22,3 +22,11 @@ std::string runLengthEncode(std::string_view _number);
  * @return std::string
  */
 std::string romanNumerals(std::string_view _number);
+
+/**
+ * @brief returns a number in english words
+ * 
+ * @param _number 
+ * @return std::string 
+ */
+std::string numberToEnglish(std::string_view _number);

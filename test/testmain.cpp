@@ -47,3 +47,15 @@ TEST_CASE("romanNumerals")
 	CHECK(romanNumerals("3999") == "MMMCMXCIX");
 	CHECK(romanNumerals("5432") == "");
 }
+
+TEST_CASE("numberToEnglish")
+{
+	CHECK(numberToEnglish("0") == "zero");
+	CHECK(numberToEnglish("000") == "zero");
+	CHECK(numberToEnglish("11") == "eleven");
+	CHECK(numberToEnglish("18") == "eighteen");
+	CHECK(numberToEnglish("018") == "eighteen");
+	CHECK(numberToEnglish("126") == "one hundred twenty six");
+	CHECK(numberToEnglish("909") == "nine hundred nine");
+	CHECK(numberToEnglish("216") == "two hundred sixteen");
+}

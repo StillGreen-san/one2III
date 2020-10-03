@@ -56,3 +56,8 @@ std::string romanNumerals(std::string_view _number)
 	}
 	return converted;
 }
+
+std::string numberToEnglish(std::string_view _number) 
+{
+	return {};
+}
