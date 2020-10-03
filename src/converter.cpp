@@ -59,5 +59,29 @@ std::string romanNumerals(std::string_view _number)
 
 std::string numberToEnglish(std::string_view _number) 
 {
-	return {};
+	static const std::vector<std::string> numeng //TODO? make array?
+	{
+		"", "one", "two", "three", "four", "five",
+		"six", "seven", "eight", "nine", "ten",
+		"eleven", "twelve", "thirteen",	"fourteen",
+		"fifteen", "sixteen", "seventeen", "eighteen",
+		"nineteen", "twenty", "thirty",	"forty",
+		"fifty", "sixty", "seventy", "eighty", "ninety"
+	};
+	auto number = static_cast<unsigned short>(std::stoul(std::string(_number))); //TODO find way without converting?
+	if(number > 999) return {};
+	if(number == 0) return {"zero"};
+	if(number < 21) return numeng[number];
+	std::string english;
+	if(number > 99){
+		english += numeng[number / 100] + " hundred ";
+		number = number % 100;
+	}
+	if(number < 21) english += numeng[number];
+	else{
+		english += numeng[(number / 10) + 18];
+		english += " " + numeng[number % 10];
+	}
+	if(english.back() == ' ') english.pop_back();
+	return english;
 }
