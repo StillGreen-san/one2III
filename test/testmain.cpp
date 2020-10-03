@@ -17,10 +17,12 @@ TEST_CASE("runLengthEncode")
 {
 	CHECK(runLengthEncode("") == "");
 	CHECK(runLengthEncode("1") == "1 1");
+	CHECK(runLengthEncode("0") == "1 0");
 	CHECK(runLengthEncode("12") == "1 1 1 2");
 	CHECK(runLengthEncode("22") == "2 2");
 	CHECK(runLengthEncode("123") == "1 1 1 2 1 3");
 	CHECK(runLengthEncode("111") == "3 1");
+	CHECK(runLengthEncode("0000") == "4 0");
 	CHECK(runLengthEncode("995551") == "2 9 3 5 1 1");
 	CHECK(runLengthEncode("641668") == "1 6 1 4 1 1 2 6 1 8");
 	CHECK(runLengthEncode("1233444") == "1 1 1 2 2 3 3 4");
@@ -32,6 +34,8 @@ TEST_CASE("runLengthEncode")
 TEST_CASE("romanNumerals")
 {
 	CHECK(romanNumerals("") == "");
+	CHECK(romanNumerals("0") == "");
+	CHECK(romanNumerals("000") == "");
 	CHECK(romanNumerals("39") == "XXXIX");
 	CHECK(romanNumerals("160") == "CLX");
 	CHECK(romanNumerals("207") == "CCVII");
@@ -43,6 +47,7 @@ TEST_CASE("romanNumerals")
 	CHECK(romanNumerals("1918") == "MCMXVIII");
 	CHECK(romanNumerals("1954") == "MCMLIV");
 	CHECK(romanNumerals("2014") == "MMXIV");
+	CHECK(romanNumerals("02014") == "MMXIV");
 	CHECK(romanNumerals("2421") == "MMCDXXI");
 	CHECK(romanNumerals("3999") == "MMMCMXCIX");
 	CHECK(romanNumerals("5432") == "");

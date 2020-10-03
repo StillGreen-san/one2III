@@ -36,15 +36,16 @@ std::string runLengthEncode(std::string_view _number)
 
 std::string romanNumerals(std::string_view _number) 
 {
-	if(_number.size() > 4 || _number.size() < 1 || (_number.size() == 4 && _number[0] > '3')) return {}; //TODO handle leading zeros
 	static const std::vector<std::pair<unsigned short, const char*>> roman //TODO? make array?
 	{
 		{1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"},
 		{100, "C"}, {90, "XC"}, {50, "L"}, {40, "XL"},
 		{10, "X"}, {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"}
 	};
-	std::string converted{};
+	if(_number.size() == 0) return {};
 	unsigned short number = static_cast<unsigned short>(std::stoul(std::string(_number))); //TODO find way without converting?
+	if(number < 1 || number > 3999) return {};
+	std::string converted{};
 	for(auto& r : roman)
 	{
 		while(number >= r.first)
