@@ -3,6 +3,8 @@
  * @brief implementation file for helper functions
  */
 
+#include <numeric>
+
 #include "helper.hpp"
 
 std::vector<std::vector<uint8_t>> integerPartitions(uint8_t _integer,
@@ -48,5 +50,14 @@ std::vector<std::vector<uint8_t>> integerPartitions(uint8_t _integer,
 
 std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<uint8_t>& _partition) 
 {
-	return {};
+	size_t partitionSize = std::accumulate(begin(_partition), end(_partition), 0ULL);
+	if(_string.size() != partitionSize)	return {};//? 0?
+	std::vector<std::string_view> partitioned;
+	partitioned.reserve(_partition.size());
+	uint8_t beginOffset = 0;
+	for(uint8_t count : _partition){
+		partitioned.push_back(_string.substr(beginOffset, count));
+		beginOffset += count;
+	}
+	return partitioned;
 }
