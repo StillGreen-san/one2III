@@ -14,7 +14,7 @@ int main()
 	std::string numberSequence;
 	std::cin >> numberSequence; //TODO validate input
 	std::cout << "select converter: 1:rom, 2:rle, 3:eng :";
-	short converter;
+	uint16_t converter;
 	std::cin >> converter;
 	auto convert = [&](const std::string_view& view){
 		switch (converter)

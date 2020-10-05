@@ -12,7 +12,7 @@ std::string runLengthEncode(std::string_view _number)
 	size_t size = _number.size();
 	if(size == 0) return {};
 	std::string encoded;
-	unsigned groupCount = 1;
+	uint32_t groupCount = 1;
 	for(size_t i = 1; i < size; ++i)
 	{
 		if(_number[i-1] == _number[i])
@@ -54,14 +54,14 @@ std::string asRunLengthEncode(std::string_view _number)
 
 std::string romanNumerals(std::string_view _number) 
 {
-	static const std::vector<std::pair<unsigned short, const char*>> roman //TODO? make array?
+	static const std::vector<std::pair<uint16_t, const char*>> roman //TODO? make array?
 	{
 		{1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"},
 		{100, "C"}, {90, "XC"}, {50, "L"}, {40, "XL"},
 		{10, "X"}, {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"}
 	};
 	if(_number.size() == 0) return {};
-	unsigned short number = static_cast<unsigned short>(std::stoul(std::string(_number))); //TODO find way without converting?
+	uint16_t number = static_cast<uint16_t>(std::stoul(std::string(_number))); //TODO find way without converting?
 	if(number < 1 || number > 3999) return {};
 	std::string converted{};
 	for(auto& r : roman)
@@ -87,7 +87,7 @@ std::string numberToEnglish(std::string_view _number)
 		"nineteen", "twenty", "thirty",	"forty",
 		"fifty", "sixty", "seventy", "eighty", "ninety"
 	};
-	auto number = static_cast<unsigned short>(std::stoul(std::string(_number))); //TODO find way without converting?
+	auto number = static_cast<uint16_t>(std::stoul(std::string(_number))); //TODO find way without converting?
 	if(number > 999) return {};
 	if(number == 0) return {"zero"};
 	if(number < 21) return numeng[number];
