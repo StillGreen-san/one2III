@@ -117,3 +117,5 @@ TEST_CASE("isValidNumberSequence")
 	CHECK(isValidNumberSequence("12==56") == false);
 	CHECK(isValidNumberSequence("$%&/") == false);
 }
+
+//TODO tests for conversionrules
