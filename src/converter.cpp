@@ -36,7 +36,20 @@ std::string runLengthEncode(std::string_view _number)
 
 std::string asRunLengthEncode(std::string_view _number) 
 {
-	return {};
+	size_t size = _number.size();
+	if(size == 0 || size % 2 != 0) return {};
+	for(size_t i = 3; i < size; ++i)
+	{
+		if(_number[i-2] == _number[i]) return {};
+	}
+	std::string converted;
+	converted.reserve((size*2)-1);
+	for(char c : _number)
+	{
+		converted.append(1, c).append(1,' ');
+	}
+	converted.pop_back();
+	return converted;
 }
 
 std::string romanNumerals(std::string_view _number) 
