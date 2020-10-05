@@ -21,6 +21,15 @@ std::vector<std::vector<uint8_t>> integerPartitions(uint8_t _integer,
 	uint8_t _partcount, uint8_t _minpart = 1, uint8_t _maxpart = 255);
 
 /**
+ * @brief checks if string is a valid number sequence
+ * 
+ * @param _sequence 
+ * @return true if it contains only numbers
+ * @return false otherwise
+ */
+bool isValidNumberSequence(const std::string& _sequence);
+
+/**
  * @brief returns string_views of a string for a partion of that string
  * 
  * @param _string

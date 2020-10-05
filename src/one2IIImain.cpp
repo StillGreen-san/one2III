@@ -10,12 +10,19 @@
 
 int main()
 {
-	std::cout << "enter a number sequence:";
+	// std::cout << "enter a number sequence:";
 	std::string numberSequence;
-	std::cin >> numberSequence; //TODO validate input
-	std::cout << "select converter: 1:rom, 2:rle, 3:eng :";
-	uint16_t converter;
-	std::cin >> converter;
+	while(isValidNumberSequence(numberSequence) == false)
+	{
+		std::cout << "enter a number sequence: ";
+		std::cin >> numberSequence;
+	}
+	uint16_t converter = 0;
+	while (converter < 1 || converter > 3)
+	{
+		std::cout << "select converter: 1:rom, 2:rle, 3:eng : ";
+		std::cin >> converter;
+	}
 	auto convert = [&](const std::string_view& view){
 		switch (converter)
 		{

@@ -104,3 +104,16 @@ TEST_CASE("partitionString")
 	CHECK_THAT(partitionString(tc_1234, {2,2,2,2}), Catch::UnorderedEquals(svv{}));
 
 }//TODO check if unordered makes sense
+
+TEST_CASE("isValidNumberSequence")
+{
+	CHECK(isValidNumberSequence("") == false);
+	CHECK(isValidNumberSequence("123456") == true);
+	CHECK(isValidNumberSequence("1 34 6") == false);
+	CHECK(isValidNumberSequence("abcdef") == false);
+	CHECK(isValidNumberSequence("1b3d5e") == false);
+	CHECK(isValidNumberSequence("ABCDEF") == false);
+	CHECK(isValidNumberSequence("0") == true);
+	CHECK(isValidNumberSequence("12==56") == false);
+	CHECK(isValidNumberSequence("$%&/") == false);
+}
