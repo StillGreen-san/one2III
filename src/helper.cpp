@@ -12,7 +12,7 @@ std::vector<std::vector<uint8_t>> integerPartitions(uint8_t _integer,
 		|| _minpart > _maxpart) return {};
 	if(_partcount == 1) return {{_integer}};
 	std::vector<std::vector<uint8_t>> partitions;
-	std::vector<uint8_t> current(_partcount, 1);
+	std::vector<uint8_t> current(_partcount, 1);//TODO init with _minpart?
 	current[0] = _integer - _partcount + 1;
 	while (true){
 		while (true){
@@ -44,4 +44,9 @@ std::vector<std::vector<uint8_t>> integerPartitions(uint8_t _integer,
 		}
 		current[0] = newFirst;
 	}
+}
+
+std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<uint8_t>& _partition) 
+{
+	return {};
 }
