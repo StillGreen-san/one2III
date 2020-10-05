@@ -20,8 +20,8 @@ int main()
 		switch (converter)
 		{
 		case 1: return romanNumerals(view);
-		case 2: return romanNumerals(view);
-		case 3: return romanNumerals(view);
+		case 2: return runLengthEncode(view);
+		case 3: return numberToEnglish(view);
 		default: return std::string{};
 		}
 	};
