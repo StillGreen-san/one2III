@@ -34,6 +34,11 @@ std::string runLengthEncode(std::string_view _number)
 	return encoded;
 }
 
+std::string asRunLengthEncode(std::string_view _number) 
+{
+	return {};
+}
+
 std::string romanNumerals(std::string_view _number) 
 {
 	static const std::vector<std::pair<unsigned short, const char*>> roman //TODO? make array?

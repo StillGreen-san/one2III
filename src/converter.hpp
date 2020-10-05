@@ -16,6 +16,14 @@
 std::string runLengthEncode(std::string_view _number);
 
 /**
+ * @brief returns a number sequence interpreted as RLE, space separated 
+ * 
+ * @param _number 
+ * @return std::string 
+ */
+std::string asRunLengthEncode(std::string_view _number);
+
+/**
  * @brief returns a number sequence as roman numerals
  * 
  * @param _number 0 <=> 3999

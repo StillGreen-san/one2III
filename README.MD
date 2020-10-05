@@ -12,7 +12,7 @@ convert every substring using every possible conversion rule
 - run length enc: 112 -> 2112 (two ones, one two)
 - roman numerals: 123 -> CXXIII
 - words in eng: 321 -> three hundred twenty one
-- look and say: combintn of run length enc and words in eng
+- look and say: combintn of rle (converted/interpreted) and eng
 - more combinations ?
 
 ## e.g. 123 with rules conway & roman:
