@@ -47,7 +47,7 @@ protected:
 	size_t maxInputSize;
 };
 
-class RomanNumeralConversion : ConversionRule
+class RomanNumeralConversion : public ConversionRule
 {
 public:
 	RomanNumeralConversion::RomanNumeralConversion();
@@ -55,7 +55,7 @@ public:
 	std::string convert(std::string_view _string) override;
 };
 
-class RunLengthEncodingConversion : ConversionRule
+class RunLengthEncodingConversion : public ConversionRule
 {
 public:
 	RunLengthEncodingConversion::RunLengthEncodingConversion();

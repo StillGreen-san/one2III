@@ -4,50 +4,53 @@
  */
 
 #include <iostream>
+#include <algorithm>
 
 #include "helper.hpp"
 #include "converter.hpp"
+#include "conversionrules.hpp"
 
 int main()
 {
-	// std::cout << "enter a number sequence:";
 	std::string numberSequence;
 	while(isValidNumberSequence(numberSequence) == false)
 	{
 		std::cout << "enter a number sequence: ";
 		std::cin >> numberSequence;
 	}
-	uint16_t converter = 0;
-	while (converter < 1 || converter > 3)
-	{
-		std::cout << "select converter: 1:rom, 2:rle, 3:eng : ";
-		std::cin >> converter;
-	}
-	auto convert = [&](const std::string_view& view){
-		switch (converter)
-		{
-		case 1: return romanNumerals(view);
-		case 2: return runLengthEncode(view);
-		case 3: return numberToEnglish(view);
-		default: return std::string{};
-		}
-	};
+
+	std::vector<std::unique_ptr<ConversionRule>> converters;
+	converters.emplace_back(new RomanNumeralConversion);
+	converters.emplace_back(new RunLengthEncodingConversion);
+
 	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
 	for(uint8_t parts = digits; parts > 0; --parts)
 	{
 		const auto partitions = integerPartitions(digits, parts);
-		for(auto& partition : partitions)//TODO better naming?
+		for(auto& partition : partitions)
 		{
 			const auto views = partitionString(numberSequence, partition);
 			if(views.size() == 0) continue;
-			std::string converted;
-			const std::string seperator = " | ";
-			for(auto& view : views)//TODO better naming?
+			std::vector<std::vector<std::string>> allConversions;
+			for(auto& view : views)
 			{
-				converted.append(convert(view)).append(seperator);
+				std::vector<std::string> viewConversions;
+				for(auto& c : converters)
+				{
+					viewConversions.push_back(std::move(c->convert(view)));
+				}
+				allConversions.push_back(std::move(viewConversions));
 			}
-			converted[converted.size()-3] = '\0';
-			std::cout << converted.c_str() << std::endl;
+			for(size_t x = allConversions.front().size(); x > 0; --x)
+			{
+				std::cout << " | ";
+				for(size_t y = 0; y < allConversions.size(); ++y)
+				{
+					std::cout << allConversions[y][x-1] << " | ";
+				}
+				std::cout << std::endl;
+			}
+			std::cout << std::endl;
 		}
 	}
 }

@@ -4,6 +4,7 @@ set(TARGET_MAIN one2IIImain)
 set(SOURCES_ADDITIONAL
 	converter.cpp
 	helper.cpp
+	conversionrules.cpp
 )
 
 add_executable(${TARGET_MAIN} ${TARGET_MAIN}.cpp)
