@@ -14,7 +14,6 @@ class ConversionRule
 {
 public:
 	ConversionRule() = delete;
-	ConversionRule(size_t _minInputSize, size_t _maxInputSize);
 
 	virtual std::string convert(std::string_view _string) = 0;
 
@@ -39,9 +38,27 @@ public:
 	 * @return true if the string can be converted
 	 * @return false otherwise
 	 */
-	bool canBeConverted(std::string_view _string);
+	bool canBeConverted(std::string_view _string);//TODO make virtual? remove completly?
 
 protected:
+	ConversionRule(size_t _minInputSize, size_t _maxInputSize);
+
 	size_t minInputSize;
 	size_t maxInputSize;
+};
+
+class RomanNumeralConversion : ConversionRule
+{
+public:
+	RomanNumeralConversion::RomanNumeralConversion();
+
+	std::string convert(std::string_view _string) override;
+};
+
+class RunLengthEncodingConversion : ConversionRule
+{
+public:
+	RunLengthEncodingConversion::RunLengthEncodingConversion();
+
+	std::string convert(std::string_view _string) override;
 };

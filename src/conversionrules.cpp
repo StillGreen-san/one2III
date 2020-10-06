@@ -4,6 +4,9 @@
  */
 
 #include "conversionrules.hpp"
+#include "converter.hpp"
+
+#pragma region ConversionRule
 
 ConversionRule::ConversionRule(size_t _minInputSize, size_t _maxInputSize) :
 	minInputSize{_minInputSize},
@@ -27,3 +30,35 @@ bool ConversionRule::canBeConverted(std::string_view _string)
 	return _string.size() >= minInputSize
 		&& _string.size() <= maxInputSize;
 }
+
+#pragma endregion ConversionRule
+
+#pragma region RomanNumeralConversion
+
+RomanNumeralConversion::RomanNumeralConversion() :
+	ConversionRule::ConversionRule(1, 4)
+{
+
+}
+
+std::string RomanNumeralConversion::convert(std::string_view _string) 
+{
+	return romanNumerals(_string);
+}
+
+#pragma endregion RomanNumeralConversion
+
+#pragma region RunLengthEncodingConversion
+
+RunLengthEncodingConversion::RunLengthEncodingConversion() :
+	ConversionRule::ConversionRule(1, std::numeric_limits<size_t>::max())
+{
+
+}
+
+std::string RunLengthEncodingConversion::convert(std::string_view _string) 
+{
+	return runLengthEncode(_string);
+}
+
+#pragma endregion RunLengthEncodingConversion
