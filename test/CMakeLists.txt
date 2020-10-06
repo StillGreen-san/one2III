@@ -6,6 +6,7 @@ set(TARGET_MAIN testmain)
 set(SOURCES_ADDITIONAL
 	${one2III_SRC_DIR}/converter.cpp
 	${one2III_SRC_DIR}/helper.cpp
+	${one2III_SRC_DIR}/conversionrules.cpp
 )
 
 add_executable(${TARGET_MAIN} ${TARGET_MAIN}.cpp)

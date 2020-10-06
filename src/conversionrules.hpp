@@ -62,3 +62,5 @@ public:
 
 	std::string convert(std::string_view _string) override;
 };
+
+//TODO implement rest of converter.hpp functions as rule

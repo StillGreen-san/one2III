@@ -8,11 +8,7 @@
 
 #include "converter.hpp"
 #include "helper.hpp"
-
-TEST_CASE("PLACEHOLDER")
-{
-	CHECK(true);
-}
+#include "conversionrules.hpp"
 
 TEST_CASE("runLengthEncode")
 {
@@ -118,4 +114,19 @@ TEST_CASE("isValidNumberSequence")
 	CHECK(isValidNumberSequence("$%&/") == false);
 }
 
-//TODO tests for conversionrules
+TEST_CASE("conversionrules")
+{
+	SECTION("RomanNumeralConversion")
+	{
+		RomanNumeralConversion rnc;
+		CHECK(rnc.convert("789") == "DCCLXXXIX");
+		CHECK(rnc.convert("1009") == "MIX");
+	}
+
+	SECTION("RunLengthEncodingConversion")
+	{
+		RunLengthEncodingConversion rlec;
+		CHECK(rlec.convert("22") == "2 2");
+		CHECK(rlec.convert("123") == "1 1 1 2 1 3");
+	}
+}
