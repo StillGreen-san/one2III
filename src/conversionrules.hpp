@@ -15,21 +15,21 @@ class ConversionRule
 public:
 	ConversionRule() = delete;
 
-	virtual std::string convert(std::string_view _string) = 0;
+	virtual std::string convert(std::string_view _string) const = 0;
 
 	/**
 	 * @brief gets the minimum supported input size for conversion
 	 * 
 	 * @return size_t minimum supported input size for conversion
 	 */
-	size_t getMinInputSize();
+	size_t getMinInputSize() const;
 
 	/**
 	 * @brief gets the maximum supported input size for conversion
 	 * 
 	 * @return size_t maximum supported input size for conversion
 	 */
-	size_t getMaxInputSize();
+	size_t getMaxInputSize() const;
 
 	/**
 	 * @brief checks if the string can be converted by this rule
@@ -38,7 +38,7 @@ public:
 	 * @return true if the string can be converted
 	 * @return false otherwise
 	 */
-	bool canBeConverted(std::string_view _string);//TODO make virtual? remove completly?
+	bool canBeConverted(std::string_view _string) const;//TODO make virtual? remove completly?
 
 protected:
 	ConversionRule(size_t _minInputSize, size_t _maxInputSize);
@@ -52,7 +52,7 @@ class RomanNumeralConversion : public ConversionRule
 public:
 	RomanNumeralConversion::RomanNumeralConversion();
 
-	std::string convert(std::string_view _string) override;
+	std::string convert(std::string_view _string) const override;
 };
 
 class RunLengthEncodingConversion : public ConversionRule
@@ -60,7 +60,7 @@ class RunLengthEncodingConversion : public ConversionRule
 public:
 	RunLengthEncodingConversion::RunLengthEncodingConversion();
 
-	std::string convert(std::string_view _string) override;
+	std::string convert(std::string_view _string) const override;
 };
 
 //TODO implement rest of converter.hpp functions as rule

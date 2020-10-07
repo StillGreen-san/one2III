@@ -15,17 +15,17 @@ ConversionRule::ConversionRule(size_t _minInputSize, size_t _maxInputSize) :
 	
 }
 
-size_t ConversionRule::getMinInputSize()
+size_t ConversionRule::getMinInputSize() const
 {
 	return minInputSize;
 }
 
-size_t ConversionRule::getMaxInputSize()
+size_t ConversionRule::getMaxInputSize() const
 {
 	return maxInputSize;
 }
 
-bool ConversionRule::canBeConverted(std::string_view _string)
+bool ConversionRule::canBeConverted(std::string_view _string) const
 {
 	return _string.size() >= minInputSize
 		&& _string.size() <= maxInputSize;
@@ -41,7 +41,7 @@ RomanNumeralConversion::RomanNumeralConversion() :
 
 }
 
-std::string RomanNumeralConversion::convert(std::string_view _string) 
+std::string RomanNumeralConversion::convert(std::string_view _string) const
 {
 	return romanNumerals(_string);
 }
@@ -56,7 +56,7 @@ RunLengthEncodingConversion::RunLengthEncodingConversion() :
 
 }
 
-std::string RunLengthEncodingConversion::convert(std::string_view _string) 
+std::string RunLengthEncodingConversion::convert(std::string_view _string) const
 {
 	return runLengthEncode(_string);
 }
