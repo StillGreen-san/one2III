@@ -70,12 +70,18 @@ public:
 	std::string convert(std::string_view _string) const override;
 };
 
-class LookAndSay : public ConversionRule
+class LookAndSayConversion : public ConversionRule
 {
 public:
-	LookAndSay::LookAndSay();
+	LookAndSayConversion::LookAndSayConversion();
 
 	std::string convert(std::string_view _string) const override;
 };
 
-//TODO implement rest of converter.hpp functions as rule
+class AsNumberConversion : public ConversionRule
+{
+public:
+	AsNumberConversion::AsNumberConversion();
+
+	std::string convert(std::string_view _string) const override;
+};

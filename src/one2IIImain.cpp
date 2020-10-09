@@ -25,7 +25,7 @@ std::ostream& operator<<(std::ostream& _os, const std::vector<uint8_t>& _vec)
 
 int main()
 {
-	std::string numberSequence = "123456";//;//
+	std::string numberSequence;// = "123456";//
 	while(isValidNumberSequence(numberSequence) == false)
 	{
 		std::cout << "enter a number sequence: ";
@@ -34,7 +34,11 @@ int main()
 
 	std::vector<std::unique_ptr<ConversionRule>> converters;
 	converters.emplace_back(new RomanNumeralConversion);
+	converters.emplace_back(new AsNumberConversion);
+	converters.emplace_back(new AsRunLengthEncodingConversion);
+	converters.emplace_back(new NumberToEnglishConversion);
 	converters.emplace_back(new RunLengthEncodingConversion);
+	converters.emplace_back(new LookAndSayConversion);
 
 	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
 	for(uint8_t parts = digits; parts > 0; --parts)

@@ -89,17 +89,17 @@ std::string AsRunLengthEncodingConversion::convert(std::string_view _string) con
 
 #pragma region LookAndSay
 
-LookAndSay::LookAndSay() :
+LookAndSayConversion::LookAndSayConversion() :
 	ConversionRule::ConversionRule(1, std::numeric_limits<size_t>::max())
 {
 
 }
 
-std::string LookAndSay::convert(std::string_view _string) const
+std::string LookAndSayConversion::convert(std::string_view _string) const
 {
 	std::string runLengthEncoded = runLengthEncode(_string);
 	if(runLengthEncoded == "") return runLengthEncoded;
-	const size_t sectionSize = 2;
+	const size_t sectionHalf = 1;
 	std::string separator = "";
 	std::string lookAndSay;
 	auto stringEnd = std::remove(begin(runLengthEncoded), end(runLengthEncoded), ' ');
@@ -108,11 +108,29 @@ std::string LookAndSay::convert(std::string_view _string) const
 	{
 		lookAndSay
 			.append(separator)
-			.append(numberToEnglish(std::string_view(&*sectionBegin , sectionSize)));
-		separator = " ";
-		std::advance(sectionBegin, sectionSize);
+			.append(numberToEnglish(std::string_view(&*sectionBegin , sectionHalf)));
+		std::advance(sectionBegin, sectionHalf);
+		lookAndSay
+			.append(separator = " ")
+			.append(numberToEnglish(std::string_view(&*sectionBegin , sectionHalf)));
+		std::advance(sectionBegin, sectionHalf);
 	}
 	return lookAndSay;
 }
 
 #pragma endregion LookAndSay
+
+#pragma region AsNumber
+
+AsNumberConversion::AsNumberConversion() :
+	ConversionRule::ConversionRule(1, std::numeric_limits<size_t>::max())
+{
+
+}
+
+std::string AsNumberConversion::convert(std::string_view _string) const
+{
+	return std::string(_string);
+}
+
+#pragma endregion AsNumber
