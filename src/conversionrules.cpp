@@ -15,20 +15,11 @@ ConversionRule::ConversionRule(size_t _minInputSize, size_t _maxInputSize) :
 	
 }
 
-size_t ConversionRule::getMinInputSize() const
-{
-	return minInputSize;
-}
-
-size_t ConversionRule::getMaxInputSize() const
-{
-	return maxInputSize;
-}
-
 bool ConversionRule::canBeConverted(std::string_view _string) const
 {
-	return _string.size() >= minInputSize
-		&& _string.size() <= maxInputSize;
+	size_t size = _string.size();
+	return size >= minInputSize
+		&& size <= maxInputSize;
 }
 
 #pragma endregion ConversionRule
@@ -44,6 +35,15 @@ RomanNumeralConversion::RomanNumeralConversion() :
 std::string RomanNumeralConversion::convert(std::string_view _string) const
 {
 	return romanNumerals(_string);
+}
+
+bool RomanNumeralConversion::canBeConverted(std::string_view _string) const 
+{
+	size_t size = _string.size();
+	if(size == maxInputSize)
+		return _string.front() <= '3';
+	return size >= minInputSize
+		&& size <= maxInputSize;
 }
 
 #pragma endregion RomanNumeralConversion

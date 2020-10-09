@@ -18,33 +18,19 @@ public:
 	virtual std::string convert(std::string_view _string) const = 0;
 
 	/**
-	 * @brief gets the minimum supported input size for conversion
-	 * 
-	 * @return size_t minimum supported input size for conversion
-	 */
-	size_t getMinInputSize() const;
-
-	/**
-	 * @brief gets the maximum supported input size for conversion
-	 * 
-	 * @return size_t maximum supported input size for conversion
-	 */
-	size_t getMaxInputSize() const;
-
-	/**
 	 * @brief checks if the string can be converted by this rule
 	 * 
 	 * @param _string the string to be converted
 	 * @return true if the string can be converted
 	 * @return false otherwise
 	 */
-	bool canBeConverted(std::string_view _string) const;//TODO make virtual? remove completly?
+	virtual bool canBeConverted(std::string_view _string) const;
 
 protected:
 	ConversionRule(size_t _minInputSize, size_t _maxInputSize);
 
-	size_t minInputSize;
-	size_t maxInputSize;
+	const size_t minInputSize;
+	const size_t maxInputSize;
 };
 
 class RomanNumeralConversion : public ConversionRule
@@ -53,6 +39,8 @@ public:
 	RomanNumeralConversion::RomanNumeralConversion();
 
 	std::string convert(std::string_view _string) const override;
+
+	bool canBeConverted(std::string_view _string) const override;
 };
 
 class RunLengthEncodingConversion : public ConversionRule
