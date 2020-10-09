@@ -40,10 +40,18 @@ int main()
 	converters.emplace_back(new RunLengthEncodingConversion);
 	converters.emplace_back(new LookAndSayConversion);
 
+	RuleBook rb; rb ;  ;
+
 	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
 	for(uint8_t parts = digits; parts > 0; --parts)
 	{
-		auto partitions = integerPartitions(digits, parts);
+		auto min = std::min_element(begin(converters), end(converters), [](auto& a, auto& b){
+			return a->getMinInputSize() < b->getMinInputSize();
+		});
+		auto max = std::max_element(begin(converters), end(converters), [](auto& a, auto& b){
+			return a->getMaxInputSize() < b->getMaxInputSize();
+		});
+		auto partitions = integerPartitions(digits, parts, (*min)->getMinInputSize(), (*max)->getMaxInputSize());
 		for(auto& partition : partitions)
 		{
 			do

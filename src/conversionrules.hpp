@@ -6,6 +6,19 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <memory>
+
+enum class Rule : char
+{
+	None,
+	RomanNumeralConversion,
+	AsNumberConversion,
+	AsRunLengthEncodingConversion,
+	NumberToEnglishConversion,
+	RunLengthEncodingConversion,
+	LookAndSayConversion
+};
 
 /**
  * @brief base class for all conversion rules
@@ -14,6 +27,8 @@ class ConversionRule
 {
 public:
 	ConversionRule() = delete;
+
+	static constexpr Rule ruleType = Rule::None;//TODO do this somehow with polymorphic
 
 	virtual std::string convert(std::string_view _string) const = 0;
 
@@ -84,4 +99,35 @@ public:
 	AsNumberConversion::AsNumberConversion();
 
 	std::string convert(std::string_view _string) const override;
+};
+
+class RuleBook
+{
+public:
+	/**
+	 * @brief add a conversion rule to the collection
+	 * 
+	 * @param _rule the conversion rule type to add
+	 * @return true if rule was added
+	 * @return false if was rule already added
+	 */
+	bool add(Rule _rule);
+
+	/**
+	 * @brief gets the minimum supported input size for conversion
+	 * 
+	 * @return size_t minimum supported input size for conversion
+	 */
+	size_t getMinInputSize() const;
+
+	/**
+	 * @brief gets the maximum supported input size for conversion
+	 * 
+	 * @return size_t maximum supported input size for conversion
+	 */
+	size_t getMaxInputSize() const;
+private:
+	std::vector<std::unique_ptr<ConversionRule>> rules;
+	size_t minInputSize = std::numeric_limits<size_t>::min();
+	size_t maxInputSize = std::numeric_limits<size_t>::max();
 };

@@ -134,3 +134,29 @@ std::string AsNumberConversion::convert(std::string_view _string) const
 }
 
 #pragma endregion AsNumber
+
+#pragma region RuleBook
+
+bool RuleBook::add(Rule _rule) 
+{
+	switch (_rule)
+	{
+	case Rule::AsNumberConversion :
+		
+		break;
+	
+	default: return false;
+	}
+}
+
+size_t RuleBook::getMinInputSize() const
+{
+	return minInputSize;
+}
+
+size_t RuleBook::getMaxInputSize() const
+{
+	return maxInputSize;
+}
+
+#pragma endregion RuleBook
