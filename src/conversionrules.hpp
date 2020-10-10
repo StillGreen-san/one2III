@@ -100,6 +100,20 @@ public:
 	std::string convert(std::string_view _string) const override;
 };
 
+class RuleBookIterator
+{
+public:
+	bool operator!=(const RuleBookIterator& _other) const;
+	bool operator==(const RuleBookIterator& _other) const;
+	const ConversionRule& operator*() const;
+	const ConversionRule* operator->() const;
+	RuleBookIterator& operator++();
+	RuleBookIterator& operator--();
+private:
+	friend class RuleBook;
+	std::map<Rule, std::unique_ptr<ConversionRule>>::const_iterator iterator;
+};
+
 class RuleBook
 {
 public:
@@ -125,10 +139,13 @@ public:
 	 * @return size_t maximum supported input size for conversion
 	 */
 	size_t getMaxInputSize() const;
+
+	RuleBookIterator begin() const;
+	RuleBookIterator end() const;
 private:
 	std::pair<std::map<Rule, std::unique_ptr<ConversionRule>>::iterator, bool> emplaceRule(Rule _rule);
 private:
 	std::map<Rule, std::unique_ptr<ConversionRule>> rules;
-	size_t minInputSize = std::numeric_limits<size_t>::min();
-	size_t maxInputSize = std::numeric_limits<size_t>::max();
+	size_t minInputSize = std::numeric_limits<size_t>::max();
+	size_t maxInputSize = std::numeric_limits<size_t>::min();
 };

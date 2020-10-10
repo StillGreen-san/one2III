@@ -157,6 +157,20 @@ size_t RuleBook::getMaxInputSize() const
 	return maxInputSize;
 }
 
+RuleBookIterator RuleBook::begin() const
+{
+	RuleBookIterator iterator;
+	iterator.iterator = rules.begin();
+	return iterator;
+}
+
+RuleBookIterator RuleBook::end() const
+{
+	RuleBookIterator iterator;
+	iterator.iterator = rules.end();
+	return iterator;
+}
+
 std::pair<std::map<Rule, std::unique_ptr<ConversionRule>>::iterator, bool> RuleBook::emplaceRule(Rule _rule) 
 {
 	switch (_rule)
@@ -178,3 +192,39 @@ std::pair<std::map<Rule, std::unique_ptr<ConversionRule>>::iterator, bool> RuleB
 }
 
 #pragma endregion RuleBook
+
+#pragma region RuleBookIterator
+
+bool RuleBookIterator::operator!=(const RuleBookIterator& _other) const
+{
+	return iterator != _other.iterator;
+}
+
+bool RuleBookIterator::operator==(const RuleBookIterator& _other) const
+{
+	return iterator == _other.iterator;
+}
+
+const ConversionRule* RuleBookIterator::operator->() const
+{
+	return iterator->second.operator->();
+}
+
+const ConversionRule& RuleBookIterator::operator*() const
+{
+	return iterator->second.operator*();
+}
+
+RuleBookIterator& RuleBookIterator::operator--() 
+{
+	iterator--;
+	return *this;
+}
+
+RuleBookIterator& RuleBookIterator::operator++() 
+{
+	iterator++;
+	return *this;
+}
+
+#pragma endregion RuleBookIterator

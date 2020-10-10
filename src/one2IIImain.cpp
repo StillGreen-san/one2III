@@ -32,26 +32,18 @@ int main()
 		std::cin >> numberSequence;
 	}
 
-	std::vector<std::unique_ptr<ConversionRule>> converters;
-	converters.emplace_back(new RomanNumeralConversion);
-	converters.emplace_back(new AsNumberConversion);
-	converters.emplace_back(new AsRunLengthEncodingConversion);
-	converters.emplace_back(new NumberToEnglishConversion);
-	converters.emplace_back(new RunLengthEncodingConversion);
-	converters.emplace_back(new LookAndSayConversion);
-
-	RuleBook rb; rb ;  ;
+	RuleBook ruleBook;
+	ruleBook.add(Rule::RomanNumeralConversion);
+	ruleBook.add(Rule::AsNumberConversion);
+	ruleBook.add(Rule::AsRunLengthEncodingConversion);
+	ruleBook.add(Rule::NumberToEnglishConversion);
+	ruleBook.add(Rule::RunLengthEncodingConversion);
+	ruleBook.add(Rule::LookAndSayConversion);
 
 	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
 	for(uint8_t parts = digits; parts > 0; --parts)
 	{
-		auto min = std::min_element(begin(converters), end(converters), [](auto& a, auto& b){
-			return a->getMinInputSize() < b->getMinInputSize();
-		});
-		auto max = std::max_element(begin(converters), end(converters), [](auto& a, auto& b){
-			return a->getMaxInputSize() < b->getMaxInputSize();
-		});
-		auto partitions = integerPartitions(digits, parts, (*min)->getMinInputSize(), (*max)->getMaxInputSize());
+		auto partitions = integerPartitions(digits, parts, ruleBook.getMinInputSize(), ruleBook.getMaxInputSize());
 		for(auto& partition : partitions)
 		{
 			do
@@ -63,9 +55,9 @@ int main()
 				for(auto& view : views)
 				{
 					std::vector<std::string> viewConversions;
-					for(auto& c : converters)
+					for(auto& rule : ruleBook)
 					{
-						viewConversions.push_back(std::move(c->convert(view)));
+						viewConversions.push_back(std::move(rule.convert(view)));
 					}
 					allConversions.push_back(std::move(viewConversions));
 				}
