@@ -139,14 +139,12 @@ std::string AsNumberConversion::convert(std::string_view _string) const
 
 bool RuleBook::add(Rule _rule) 
 {
-	switch (_rule)
-	{
-	case Rule::AsNumberConversion :
-		
-		break;
-	
-	default: return false;
-	}
+	if(rules.find(_rule) != rules.end()) return false;
+	auto result = emplaceRule(_rule);
+	if(result.second == false) return false;
+	minInputSize = std::min(minInputSize, result.first->second->getMinInputSize());
+	maxInputSize = std::max(maxInputSize, result.first->second->getMaxInputSize());
+	return true;
 }
 
 size_t RuleBook::getMinInputSize() const
@@ -157,6 +155,26 @@ size_t RuleBook::getMinInputSize() const
 size_t RuleBook::getMaxInputSize() const
 {
 	return maxInputSize;
+}
+
+std::pair<std::map<Rule, std::unique_ptr<ConversionRule>>::iterator, bool> RuleBook::emplaceRule(Rule _rule) 
+{
+	switch (_rule)
+	{
+	case Rule::AsNumberConversion :
+		return rules.emplace(_rule, new AsNumberConversion);
+	case Rule::AsRunLengthEncodingConversion :
+		return rules.emplace(_rule, new AsRunLengthEncodingConversion);
+	case Rule::LookAndSayConversion :
+		return rules.emplace(_rule, new LookAndSayConversion);
+	case Rule::NumberToEnglishConversion :
+		return rules.emplace(_rule, new NumberToEnglishConversion);
+	case Rule::RomanNumeralConversion :
+		return rules.emplace(_rule, new RomanNumeralConversion);
+	case Rule::RunLengthEncodingConversion :
+		return rules.emplace(_rule, new RunLengthEncodingConversion);
+	default: return {std::map<Rule, std::unique_ptr<ConversionRule>>::iterator(), false};
+	}
 }
 
 #pragma endregion RuleBook

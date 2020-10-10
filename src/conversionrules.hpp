@@ -6,18 +6,19 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <map>
 #include <memory>
 
-enum class Rule : char
+enum class Rule : uint8_t
 {
-	None,
 	RomanNumeralConversion,
 	AsNumberConversion,
 	AsRunLengthEncodingConversion,
 	NumberToEnglishConversion,
 	RunLengthEncodingConversion,
-	LookAndSayConversion
+	LookAndSayConversion,
+
+	None
 };
 
 /**
@@ -27,8 +28,6 @@ class ConversionRule
 {
 public:
 	ConversionRule() = delete;
-
-	static constexpr Rule ruleType = Rule::None;//TODO do this somehow with polymorphic
 
 	virtual std::string convert(std::string_view _string) const = 0;
 
@@ -127,7 +126,9 @@ public:
 	 */
 	size_t getMaxInputSize() const;
 private:
-	std::vector<std::unique_ptr<ConversionRule>> rules;
+	std::pair<std::map<Rule, std::unique_ptr<ConversionRule>>::iterator, bool> emplaceRule(Rule _rule);
+private:
+	std::map<Rule, std::unique_ptr<ConversionRule>> rules;
 	size_t minInputSize = std::numeric_limits<size_t>::min();
 	size_t maxInputSize = std::numeric_limits<size_t>::max();
 };
