@@ -137,7 +137,7 @@ std::string AsNumberConversion::convert(std::string_view _string) const
 
 #pragma region RuleBook
 
-bool RuleBook::add(Rule _rule) 
+bool RuleBook::add(RuleType _rule) 
 {
 	if(rules.find(_rule) != rules.end()) return false;
 	auto result = emplaceRule(_rule);
@@ -171,23 +171,23 @@ RuleBookIterator RuleBook::end() const
 	return iterator;
 }
 
-std::pair<std::map<Rule, std::unique_ptr<ConversionRule>>::iterator, bool> RuleBook::emplaceRule(Rule _rule) 
+std::pair<std::map<RuleType, std::unique_ptr<ConversionRule>>::iterator, bool> RuleBook::emplaceRule(RuleType _rule) 
 {
 	switch (_rule)
 	{
-	case Rule::AsNumberConversion :
+	case RuleType::AsNumberConversion :
 		return rules.emplace(_rule, new AsNumberConversion);
-	case Rule::AsRunLengthEncodingConversion :
+	case RuleType::AsRunLengthEncodingConversion :
 		return rules.emplace(_rule, new AsRunLengthEncodingConversion);
-	case Rule::LookAndSayConversion :
+	case RuleType::LookAndSayConversion :
 		return rules.emplace(_rule, new LookAndSayConversion);
-	case Rule::NumberToEnglishConversion :
+	case RuleType::NumberToEnglishConversion :
 		return rules.emplace(_rule, new NumberToEnglishConversion);
-	case Rule::RomanNumeralConversion :
+	case RuleType::RomanNumeralConversion :
 		return rules.emplace(_rule, new RomanNumeralConversion);
-	case Rule::RunLengthEncodingConversion :
+	case RuleType::RunLengthEncodingConversion :
 		return rules.emplace(_rule, new RunLengthEncodingConversion);
-	default: return {std::map<Rule, std::unique_ptr<ConversionRule>>::iterator(), false};
+	default: return {std::map<RuleType, std::unique_ptr<ConversionRule>>::iterator(), false};
 	}
 }
 

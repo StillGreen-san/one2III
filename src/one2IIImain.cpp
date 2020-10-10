@@ -33,12 +33,12 @@ int main()
 	}
 
 	RuleBook ruleBook;
-	ruleBook.add(Rule::RomanNumeralConversion);
-	ruleBook.add(Rule::AsNumberConversion);
-	ruleBook.add(Rule::AsRunLengthEncodingConversion);
-	ruleBook.add(Rule::NumberToEnglishConversion);
-	ruleBook.add(Rule::RunLengthEncodingConversion);
-	ruleBook.add(Rule::LookAndSayConversion);
+	ruleBook.add(RuleType::RomanNumeralConversion);
+	ruleBook.add(RuleType::AsNumberConversion);
+	ruleBook.add(RuleType::AsRunLengthEncodingConversion);
+	ruleBook.add(RuleType::NumberToEnglishConversion);
+	ruleBook.add(RuleType::RunLengthEncodingConversion);
+	ruleBook.add(RuleType::LookAndSayConversion);
 
 	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
 	for(uint8_t parts = digits; parts > 0; --parts)
