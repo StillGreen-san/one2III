@@ -95,6 +95,7 @@ LookAndSayConversion::LookAndSayConversion() :
 
 }
 
+//TODO move impl to converter
 std::string LookAndSayConversion::convert(std::string_view _string) const
 {
 	std::string runLengthEncoded = runLengthEncode(_string);
