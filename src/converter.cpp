@@ -7,7 +7,7 @@
 
 #include "converter.hpp"
 
-std::string runLengthEncode(std::string_view _number) 
+std::string runLengthEncode(std::string_view _number)
 {
 	size_t size = _number.size();
 	if(size == 0) return {};
@@ -34,7 +34,7 @@ std::string runLengthEncode(std::string_view _number)
 	return encoded;
 }
 
-std::string asRunLengthEncode(std::string_view _number) 
+std::string asRunLengthEncode(std::string_view _number)
 {
 	size_t size = _number.size();
 	if(size == 0 || size % 2 != 0) return {};
@@ -52,7 +52,7 @@ std::string asRunLengthEncode(std::string_view _number)
 	return converted;
 }
 
-std::string romanNumerals(std::string_view _number) 
+std::string romanNumerals(std::string_view _number)
 {
 	static const std::vector<std::pair<uint16_t, const char*>> roman //TODO? make array?
 	{
@@ -76,7 +76,7 @@ std::string romanNumerals(std::string_view _number)
 	return converted;
 }
 
-std::string numberToEnglish(std::string_view _number) 
+std::string numberToEnglish(std::string_view _number)
 {
 	static const std::vector<std::string> numeng //TODO? make array?
 	{
@@ -103,4 +103,27 @@ std::string numberToEnglish(std::string_view _number)
 	}
 	if(english.back() == ' ') english.pop_back();
 	return english;
+}
+
+std::string lookAndSay(std::string_view _number)
+{
+	std::string runLengthEncoded = runLengthEncode(_number);
+	if(runLengthEncoded == "") return runLengthEncoded;
+	const size_t sectionHalf = 1;
+	std::string separator = "";
+	std::string lookAndSay;
+	auto stringEnd = std::remove(begin(runLengthEncoded), end(runLengthEncoded), ' ');
+	auto sectionBegin = begin(runLengthEncoded);
+	while(sectionBegin != stringEnd)
+	{
+		lookAndSay
+			.append(separator)
+			.append(numberToEnglish(std::string_view(&*sectionBegin , sectionHalf)));
+		std::advance(sectionBegin, sectionHalf);
+		lookAndSay
+			.append(separator = " ")
+			.append(numberToEnglish(std::string_view(&*sectionBegin , sectionHalf)));
+		std::advance(sectionBegin, sectionHalf);
+	}
+	return lookAndSay;
 }
