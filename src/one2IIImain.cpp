@@ -58,7 +58,7 @@ int main()
 					std::vector<std::string> viewConversions;
 					for(auto& rule : ruleBook)
 					{
-						viewConversions.push_back(std::move(rule.convert(view)));
+						viewConversions.push_back(std::move(ConversionRule::convert(rule, view)));
 					}
 					allConversions.push_back(std::move(viewConversions));
 				}

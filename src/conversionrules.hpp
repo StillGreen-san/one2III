@@ -6,7 +6,7 @@
 #pragma once
 
 #include <string>
-#include <map>
+#include <set>
 #include <memory>
 
 //TODO make rules as constexpr function object template
@@ -17,243 +17,75 @@
  */
 enum class RuleType : uint8_t
 {
-	RomanNumeralConversion,
-	AsNumberConversion,
-	AsRunLengthEncodingConversion,
-	NumberToEnglishConversion,
-	RunLengthEncodingConversion,
-	LookAndSayConversion,
+	RomanNumeralConversion, /* converts a number sequence to roman numerals */
+	AsNumberConversion, /* returns a number sequence as is */
+	AsRunLengthEncodingConversion, /* interprets a number sequence as run length encoding */
+	NumberToEnglishConversion, /* converts a number sequence to english words */
+	RunLengthEncodingConversion, /* converts a number sequence to english words */
+	LookAndSayConversion, /* converts a number sequence with run length encoding then to english words */
 
-	None
+	None /* invalid */
 };
 
-/**
- * @brief template for conversion rules
- * 
- * @tparam _RT one of RuleType
- */
-template<RuleType _RT>
 struct ConversionRule
 {
-	/* non specialized template should not be used */
-};
-
-/**
- * @brief specialized template for conversion rules see convert
- * 
- * @tparam RuleType::RomanNumeralConversion
- */
-template<>
-struct ConversionRule<RuleType::RomanNumeralConversion>
-{
 	/**
-	 * @brief returns a number sequence converted to roman numerals
+	 * @brief returns a number sequence converted according to rule type
 	 * 
 	 * @param _string the number sequence to convert
 	 * @return std::string the converted number sequence
 	 */
-	static std::string convert(std::string_view _string) noexcept;
+	static std::string convert(RuleType _rule, std::string_view _string);
 
 	/**
-	 * @brief the maximum supported input size for conversion
+	 * @brief the minimum supported input size for conversion with rule type
 	 * 
 	 */
-	static constexpr size_t minInputSize = 1;
+	static constexpr size_t minInputSize(RuleType _rule) noexcept
+	{
+		switch(_rule)
+		{
+		case RuleType::RomanNumeralConversion :
+			return 1;
+		case RuleType::RunLengthEncodingConversion :
+			return 1;
+		case RuleType::NumberToEnglishConversion :
+			return 1;
+		case RuleType::AsRunLengthEncodingConversion :
+			return 2;
+		case RuleType::LookAndSayConversion :
+			return 1;
+		case RuleType::AsNumberConversion :
+			return 1;
+		default:
+			return std::numeric_limits<size_t>::max();
+		}
+	}
 
 	/**
-	 * @brief the maximum supported input size for conversion
+	 * @brief the maximum supported input size for conversion with rule type
 	 * 
 	 */
-	static constexpr size_t maxInputSize = 4;
-};
-
-/**
- * @brief specialized template for conversion rules see convert
- * 
- * @tparam RuleType::AsNumberConversion
- */
-template<>
-struct ConversionRule<RuleType::AsNumberConversion>
-{
-	/**
-	 * @brief returns a number sequence as is
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	static std::string convert(std::string_view _string) noexcept;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t minInputSize = 1;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
-};
-
-/**
- * @brief specialized template for conversion rules see convert
- * 
- * @tparam RuleType::RunLengthEncodingConversion
- */
-template<>
-struct ConversionRule<RuleType::RunLengthEncodingConversion>
-{
-	/**
-	 * @brief returns a number sequence converted with run length encoding
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	static std::string convert(std::string_view _string) noexcept;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t minInputSize = 1;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
-};
-
-/**
- * @brief specialized template for conversion rules see convert
- * 
- * @tparam RuleType::NumberToEnglishConversion
- */
-template<>
-struct ConversionRule<RuleType::NumberToEnglishConversion>
-{
-	/**
-	 * @brief returns a number sequence converted to english words
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	static std::string convert(std::string_view _string) noexcept;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t minInputSize = 1;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t maxInputSize = 3;
-};
-
-/**
- * @brief specialized template for conversion rules see convert
- * 
- * @tparam RuleType::RunLengthEncodingConversion
- */
-template<>
-struct ConversionRule<RuleType::RunLengthEncodingConversion>
-{
-	/**
-	 * @brief returns a number sequence converted to english words
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	static std::string convert(std::string_view _string) noexcept;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t minInputSize = 1;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
-};
-
-/**
- * @brief specialized template for conversion rules see convert
- * 
- * @tparam RuleType::AsRunLengthEncodingConversion
- */
-template<>
-struct ConversionRule<RuleType::AsRunLengthEncodingConversion>
-{
-	/**
-	 * @brief returns a number sequence interpreted as run length encoding
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	static std::string convert(std::string_view _string) noexcept;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t minInputSize = 2;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
-};
-
-/**
- * @brief specialized template for conversion rules see convert
- * 
- * @tparam RuleType::AsNumberConversion
- */
-template<>
-struct ConversionRule<RuleType::LookAndSayConversion>
-{
-	/**
-	 * @brief returns a number sequence converted with run length encoding then to english words
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	static std::string convert(std::string_view _string) noexcept;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t minInputSize = 1;
-
-	/**
-	 * @brief the maximum supported input size for conversion
-	 * 
-	 */
-	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
-};
-
-//TODO doc comments
-class RuleBookIterator
-{
-public:
-	bool operator!=(const RuleBookIterator& _other) const;
-	bool operator==(const RuleBookIterator& _other) const;
-	const ConversionRule& operator*() const;
-	const ConversionRule* operator->() const;
-	RuleBookIterator& operator++();
-	RuleBookIterator& operator--();
-private:
-	friend class RuleBook;
-	std::map<RuleType, std::unique_ptr<ConversionRule>>::const_iterator iterator;
+	static constexpr size_t maxInputSize(RuleType _rule) noexcept
+	{
+		switch(_rule)
+		{
+		case RuleType::RomanNumeralConversion :
+			return 4;
+		case RuleType::RunLengthEncodingConversion :
+			return std::numeric_limits<size_t>::max();
+		case RuleType::NumberToEnglishConversion :
+			return 3;
+		case RuleType::AsRunLengthEncodingConversion :
+			return std::numeric_limits<size_t>::max();
+		case RuleType::LookAndSayConversion :
+			return std::numeric_limits<size_t>::max();
+		case RuleType::AsNumberConversion :
+			return std::numeric_limits<size_t>::max();
+		default:
+			return std::numeric_limits<size_t>::min();
+		}
+	}
 };
 
 /**
@@ -291,28 +123,20 @@ public:
 	 * 
 	 * @return RuleBookIterator 
 	 */
-	RuleBookIterator begin() const;
+	std::set<RuleType>::const_iterator begin() const;
 
 	/**
 	 * @brief returns an iterator to one past the last rule
 	 * 
 	 * @return RuleBookIterator 
 	 */
-	RuleBookIterator end() const;
+	std::set<RuleType>::const_iterator end() const;
 private:
 	/**
-	 * @brief !INTERNAL! try_emplace a rule and return the result of try_emplace
-	 * 
-	 * @param _rule the rule type to emplace
-	 * @return std::pair<std::map<Rule, std::unique_ptr<ConversionRule>>::iterator, bool> 
-	 */
-	std::pair<std::map<RuleType, std::unique_ptr<ConversionRule>>::iterator, bool> emplaceRule(RuleType _rule);
-private:
-	/**
-	 * @brief !INTERNAL! map to store all added rules
+	 * @brief !INTERNAL! set to store all added rules
 	 * 
 	 */
-	std::map<RuleType, std::unique_ptr<ConversionRule>> rules;
+	std::set<RuleType> rules;
 
 	/**
 	 * @brief !INTERNAL! the minimum supported input size for conversion
