@@ -9,6 +9,8 @@
 #include <map>
 #include <memory>
 
+//TODO make rules as constexpr function object template
+
 /**
  * @brief enumeration of all available rule types
  * 
@@ -26,167 +28,217 @@ enum class RuleType : uint8_t
 };
 
 /**
- * @brief base class for all conversion rules
+ * @brief template for conversion rules
+ * 
+ * @tparam _RT one of RuleType
  */
-class ConversionRule
+template<RuleType _RT>
+struct ConversionRule
 {
-public:
-	/**
-	 * @brief deleted: as min,- maxinputsize need to be explicitly initialized
-	 * 
-	 */
-	ConversionRule() = delete;
-
-	/**
-	 * @brief returns a number sequence converted according to rule derived from this class
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	virtual std::string convert(std::string_view _string) const = 0;
-
-	/**
-	 * @brief gets the minimum supported input size for conversion
-	 * 
-	 * @return size_t minimum supported input size for conversion
-	 */
-	size_t getMinInputSize() const;
-
-	/**
-	 * @brief gets the maximum supported input size for conversion
-	 * 
-	 * @return size_t maximum supported input size for conversion
-	 */
-	size_t getMaxInputSize() const;
-
-protected:
-	/**
-	 * @brief !INTERNAL! construct a new ConversionRule object
-	 * 
-	 * @param _minInputSize the minimum supported input size for conversion
-	 * @param _maxInputSize the maximum supported input size for conversion
-	 */
-	ConversionRule(size_t _minInputSize, size_t _maxInputSize);
-
-	/**
-	 * @brief !INTERNAL! the minimum supported input size for conversion
-	 * 
-	 */
-	const size_t minInputSize;
-
-	/**
-	 * @brief !INTERNAL! the maximum supported input size for conversion
-	 * 
-	 */
-	const size_t maxInputSize;
+	/* non specialized template should not be used */
 };
 
-class RomanNumeralConversion : public ConversionRule
+/**
+ * @brief specialized template for conversion rules see convert
+ * 
+ * @tparam RuleType::RomanNumeralConversion
+ */
+template<>
+struct ConversionRule<RuleType::RomanNumeralConversion>
 {
-public:
-	/**
-	 * @brief Construct a new RomanNumeralConversion rule
-	 * 
-	 */
-	RomanNumeralConversion::RomanNumeralConversion();
-
 	/**
 	 * @brief returns a number sequence converted to roman numerals
 	 * 
 	 * @param _string the number sequence to convert
 	 * @return std::string the converted number sequence
 	 */
-	std::string convert(std::string_view _string) const override;
+	static std::string convert(std::string_view _string) noexcept;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t minInputSize = 1;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t maxInputSize = 4;
 };
 
-class RunLengthEncodingConversion : public ConversionRule
+/**
+ * @brief specialized template for conversion rules see convert
+ * 
+ * @tparam RuleType::AsNumberConversion
+ */
+template<>
+struct ConversionRule<RuleType::AsNumberConversion>
 {
-public:
-	/**
-	 * @brief Construct a new RunLengthEncodingConversion rule
-	 * 
-	 */
-	RunLengthEncodingConversion::RunLengthEncodingConversion();
-
-	/**
-	 * @brief returns a number sequence converted with run length encoding
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	std::string convert(std::string_view _string) const override;
-};
-
-class NumberToEnglishConversion : public ConversionRule
-{
-public:
-	/**
-	 * @brief Construct a new NumberToEnglishConversion rule
-	 * 
-	 */
-	NumberToEnglishConversion::NumberToEnglishConversion();
-
-	/**
-	 * @brief returns a number sequence converted to english words
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	std::string convert(std::string_view _string) const override;
-};
-
-class AsRunLengthEncodingConversion : public ConversionRule
-{
-public:
-	/**
-	 * @brief Construct a new AsRunLengthEncodingConversion rule
-	 * 
-	 */
-	AsRunLengthEncodingConversion::AsRunLengthEncodingConversion();
-
-	/**
-	 * @brief returns a number sequence interpreted as run length encoding
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	std::string convert(std::string_view _string) const override;
-};
-
-class LookAndSayConversion : public ConversionRule
-{
-public:
-	/**
-	 * @brief Construct a new LookAndSayConversion rule
-	 * 
-	 */
-	LookAndSayConversion::LookAndSayConversion();
-
-	/**
-	 * @brief returns a number sequence converted with run length encoding then to english words
-	 * 
-	 * @param _string the number sequence to convert
-	 * @return std::string the converted number sequence
-	 */
-	std::string convert(std::string_view _string) const override;
-};
-
-class AsNumberConversion : public ConversionRule
-{
-public:
-	/**
-	 * @brief Construct a new AsNumberConversion rule
-	 * 
-	 */
-	AsNumberConversion::AsNumberConversion();
-
 	/**
 	 * @brief returns a number sequence as is
 	 * 
 	 * @param _string the number sequence to convert
 	 * @return std::string the converted number sequence
 	 */
-	std::string convert(std::string_view _string) const override;
+	static std::string convert(std::string_view _string) noexcept;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t minInputSize = 1;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
+};
+
+/**
+ * @brief specialized template for conversion rules see convert
+ * 
+ * @tparam RuleType::RunLengthEncodingConversion
+ */
+template<>
+struct ConversionRule<RuleType::RunLengthEncodingConversion>
+{
+	/**
+	 * @brief returns a number sequence converted with run length encoding
+	 * 
+	 * @param _string the number sequence to convert
+	 * @return std::string the converted number sequence
+	 */
+	static std::string convert(std::string_view _string) noexcept;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t minInputSize = 1;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
+};
+
+/**
+ * @brief specialized template for conversion rules see convert
+ * 
+ * @tparam RuleType::NumberToEnglishConversion
+ */
+template<>
+struct ConversionRule<RuleType::NumberToEnglishConversion>
+{
+	/**
+	 * @brief returns a number sequence converted to english words
+	 * 
+	 * @param _string the number sequence to convert
+	 * @return std::string the converted number sequence
+	 */
+	static std::string convert(std::string_view _string) noexcept;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t minInputSize = 1;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t maxInputSize = 3;
+};
+
+/**
+ * @brief specialized template for conversion rules see convert
+ * 
+ * @tparam RuleType::RunLengthEncodingConversion
+ */
+template<>
+struct ConversionRule<RuleType::RunLengthEncodingConversion>
+{
+	/**
+	 * @brief returns a number sequence converted to english words
+	 * 
+	 * @param _string the number sequence to convert
+	 * @return std::string the converted number sequence
+	 */
+	static std::string convert(std::string_view _string) noexcept;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t minInputSize = 1;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
+};
+
+/**
+ * @brief specialized template for conversion rules see convert
+ * 
+ * @tparam RuleType::AsRunLengthEncodingConversion
+ */
+template<>
+struct ConversionRule<RuleType::AsRunLengthEncodingConversion>
+{
+	/**
+	 * @brief returns a number sequence interpreted as run length encoding
+	 * 
+	 * @param _string the number sequence to convert
+	 * @return std::string the converted number sequence
+	 */
+	static std::string convert(std::string_view _string) noexcept;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t minInputSize = 2;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
+};
+
+/**
+ * @brief specialized template for conversion rules see convert
+ * 
+ * @tparam RuleType::AsNumberConversion
+ */
+template<>
+struct ConversionRule<RuleType::LookAndSayConversion>
+{
+	/**
+	 * @brief returns a number sequence converted with run length encoding then to english words
+	 * 
+	 * @param _string the number sequence to convert
+	 * @return std::string the converted number sequence
+	 */
+	static std::string convert(std::string_view _string) noexcept;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t minInputSize = 1;
+
+	/**
+	 * @brief the maximum supported input size for conversion
+	 * 
+	 */
+	static constexpr size_t maxInputSize = std::numeric_limits<size_t>::max();
 };
 
 //TODO doc comments

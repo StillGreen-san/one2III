@@ -6,97 +6,28 @@
 #include "conversionrules.hpp"
 #include "converter.hpp"
 
-#pragma region ConversionRule
-
-ConversionRule::ConversionRule(size_t _minInputSize, size_t _maxInputSize) :
-	minInputSize{_minInputSize},
-	maxInputSize{_maxInputSize}
-{
-	
-}
-
-size_t ConversionRule::getMinInputSize() const
-{
-	return minInputSize;
-}
-
-size_t ConversionRule::getMaxInputSize() const
-{
-	return maxInputSize;
-}
-
-#pragma endregion ConversionRule
-
-#pragma region RomanNumeralConversion
-
-RomanNumeralConversion::RomanNumeralConversion() :
-	ConversionRule::ConversionRule(1, 4)
-{
-
-}
-
-std::string RomanNumeralConversion::convert(std::string_view _string) const
+std::string ConversionRule<RuleType::RomanNumeralConversion>::convert(std::string_view _string) noexcept
 {
 	return romanNumerals(_string);
 }
 
-#pragma endregion RomanNumeralConversion
-
-#pragma region RunLengthEncodingConversion
-
-RunLengthEncodingConversion::RunLengthEncodingConversion() :
-	ConversionRule::ConversionRule(1, std::numeric_limits<size_t>::max())
-{
-
-}
-
-std::string RunLengthEncodingConversion::convert(std::string_view _string) const
+std::string ConversionRule<RuleType::RunLengthEncodingConversion>::convert(std::string_view _string) noexcept
 {
 	return runLengthEncode(_string);
 }
 
-#pragma endregion RunLengthEncodingConversion
-
-#pragma region NumberToEnglishConversion
-
-NumberToEnglishConversion::NumberToEnglishConversion() :
-	ConversionRule::ConversionRule(1, 3)
-{
-
-}
-
-std::string NumberToEnglishConversion::convert(std::string_view _string) const 
+std::string ConversionRule<RuleType::NumberToEnglishConversion>::convert(std::string_view _string) noexcept 
 {
 	return numberToEnglish(_string);
 }
 
-#pragma endregion NumberToEnglishConversion
-
-#pragma region AsRunLengthEncodingConversion
-
-AsRunLengthEncodingConversion::AsRunLengthEncodingConversion() :
-	ConversionRule::ConversionRule(2, std::numeric_limits<size_t>::max())
-{
-
-}
-
-std::string AsRunLengthEncodingConversion::convert(std::string_view _string) const
+std::string ConversionRule<RuleType::AsRunLengthEncodingConversion>::convert(std::string_view _string) noexcept
 {
 	return asRunLengthEncode(_string);
 }
 
-#pragma endregion AsRunLengthEncodingConversion
-
-#pragma region LookAndSay
-
-LookAndSayConversion::LookAndSayConversion() :
-	ConversionRule::ConversionRule(1, std::numeric_limits<size_t>::max())
-{
-
-}
-
 //TODO move impl to converter
-std::string LookAndSayConversion::convert(std::string_view _string) const
+std::string ConversionRule<RuleType::LookAndSayConversion>::convert(std::string_view _string) noexcept
 {
 	std::string runLengthEncoded = runLengthEncode(_string);
 	if(runLengthEncoded == "") return runLengthEncoded;
@@ -119,22 +50,10 @@ std::string LookAndSayConversion::convert(std::string_view _string) const
 	return lookAndSay;
 }
 
-#pragma endregion LookAndSay
-
-#pragma region AsNumber
-
-AsNumberConversion::AsNumberConversion() :
-	ConversionRule::ConversionRule(1, std::numeric_limits<size_t>::max())
-{
-
-}
-
-std::string AsNumberConversion::convert(std::string_view _string) const
+std::string ConversionRule<RuleType::AsNumberConversion>::convert(std::string_view _string) noexcept
 {
 	return std::string(_string);
 }
-
-#pragma endregion AsNumber
 
 #pragma region RuleBook
 
