@@ -55,6 +55,13 @@ TEST_CASE("LookAndSayConversion")
 
 TEST_CASE("ConversionRule")
 {
+	SECTION("convert")
+	{
+		CHECK(ConversionRule::convert(RuleType::None, "12342453") == "");
+		CHECK(ConversionRule::convert(RuleType::None, "12") == "");
+		CHECK(ConversionRule::convert(RuleType::None, "") == "");
+	}
+
 	SECTION("minInputSize")
 	{
 		CHECK(ConversionRule::minInputSize(RuleType::RomanNumeralConversion) == 1);
