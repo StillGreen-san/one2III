@@ -108,22 +108,25 @@ std::string numberToEnglish(std::string_view _number)
 std::string lookAndSay(std::string_view _number)
 {
 	std::string runLengthEncoded = runLengthEncode(_number);
-	if(runLengthEncoded == "") return runLengthEncoded;
-	const size_t sectionHalf = 1;
+	if(runLengthEncoded == "") return runLengthEncoded;//TODO check for really long sequences
 	std::string separator = "";
 	std::string lookAndSay;
-	auto stringEnd = std::remove(begin(runLengthEncoded), end(runLengthEncoded), ' ');
-	auto sectionBegin = begin(runLengthEncoded);
+	for(char& chr : runLengthEncoded)
+	{
+		if(chr == ' ') chr = '\0';
+	}
+	char* stringEnd = &runLengthEncoded.back() + 2;
+	char* sectionBegin = &runLengthEncoded.front();
 	while(sectionBegin != stringEnd)
 	{
 		lookAndSay
 			.append(separator)
-			.append(numberToEnglish(std::string_view(&*sectionBegin , sectionHalf)));
-		std::advance(sectionBegin, sectionHalf);
+			.append(numberToEnglish(std::string_view(sectionBegin)));
+		sectionBegin += strlen(sectionBegin) + 1;
 		lookAndSay
 			.append(separator = " ")
-			.append(numberToEnglish(std::string_view(&*sectionBegin , sectionHalf)));
-		std::advance(sectionBegin, sectionHalf);
+			.append(numberToEnglish(std::string_view(sectionBegin)));
+		sectionBegin += strlen(sectionBegin) + 1;
 	}
 	return lookAndSay;
 }
