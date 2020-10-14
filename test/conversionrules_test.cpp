@@ -46,11 +46,11 @@ TEST_CASE("AsNumberConversion")
 TEST_CASE("LookAndSayConversion")
 {
 	auto las = RuleType::LookAndSayConversion;
-	CHECK(ConversionRule::convert(las, "5336666") == "one five two three four six");
-	CHECK(ConversionRule::convert(las, "9999999") == "seven nine");
-	CHECK(ConversionRule::convert(las, "888000") == "three eight three zero");
-	CHECK(ConversionRule::convert(las, "1") == "one one");
-	CHECK(ConversionRule::convert(las, "") == "");
+	CHECK(ConversionRule::convert(las, "5336666") == lookAndSay("5336666"));
+	CHECK(ConversionRule::convert(las, "9999999") == lookAndSay("9999999"));
+	CHECK(ConversionRule::convert(las, "888000") == lookAndSay("888000"));
+	CHECK(ConversionRule::convert(las, "1") == lookAndSay("1"));
+	CHECK(ConversionRule::convert(las, "") == lookAndSay(""));
 }
 
 TEST_CASE("ConversionRule")

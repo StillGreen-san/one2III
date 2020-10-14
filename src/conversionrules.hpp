@@ -39,7 +39,7 @@ struct ConversionRule
 	 * @param _string the number sequence to convert
 	 * @return std::string the converted number sequence
 	 */
-	static std::string convert(RuleType _rule, std::string_view _string);
+	static std::string convert(RuleType _rule, std::string_view _string);//TODO make inline also?
 
 	/**
 	 * @brief the minimum supported input size for conversion with rule type
