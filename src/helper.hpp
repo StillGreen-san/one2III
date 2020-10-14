@@ -23,7 +23,7 @@ std::vector<std::vector<uint8_t>> integerPartitions(uint8_t _integer,
 /**
  * @brief checks if string is a valid number sequence
  * 
- * @param _sequence 
+ * @param _sequence the sring to check
  * @return true if it contains only numbers
  * @return false otherwise
  */
@@ -32,8 +32,8 @@ bool isValidNumberSequence(const std::string& _sequence);
 /**
  * @brief returns string_views of a string for a partion of that string
  * 
- * @param _string
- * @param _partition
+ * @param _string the string to partition
+ * @param _partition a list of ints forming a partition
  * @return std::vector<std::string_view> 
  */
 std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<uint8_t>& _partition);

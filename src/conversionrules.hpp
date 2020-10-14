@@ -27,6 +27,10 @@ enum class RuleType : uint8_t
 	None /* invalid */
 };
 
+/**
+ * @brief static struct to handle conversion rules
+ * 
+ */
 struct ConversionRule
 {
 	/**
