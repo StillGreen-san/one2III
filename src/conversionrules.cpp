@@ -34,6 +34,7 @@ std::string ConversionRule::convert(RuleType _rule, std::string_view _string)
 
 bool RuleBook::add(RuleType _rule) 
 {
+	if(_rule == RuleType::None) return false;
 	auto result = rules.insert(_rule);
 	if(result.second == false) return false;
 	minInputSize = std::min(minInputSize, ConversionRule::minInputSize(*(result.first)));
