@@ -21,6 +21,7 @@ TEST_CASE("runLengthEncode")
 	CHECK(runLengthEncode("641668") == "1 6 1 4 1 1 2 6 1 8");
 	CHECK(runLengthEncode("1233444") == "1 1 1 2 2 3 3 4");
 	CHECK(runLengthEncode("1000000000033") == "1 1 10 0 2 3");
+	CHECK(runLengthEncode("0000000000000") == "13 0");
 	CHECK(runLengthEncode("1111122111111211") == "5 1 2 2 6 1 1 2 2 1");
 	CHECK(runLengthEncode("1000000000033333333333") == "1 1 10 0 11 3");
 }
@@ -70,4 +71,15 @@ TEST_CASE("numberToEnglish")
 	CHECK(numberToEnglish("500") == "five hundred");
 	CHECK(numberToEnglish("999") == "nine hundred ninety nine");
 	CHECK(numberToEnglish("9875") == "");
+}
+
+TEST_CASE("lookAndSay")
+{
+	CHECK(lookAndSay("5336666") == "one five two three four six");
+	CHECK(lookAndSay("9999999") == "seven nine");
+	CHECK(lookAndSay("000000000000000000") == "eighteen zero");
+	//TODO test for really long sequences
+	CHECK(lookAndSay("888000") == "three eight three zero");
+	CHECK(lookAndSay("1") == "one one");
+	CHECK(lookAndSay("") == "");
 }

@@ -46,3 +46,5 @@ std::string numberToEnglish(std::string_view _number);
  * @return std::string the converted string
  */
 std::string lookAndSay(std::string_view _number);
+
+//TODO asNumber conversion?
