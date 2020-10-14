@@ -43,6 +43,14 @@ TEST_CASE("AsNumberConversion")
 	CHECK(ConversionRule::convert(an, "12345") == "12345");
 }
 
-//TODO add LookAndSayConversion test
+TEST_CASE("LookAndSayConversion")
+{
+	auto las = RuleType::LookAndSayConversion;
+	CHECK(ConversionRule::convert(las, "5336666") == "one five two three four six");
+	CHECK(ConversionRule::convert(las, "9999999") == "seven nine");
+	CHECK(ConversionRule::convert(las, "888000") == "three eight three zero");
+	CHECK(ConversionRule::convert(las, "1") == "one one");
+	CHECK(ConversionRule::convert(las, "") == "");
+}
 
 //TODO add RuleBook test
