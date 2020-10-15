@@ -1,5 +1,5 @@
 /**
- * @file convert.hpp
+ * @file converter.hpp
  * @brief include file for conversion functions
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file convert.cpp
+ * @file converter.cpp
  * @brief implementation file for conversion functions
  */
 

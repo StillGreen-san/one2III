@@ -7,9 +7,6 @@
 
 #include <string>
 #include <set>
-#include <memory>
-
-//TODO make rules as constexpr function object template
 
 /**
  * @brief enumeration of all available rule types
