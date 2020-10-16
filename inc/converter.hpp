@@ -43,15 +43,14 @@ struct Converter
 	 */
 	static std::string randomConversion(const RuleBook& _rules, std::string_view _string);
 
-	
 	/**
-	 * @brief returns a single conversion of all possible ones 
+	 * @brief returns the Nth conversion of all possible ones 
 	 * 
 	 * @param _rules the rules used for conversion
 	 * @param _string the string to convert
 	 * @param _number the number(id) to return from all possible conversions
 	 * @return std::string the converted string
-	 */// TODO find a better description for this function
+	 */
 	static std::string singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number);
 	
 };

@@ -6,22 +6,22 @@
 
 #include "converter.hpp"
 
-size_t estimatePossibilities(const RuleBook& _rules, std::string_view _string)
+size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view _string)
 {
 	return 0;
 }
 
-size_t calculatePossibilities(const RuleBook& _rules, std::string_view _string)
+size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_view _string)
 {
 	return 0;
 }
 
-std::string randomConversion(const RuleBook& _rules, std::string_view _string)
+std::string Converter::randomConversion(const RuleBook& _rules, std::string_view _string)
 {
 	return {};
 }
 
-std::string singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number)
+std::string Converter::singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number)
 {
 	return {};
 }
