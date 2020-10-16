@@ -1,11 +1,11 @@
 /**
- * @file helper_test.cpp
- * @brief gathers all tests for helper.hpp
+ * @file helperfunctions_test.cpp
+ * @brief gathers all tests for helperfunctions.hpp
  */
 
 #include <catch.hpp>
 
-#include "helper.hpp"
+#include "helperfunctions.hpp"
 
 TEST_CASE("integerPartitions")
 {

@@ -6,9 +6,9 @@
 #include <iostream>
 #include <algorithm>
 
-#include "helper.hpp"
-#include "converter.hpp"
-#include "conversionrules.hpp"
+#include "helperfunctions.hpp"
+#include "conversionrule.hpp"
+#include "rulebook.hpp"
 
 std::ostream& operator<<(std::ostream& _os, const std::vector<uint8_t>& _vec)
 {
