@@ -49,8 +49,36 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 }
 
 size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_view _string)
-{
-	return 0;
+{//TODO make this not as wasteful as this currently is
+	size_t totalPossibilities = 0;
+	uint8_t stringLength = static_cast<uint8_t>(_string.size()); //TODO do something with strings that are to long somewhere
+	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
+	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));//TODO make these prettier
+	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
+	{
+		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
+		for(auto& partition : possiblePartitions)
+		{
+			do
+			{
+				size_t partOffset = 0 - partition.front();
+				for(uint8_t partSize : partition)
+				{
+					partOffset += partSize;
+					std::string_view stringPart = _string.substr(partOffset, partSize);
+					for(auto& rule : _rules)
+					{
+						//TODO better check here? (e.g. for AsRLE with even size req)
+						if(!ConversionRule::convert(rule, stringPart).empty())
+						{
+							++totalPossibilities;
+						}
+					}
+				}
+			}while(std::next_permutation(rbegin(partition), rend(partition)));
+		}
+	}
+	return totalPossibilities;
 }
 
 std::string Converter::randomConversion(const RuleBook& _rules, std::string_view _string)
