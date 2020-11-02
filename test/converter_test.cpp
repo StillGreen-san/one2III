@@ -27,7 +27,7 @@ TEST_CASE("estimatePossibilities")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
 		rules.add(RuleType::AsRunLengthEncodingConversion);
-		CHECK(Converter::estimatePossibilities(rules, "1234") == 15);
+		CHECK(Converter::estimatePossibilities(rules, "1234") == 17);
 	}
 }
 
@@ -38,20 +38,20 @@ TEST_CASE("calculatePossibilities")
 	SECTION("one rule Roman")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
-		CHECK(Converter::estimatePossibilities(rules, "1234") == 8);
+		CHECK(Converter::calculatePossibilities(rules, "1234") == 8);
 	}
 
 	SECTION("one rule numToEng")
 	{
 		rules.add(RuleType::NumberToEnglishConversion);
-		CHECK(Converter::estimatePossibilities(rules, "1234") == 7);
+		CHECK(Converter::calculatePossibilities(rules, "1234") == 7);
 	}
 
 	SECTION("two rules Roman,asRLE")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
 		rules.add(RuleType::AsRunLengthEncodingConversion);
-		CHECK(Converter::estimatePossibilities(rules, "1234") == 15);
+		CHECK(Converter::calculatePossibilities(rules, "1234") == 15);
 	}
 }
 

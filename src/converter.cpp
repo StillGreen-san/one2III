@@ -22,13 +22,13 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
 		for(auto& partition : possiblePartitions)
 		{
-			//TODO add permutations to the mix
 			size_t partitionPossibilities = 1;
 			for(uint8_t partSize : partition)
 			{
 				size_t partSizePossibilities = 0;
 				for(auto& rule : _rules)
 				{
+					//TODO better check here? (e.g. for AsRLE with even size req)
 					if( partSize >= ConversionRule::minInputSize(rule) &&
 						partSize <= ConversionRule::maxInputSize(rule))
 					{
@@ -37,7 +37,12 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 				}
 				partitionPossibilities *= partSizePossibilities;
 			}
-			totalPossibilities += partitionPossibilities;
+			size_t permutationPossibilities = 1;
+			while(std::next_permutation(rbegin(partition), rend(partition)))
+			{
+				++permutationPossibilities;
+			}
+			totalPossibilities += partitionPossibilities * permutationPossibilities;
 		}
 	}
 	return totalPossibilities;
