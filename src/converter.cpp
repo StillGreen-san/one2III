@@ -61,20 +61,24 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 		{
 			do
 			{
-				size_t partOffset = 0 - partition.front();
+				size_t partitionPossibilities = 1;
+				size_t partOffset = 0;
 				for(uint8_t partSize : partition)
 				{
-					partOffset += partSize;
+					size_t partSizePossibilities = 0;
 					std::string_view stringPart = _string.substr(partOffset, partSize);
+					partOffset += partSize;
 					for(auto& rule : _rules)
 					{
 						//TODO better check here? (e.g. for AsRLE with even size req)
 						if(!ConversionRule::convert(rule, stringPart).empty())
 						{
-							++totalPossibilities;
+							++partSizePossibilities;
 						}
 					}
+					partitionPossibilities *= partSizePossibilities;
 				}
+				totalPossibilities += partitionPossibilities;
 			}while(std::next_permutation(rbegin(partition), rend(partition)));
 		}
 	}
