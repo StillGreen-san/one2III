@@ -92,6 +92,8 @@ std::string Converter::randomConversion(const RuleBook& _rules, std::string_view
 
 std::string Converter::singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number)
 {
+	if(auto possibilities = calculatePossibilities(_rules, _string);
+		_number > possibilities) _number %= possibilities; //TODO have this cached somehow
 	uint8_t stringLength = static_cast<uint8_t>(_string.size()); //TODO do something with strings that are to long somewhere
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
 	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));//TODO make these prettier

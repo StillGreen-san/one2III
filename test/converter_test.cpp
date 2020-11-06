@@ -88,5 +88,5 @@ TEST_CASE("singleConversion")
 
 	rules.add(RuleType::NumberToEnglishConversion);
 	CHECK(Converter::singleConversion(rules, "1234", 12) == "one two III four");
-	CHECK(Converter::singleConversion(rules, "1234", 666) == "?? ?? ??");
+	CHECK(Converter::singleConversion(rules, "1234", 666) == "one XXIII four");
 }
