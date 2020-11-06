@@ -92,5 +92,53 @@ std::string Converter::randomConversion(const RuleBook& _rules, std::string_view
 
 std::string Converter::singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number)
 {
-	return {};
+	uint8_t stringLength = static_cast<uint8_t>(_string.size()); //TODO do something with strings that are to long somewhere
+	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
+	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));//TODO make these prettier
+	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
+	{
+		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
+		for(auto& partition : possiblePartitions)
+		{
+			do{
+				std::vector<uint8_t> ruleIndices(partCount, 0);
+				std::string converted;
+				auto incrementIndices = [&](uint8_t _index = 0) -> bool
+				{
+					auto impl = [&](auto& _impl) -> bool
+					{
+						if(_index == ruleIndices.size()) return false;
+						++ruleIndices[_index];
+						if(ruleIndices[_index] == _rules.size())
+						{
+							ruleIndices[_index] = 0;
+							++_index;
+							return _impl(_impl);
+						}
+						return true;
+					};
+					return impl(impl);
+				};
+				do
+				{
+					size_t partOffset = 0;
+					for(uint8_t i = 0; i < partCount; ++i)
+					{
+						std::string_view stringPart = _string.substr(partOffset, partition[i]);
+						partOffset += partition[i];
+						std::string convertedPart = ConversionRule::convert(_rules[ruleIndices[i]], stringPart);
+						if(convertedPart.empty() == true) break;
+						converted.append(convertedPart).append(" ");
+					}
+					if(partOffset == stringLength)
+					{
+						if(_number != 0) --_number;
+						converted.erase(converted.size()-1);
+						if(_number == 0) return converted;
+					}
+				}while(incrementIndices());
+			}while(std::next_permutation(rbegin(partition), rend(partition)));
+		}
+	}
+	return {};//TODO handle number > calculatePossibilities
 }
