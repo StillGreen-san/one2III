@@ -5,6 +5,7 @@
  */
 
 #include <algorithm>
+#include <random>
 
 #include "converter.hpp"
 #include "conversionrule.hpp"
@@ -87,7 +88,11 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 
 std::string Converter::randomConversion(const RuleBook& _rules, std::string_view _string)
 {
-	return {};
+	size_t possibilities = calculatePossibilities(_rules, _string); //TODO have this cached somehow
+	std::uniform_int_distribution<size_t> dist(1, possibilities);
+	std::random_device rd;
+	std::mt19937_64 mt(rd()); //TODO have this cached somehow?
+	return singleConversion(_rules, _string, dist(mt));
 }
 
 std::string Converter::singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number)

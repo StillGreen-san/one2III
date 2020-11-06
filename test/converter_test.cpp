@@ -67,6 +67,7 @@ TEST_CASE("randomConversion")
 	rules.add(RuleType::RunLengthEncodingConversion);
 	CHECK(Converter::randomConversion(rules, "1234") != "");
 
+	rules = RuleBook();
 	rules.add(RuleType::AsNumberConversion);
 	CHECK(Converter::randomConversion(rules, "1234") != "");
 
@@ -80,7 +81,7 @@ TEST_CASE("randomConversion")
 TEST_CASE("singleConversion")
 {
 	RuleBook rules;
-	//TODO implement better checks when logic has been 'found'
+	//TODO what about 0?
 
 	rules.add(RuleType::RomanNumeralConversion);
 	CHECK(Converter::singleConversion(rules, "1234", 4) == "I II XXXIV");
