@@ -52,6 +52,21 @@ public:
 	 * @return std::set<RuleType>::const_iterator 
 	 */
 	std::set<RuleType>::const_iterator end() const;
+
+	/**
+	 * @brief returns the number of added rules
+	 * 
+	 * @return size_t the number of rules
+	 */
+	size_t size() const;
+
+	/**
+	 * @brief returns the rules at the specified index
+	 * 
+	 * @param _index the index to return (unchecked)
+	 * @return RuleType the rule at _index
+	 */
+	RuleType operator[](size_t _index) const;
 private:
 	/**
 	 * @brief !INTERNAL! set to store all added rules

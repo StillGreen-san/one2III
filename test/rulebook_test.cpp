@@ -16,6 +16,7 @@ TEST_CASE("RuleBook")
 	{
 		CHECK(rules.getMinInputSize() == std::numeric_limits<size_t>::max());
 		CHECK(rules.getMaxInputSize() == std::numeric_limits<size_t>::min());
+		CHECK(rules.size() == 0);
 	}
 
 	SECTION("add none")
@@ -25,7 +26,7 @@ TEST_CASE("RuleBook")
 		CHECK(rules.getMinInputSize() == std::numeric_limits<size_t>::max());
 		CHECK(rules.getMaxInputSize() == std::numeric_limits<size_t>::min());
 
-		CHECK(std::distance(rules.begin(), rules.end()) == 0);
+		CHECK(rules.size() == 0);
 	}
 
 	SECTION("one rule")
@@ -34,6 +35,8 @@ TEST_CASE("RuleBook")
 
 		CHECK(rules.getMaxInputSize() == ConversionRule::maxInputSize(RuleType::AsRunLengthEncodingConversion));
 		CHECK(rules.getMinInputSize() == ConversionRule::minInputSize(RuleType::AsRunLengthEncodingConversion));
+
+		CHECK(rules.size() == 1);
 	}
 
 	SECTION("one rule duplicate")
@@ -46,9 +49,10 @@ TEST_CASE("RuleBook")
 
 		auto ruleIt = rules.begin();
 
-		REQUIRE(std::distance(ruleIt, rules.end()) == 1);
+		REQUIRE(rules.size() == 1);
 
 		CHECK(*ruleIt == RuleType::RunLengthEncodingConversion);
+		CHECK(rules[0] == RuleType::RunLengthEncodingConversion);
 	}
 
 	SECTION("two rules")
@@ -61,10 +65,12 @@ TEST_CASE("RuleBook")
 
 		auto ruleIt = rules.begin();
 
-		REQUIRE(std::distance(ruleIt, rules.end()) == 2);
+		REQUIRE(rules.size() == 2);
 
 		CHECK(*ruleIt == RuleType::RomanNumeralConversion);
+		CHECK(rules[0] == RuleType::RomanNumeralConversion);
 		std::advance(ruleIt, 1);
 		CHECK(*ruleIt == RuleType::NumberToEnglishConversion);
+		CHECK(rules[1] == RuleType::NumberToEnglishConversion);
 	}
 }

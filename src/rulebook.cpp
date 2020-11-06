@@ -35,3 +35,19 @@ std::set<RuleType>::const_iterator RuleBook::end() const
 {
 	return rules.cend();
 }
+
+size_t RuleBook::size() const
+{
+	return rules.size();
+}
+
+RuleType RuleBook::operator[](size_t _index) const
+{
+	auto iterator = rules.begin();
+	if(_index > static_cast<size_t>(std::numeric_limits<ptrdiff_t>::max()))
+	{
+		std::advance(iterator, std::numeric_limits<ptrdiff_t>::max());
+		_index -= std::numeric_limits<ptrdiff_t>::max();
+	}
+	return *std::next(iterator, _index);
+}
