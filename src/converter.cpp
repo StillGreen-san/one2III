@@ -102,7 +102,6 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 		{
 			do{
 				std::vector<uint8_t> ruleIndices(partCount, 0);
-				std::string converted;
 				auto incrementIndices = [&](uint8_t _index = 0) -> bool
 				{
 					auto impl = [&](auto& _impl) -> bool
@@ -121,6 +120,7 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 				};
 				do
 				{
+					std::string converted;
 					size_t partOffset = 0;
 					for(uint8_t i = 0; i < partCount; ++i)
 					{
@@ -133,7 +133,7 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 					if(partOffset == stringLength)
 					{
 						if(_number != 0) --_number;
-						converted.erase(converted.size()-1);
+						if(auto size = converted.size(); size > 0) converted.erase(size-1);
 						if(_number == 0) return converted;
 					}
 				}while(incrementIndices());

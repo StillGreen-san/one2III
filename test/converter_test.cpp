@@ -87,6 +87,6 @@ TEST_CASE("singleConversion")
 	CHECK(Converter::singleConversion(rules, "1234", 8) == "MCCXXXIV");
 
 	rules.add(RuleType::NumberToEnglishConversion);
-	CHECK(Converter::singleConversion(rules, "1234", 12) == "?? ?? ??");
+	CHECK(Converter::singleConversion(rules, "1234", 12) == "one two III four");
 	CHECK(Converter::singleConversion(rules, "1234", 666) == "?? ?? ??");
 }
