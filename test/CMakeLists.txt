@@ -10,6 +10,7 @@ set(SOURCES_TEST
 	${one2III_TEST_DIR}/converter_test.cpp
 	${one2III_TEST_DIR}/helperfunctions_test.cpp
 	${one2III_TEST_DIR}/rulebook_test.cpp
+	${one2III_TEST_DIR}/ruletype_test.cpp
 )
 set(SOURCES_ADDITIONAL
 	${one2III_SRC_DIR}/conversionfunctions.cpp
@@ -17,6 +18,7 @@ set(SOURCES_ADDITIONAL
 	${one2III_SRC_DIR}/converter.cpp
 	${one2III_SRC_DIR}/helperfunctions.cpp
 	${one2III_SRC_DIR}/rulebook.cpp
+	${one2III_SRC_DIR}/ruletype.cpp
 )
 
 add_executable(${TARGET_MAIN} ${TARGET_MAIN}.cpp)

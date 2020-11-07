@@ -7,6 +7,7 @@ set(SOURCES_ADDITIONAL
 	converter.cpp
 	helperfunctions.cpp
 	rulebook.cpp
+	ruletype.cpp
 )
 
 add_executable(${TARGET_MAIN} ${TARGET_MAIN}.cpp)
