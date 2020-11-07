@@ -10,19 +10,6 @@
 #include "conversionrule.hpp"
 #include "rulebook.hpp"
 
-std::ostream& operator<<(std::ostream& _os, const std::vector<uint8_t>& _vec)
-{
-	_os << "[ ";
-	std::string sep = "";
-	for(auto& v : _vec)
-	{
-		_os << sep << static_cast<short>(v);
-		sep = ", ";
-	}
-	_os << " ]";
-	return _os;
-}
-
 int main()
 {
 	std::string numberSequence;// = "123456";//

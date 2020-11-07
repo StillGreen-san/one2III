@@ -37,3 +37,24 @@ bool isValidNumberSequence(std::string_view _sequence);
  * @return std::vector<std::string_view> 
  */
 std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<uint8_t>& _partition);
+
+template<typename T>
+std::ostream& operator<<(std::ostream& _os, const std::vector<T>& _vec) 
+{
+	_os << "[ ";
+	std::string sep = "";
+	for(auto& val : _vec)
+	{
+		if constexpr (std::is_same<T, uint8_t>::value || std::is_same<T, int8_t>::value)
+		{
+			_os << sep << static_cast<short>(val);
+		}
+		else
+		{
+			_os << sep << val;
+		}
+		sep = ", ";
+	}
+	_os << " ]";
+	return _os;
+}
