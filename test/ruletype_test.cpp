@@ -9,7 +9,7 @@
 
 TEST_CASE("enumCount(RuleType)")
 {
-	CHECK(enumCount(RuleType::None) == static_cast<enumType<RuleType>>(RuleType::None));
+	CHECK(enumCount(RuleType::None) == 6);
 }
 
 TEST_CASE("enumName(RuleType)")
@@ -26,12 +26,12 @@ TEST_CASE("enumName(RuleType)")
 
 TEST_CASE("enumDescription(RuleTyp)")
 {
-	CHECK(enumName(RuleType::AsNumberConversion) == "returns a number sequence as is");
-	CHECK(enumName(RuleType::AsRunLengthEncodingConversion) == "interprets a number sequence as run length encoding");
-	CHECK(enumName(RuleType::LookAndSayConversion) == "converts a number sequence with run length encoding then to english words");
-	CHECK(enumName(RuleType::NumberToEnglishConversion) == "converts a number sequence to english words");
-	CHECK(enumName(RuleType::RomanNumeralConversion) == "converts a number sequence to roman numerals");
-	CHECK(enumName(RuleType::RunLengthEncodingConversion) == "converts a number sequence as run length encoding");
-	CHECK(enumName(RuleType::None) == "invalid");
-	CHECK(enumName(static_cast<RuleType>(99)) == "invalid");
+	CHECK(enumDescription(RuleType::AsNumberConversion) == "returns a number sequence as is");
+	CHECK(enumDescription(RuleType::AsRunLengthEncodingConversion) == "interprets a number sequence as run length encoding");
+	CHECK(enumDescription(RuleType::LookAndSayConversion) == "converts a number sequence with run length encoding then to english words");
+	CHECK(enumDescription(RuleType::NumberToEnglishConversion) == "converts a number sequence to english words");
+	CHECK(enumDescription(RuleType::RomanNumeralConversion) == "converts a number sequence to roman numerals");
+	CHECK(enumDescription(RuleType::RunLengthEncodingConversion) == "converts a number sequence as run length encoding");
+	CHECK(enumDescription(RuleType::None) == "invalid");
+	CHECK(enumDescription(static_cast<RuleType>(99)) == "invalid");
 }
