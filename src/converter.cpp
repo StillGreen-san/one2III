@@ -54,7 +54,7 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 	size_t totalPossibilities = 0;
 	uint8_t stringLength = static_cast<uint8_t>(_string.size()); //TODO do something with strings that are to long somewhere
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
-	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));//TODO make these prettier
+	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
 	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
@@ -101,7 +101,7 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 		_number > possibilities) _number %= possibilities; //TODO have this cached somehow
 	uint8_t stringLength = static_cast<uint8_t>(_string.size()); //TODO do something with strings that are to long somewhere
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
-	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));//TODO make these prettier
+	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
 	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);

@@ -54,7 +54,7 @@ std::string asRunLengthEncode(std::string_view _number)
 
 std::string romanNumerals(std::string_view _number)
 {
-	static const std::vector<std::pair<uint16_t, const char*>> roman //TODO? make array?
+	static const std::vector<std::pair<uint16_t, const char*>> roman
 	{
 		{1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"},
 		{100, "C"}, {90, "XC"}, {50, "L"}, {40, "XL"},
@@ -78,7 +78,7 @@ std::string romanNumerals(std::string_view _number)
 
 std::string numberToEnglish(std::string_view _number)
 {
-	static const std::vector<std::string> numeng //TODO? make array?
+	static const std::vector<std::string> numeng
 	{
 		"", "one", "two", "three", "four", "five",
 		"six", "seven", "eight", "nine", "ten",
