@@ -9,9 +9,17 @@
 #include "helperfunctions.hpp"
 #include "conversionrule.hpp"
 #include "rulebook.hpp"
+#include "conversionstates.hpp"
 
 int main()
 {
+	StateHandler sh;
+	sh.addState(&ConversionStates::Info);
+	sh.addState(&ConversionStates::Test);
+	sh.addState(&ConversionStates::Exit);
+	SimpleMenu sm = sh.makeMenu();
+	sm.show();
+	
 	std::string numberSequence;// = "123456";//
 	while(isValidNumberSequence(numberSequence) == false)
 	{

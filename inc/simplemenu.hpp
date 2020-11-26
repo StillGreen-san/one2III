@@ -9,16 +9,18 @@
 #include <string>
 #include <vector>
 
+class StateHandler;
+
 class SimpleMenu
 {
 public:
-	SimpleMenu(std::string_view _text, std::string_view(*_callback)(std::string_view)) :
+	SimpleMenu(std::string_view _text, std::string_view(StateHandler::*_callback)(std::string_view)) :
 		text{_text}, callback{_callback} {}
 	void show();
 	static const std::string_view exit;
 private:
 	std::string_view text;
-	std::string_view(*callback)(std::string_view);
+	std::string_view(StateHandler::*callback)(std::string_view);//TODO resolve this mess
 };
 const std::string_view SimpleMenu::exit{nullptr, std::numeric_limits<size_t>::max()};
 
@@ -39,7 +41,7 @@ class StateHandler
 public:
 	SimpleMenu makeMenu();
 	std::string_view parseInput(std::string_view _input);
-	void addState(const SimpleState& _state);
+	void addState(const SimpleState* _state);
 private:
-	std::vector<const SimpleState&> states;
+	std::vector<const SimpleState*> states;
 };

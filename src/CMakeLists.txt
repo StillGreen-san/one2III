@@ -8,6 +8,7 @@ set(SOURCES_ADDITIONAL
 	helperfunctions.cpp
 	rulebook.cpp
 	ruletype.cpp
+	simplemenu.cpp
 )
 
 add_executable(${TARGET_MAIN} ${TARGET_MAIN}.cpp)
