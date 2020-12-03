@@ -6,25 +6,49 @@
 
 #include "simplemenu.hpp"
 
-#include <functional>
+#include <iostream>
 
-void SimpleMenu::show()
+void SimpleMenu::show() 
 {
-	StateHandler sh;
-	auto r = (sh.*callback)({nullptr});//TODO resolve this mess
+	if(states.size() == 0) return;
+
+	std::cout << states[activeState].text << std::endl;
+
+	std::string input;
+	std::cin >> input;
+
+	bool handled = false;
+	for(auto& action : states[activeState].inputmap)
+	{
+		if(action.input == nullptr || action.input == input)//!does this work?
+		{
+			if(action.external)
+			{
+				if(action.external(input))
+				{
+					activeState = 0;
+					size_t size = states.size();
+					for(; activeState < size;)
+					{
+						if(states[activeState].text == action.state)
+						{
+							handled = true;
+							break;
+						}
+					}
+				}
+				else
+				{
+					return;
+				}
+			}
+			break;
+		}
+	}
+	if(handled == false) return;
 }
 
-SimpleMenu StateHandler::makeMenu()
+void SimpleMenu::addState(SimpleMenu::State&& _state) 
 {
-	return SimpleMenu(states.front()->text, &StateHandler::parseInput);
-}
-
-std::string_view StateHandler::parseInput(std::string_view _input)
-{
-	return {};
-}
-
-void StateHandler::addState(const SimpleState* _state)
-{
-	states.push_back(_state);//TODO handle duplicates
+	states.emplace_back(_state);
 }
