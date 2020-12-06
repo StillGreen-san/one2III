@@ -37,8 +37,8 @@ static const std::string Test_text =
 	"\ntest menu\n"
 		"\ti: Info\n"
 		"\tt: This\n"
-		"\tc: False\n"
-		"\tf: Callback\n"
+		"\tc: Callback\n"
+		"\tf: False\n"
 		"\te: Exit\n"
 	"\nchoose one option";
 static const std::string Test_action_i = "i";
@@ -56,7 +56,7 @@ static const SimpleMenu::State Info
 	Info_text,
 	{
 		{
-			nullptr,
+			{nullptr, 0},
 			nullptr,
 			Test_text
 		}
@@ -90,7 +90,12 @@ static const SimpleMenu::State Test
 		{
 			Test_action_c,
 			trueCallback,
-			Info_text
+			Test_text
+		},
+		{
+			Test_action_f,
+			falseCallback,
+			Test_text
 		},
 		{
 			Test_action_e,
@@ -105,9 +110,9 @@ static const SimpleMenu::State Exit
 	Exit_text,
 	{
 		{
+			{nullptr, 0},
 			nullptr,
-			nullptr,
-			nullptr
+			{nullptr, 0}
 		}
 	}
 };

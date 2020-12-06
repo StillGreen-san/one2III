@@ -13,11 +13,10 @@
 
 int main()
 {
-	StateHandler sh;
-	sh.addState(&ConversionStates::Info);
-	sh.addState(&ConversionStates::Test);
-	sh.addState(&ConversionStates::Exit);
-	SimpleMenu sm = sh.makeMenu();
+	SimpleMenu sm;
+	sm.addState(SimpleMenu::State(ConversionStates::Info));
+	sm.addState(SimpleMenu::State(ConversionStates::Test));
+	sm.addState(SimpleMenu::State(ConversionStates::Exit));
 	sm.show();
 	
 	std::string numberSequence;// = "123456";//

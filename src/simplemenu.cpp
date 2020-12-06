@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-void SimpleMenu::show(size_t _startingState = 0) 
+void SimpleMenu::show(size_t _startingState)
 {
 	if(states.size() == 0) return;
 	activeState = _startingState;
@@ -23,12 +23,14 @@ void SimpleMenu::show(size_t _startingState = 0)
 		bool handled = false;
 		for(auto& action : states[activeState].inputmap)
 		{
-			if(action.input == nullptr || action.input == input)//!does this work?
+			if(action.input.data() == nullptr || action.input == input)
 			{
 				if(action.external)
 				{
 					if(!action.external(input))
 					{
+						std::cout << "external call to exit" << std::endl;
+						std::cin >> input;
 						return;
 					}
 				}
@@ -52,7 +54,7 @@ void SimpleMenu::show(size_t _startingState = 0)
 	return;
 }
 
-void SimpleMenu::addState(SimpleMenu::State&& _state) 
+void SimpleMenu::addState(SimpleMenu::State&& _state)
 {
 	states.emplace_back(_state);
 }
