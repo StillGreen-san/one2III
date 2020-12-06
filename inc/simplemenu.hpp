@@ -23,8 +23,8 @@ public:
 		};
 		std::vector<Action> inputmap;
 	};
-	void show();
-	void addState(State&& _state);
+	void show(size_t _startingState = 0);
+	void addState(SimpleMenu::State&& _state);
 private:
 	std::vector<State> states;
 	size_t activeState = 0;

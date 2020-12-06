@@ -37,19 +37,21 @@ static const std::string Test_text =
 	"\ntest menu\n"
 		"\ti: Info\n"
 		"\tt: This\n"
-		"\tc: Callback\n"
+		"\tc: False\n"
+		"\tf: Callback\n"
 		"\te: Exit\n"
 	"\nchoose one option";
 static const std::string Test_action_i = "i";
 static const std::string Test_action_t = "t";
 static const std::string Test_action_c = "c";
+static const std::string Test_action_f = "f";
 static const std::string Test_action_e = "e";
 
 static const std::string Exit_text =
 	"\none2III\n"
 	"\nenter anything to exit";
 
-static const SimpleState Info
+static const SimpleMenu::State Info
 {
 	Info_text,
 	{
@@ -61,11 +63,17 @@ static const SimpleState Info
 	}
 };
 
-static size_t testCounter = 0;
-static void testCallback(std::string_view _string){
-	++testCounter;
+static size_t trueCounter = 0;
+static bool trueCallback(std::string_view _string){
+	++trueCounter;
+	return true;
 }
-static const SimpleState Test
+static size_t falseCounter = 0;
+static bool falseCallback(std::string_view _string){
+	++falseCounter;
+	return false;
+}
+static const SimpleMenu::State Test
 {
 	Test_text,
 	{
@@ -81,7 +89,7 @@ static const SimpleState Test
 		},
 		{
 			Test_action_c,
-			testCallback,
+			trueCallback,
 			Info_text
 		},
 		{
@@ -92,7 +100,7 @@ static const SimpleState Test
 	}
 };
 
-static const SimpleState Exit
+static const SimpleMenu::State Exit
 {
 	Exit_text,
 	{

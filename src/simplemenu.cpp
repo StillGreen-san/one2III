@@ -8,44 +8,48 @@
 
 #include <iostream>
 
-void SimpleMenu::show() 
+void SimpleMenu::show(size_t _startingState = 0) 
 {
 	if(states.size() == 0) return;
+	activeState = _startingState;
 
-	std::cout << states[activeState].text << std::endl;
-
-	std::string input;
-	std::cin >> input;
-
-	bool handled = false;
-	for(auto& action : states[activeState].inputmap)
+	while(true)
 	{
-		if(action.input == nullptr || action.input == input)//!does this work?
+		std::cout << states[activeState].text << std::endl;
+
+		std::string input;
+		std::cin >> input;
+
+		bool handled = false;
+		for(auto& action : states[activeState].inputmap)
 		{
-			if(action.external)
+			if(action.input == nullptr || action.input == input)//!does this work?
 			{
-				if(action.external(input))
+				if(action.external)
 				{
-					activeState = 0;
-					size_t size = states.size();
-					for(; activeState < size;)
+					if(!action.external(input))
 					{
-						if(states[activeState].text == action.state)
-						{
-							handled = true;
-							break;
-						}
+						return;
 					}
 				}
-				else
+				size_t size = states.size();
+				for(activeState = 0; activeState < size; ++activeState)
 				{
-					return;
+					if(states[activeState].text == action.state)
+					{
+						handled = true;
+						break;
+					}
 				}
+				break;
 			}
-			break;
+		}
+		if(handled == false)
+		{
+			return;
 		}
 	}
-	if(handled == false) return;
+	return;
 }
 
 void SimpleMenu::addState(SimpleMenu::State&& _state) 
