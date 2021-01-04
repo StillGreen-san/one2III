@@ -29,9 +29,8 @@ void SimpleMenu::show(size_t _startingState)
 				{
 					if(!action.external(input))
 					{
-						std::cout << "external call to exit" << std::endl;
-						std::cin >> input;
-						return;
+						handled = true;
+						break;
 					}
 				}
 				size_t size = states.size();

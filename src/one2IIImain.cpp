@@ -16,23 +16,14 @@ int main()
 	SimpleMenu sm;
 	sm.addState(SimpleMenu::State(ConversionStates::Info));
 	sm.addState(SimpleMenu::State(ConversionStates::Test));
+	sm.addState(SimpleMenu::State(ConversionStates::Nums));
+	sm.addState(SimpleMenu::State(ConversionStates::Rule));
+	sm.addState(SimpleMenu::State(ConversionStates::Conv));
 	sm.addState(SimpleMenu::State(ConversionStates::Exit));
 	sm.show();
-	
-	std::string numberSequence;// = "123456";//
-	while(isValidNumberSequence(numberSequence) == false)
-	{
-		std::cout << "enter a number sequence: ";
-		std::cin >> numberSequence;
-	}
 
-	RuleBook ruleBook;
-	ruleBook.add(RuleType::RomanNumeralConversion);
-	ruleBook.add(RuleType::AsNumberConversion);
-	ruleBook.add(RuleType::AsRunLengthEncodingConversion);
-	ruleBook.add(RuleType::NumberToEnglishConversion);
-	ruleBook.add(RuleType::RunLengthEncodingConversion);
-	ruleBook.add(RuleType::LookAndSayConversion);
+	RuleBook& ruleBook = ConversionStates::rulebook;
+	std::string& numberSequence = ConversionStates::numberSequence;
 
 	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
 	for(uint8_t parts = digits; parts > 0; --parts)

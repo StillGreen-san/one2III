@@ -7,6 +7,7 @@
 #pragma once
 
 #include "simplemenu.hpp"
+#include "rulebook.hpp"
 
 //  struct SimpleState
 //  {
@@ -56,7 +57,35 @@ static const std::string Nums_text =
 	"\nNumber Sequence\n"
 		"\te: Exit\n"
 	"\nenter a number sequence";
-static bool Nums_validate(std::string_view _sequence);
+static std::string numberSequence;
+bool Nums_validate(std::string_view _sequence);
+
+static const std::string Rule_text =
+	"\nSelect a Rule to add\n"
+		"\trnc: RomanNumeralConversion\n"
+		"\tanc: AsNumberConversion\n"
+		"\tarl: AsRunLengthEncodingConversion\n"
+		"\tnte: NumberToEnglishConversion\n"
+		"\trle: RunLengthEncodingConversion\n"
+		"\tlas: LookAndSayConversion\n"
+		"\n"
+		"\tc: Convert\n"
+		"\te: Exit\n"
+	"\nchoose one option";
+static const std::string Rule_action_rnc = "rnc";
+static const std::string Rule_action_anc = "anc";
+static const std::string Rule_action_arl = "arl";
+static const std::string Rule_action_nte = "nte";
+static const std::string Rule_action_rle = "rle";
+static const std::string Rule_action_las = "las";
+static const std::string Rule_action_c = "c";
+static RuleBook rulebook;
+bool Rule_handle(std::string_view _sequence);
+
+static const std::string Conv_text =
+	"\none2III\n"
+	"\nenter anything to show all conversions";
+// bool Conv_show(std::string_view _sequence);//TODO implmnt
 
 static const std::string Exit_text =
 	"\none2III\n"
@@ -85,15 +114,9 @@ static const SimpleMenu::State Info
 };
 
 static size_t trueCounter = 0;
-static bool trueCallback(std::string_view _string){
-	++trueCounter;
-	return true;
-}
+bool trueCallback(std::string_view _string);
 static size_t falseCounter = 0;
-static bool falseCallback(std::string_view _string){
-	++falseCounter;
-	return false;
-}
+bool falseCallback(std::string_view _string);
 static const SimpleMenu::State Test
 {
 	Test_text,
@@ -138,19 +161,53 @@ static const SimpleMenu::State Exit
 	}
 };
 
-static const SimpleMenu::State Nums
+static const SimpleMenu::State Conv//TODO implmnt
 {
-	Nums_text,
+	Conv_text,
 	{
 		{
 			{nullptr, 0},
-			Nums_validate,//TODO rework to not exit on false?
+			nullptr,
 			{nullptr, 0}
+		}
+	}
+};
+
+static const SimpleMenu::State Rule
+{
+	Rule_text,
+	{
+		{
+			Rule_action_c,
+			nullptr,
+			Conv_text
 		},
 		{
 			Glob_action_e,
 			nullptr,
 			Exit_text
+		},
+		{
+			{nullptr, 0},
+			Rule_handle,
+			Rule_text
+		}
+	}
+};
+
+static const SimpleMenu::State Nums
+{
+	Nums_text,
+	{
+		{
+			Glob_action_e,
+			nullptr,
+			Exit_text
+		},
+		{
+			{nullptr, 0},//TODO make glob placeholders for nullptr text & external
+			Nums_validate,
+			Rule_text
 		}
 	}
 };
