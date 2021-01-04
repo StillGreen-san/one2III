@@ -9,6 +9,7 @@ set(SOURCES_ADDITIONAL
 	rulebook.cpp
 	ruletype.cpp
 	simplemenu.cpp
+	conversionstates.cpp
 )
 
 add_executable(${TARGET_MAIN} ${TARGET_MAIN}.cpp)
