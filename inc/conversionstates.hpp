@@ -28,11 +28,11 @@
 
 namespace ConversionStates
 {
-static const std::string Glob_action_i = "i";//Info
-static const std::string Glob_action_t = "t";//Tets
-static const std::string Glob_action_e = "e";//Exit
+const std::string Glob_action_i = "i";//Info
+const std::string Glob_action_t = "t";//Test
+const std::string Glob_action_e = "e";//Exit
 
-static const std::string Info_text =
+const std::string Info_text =
 	"\none2III\n"
 		"\tgiven a string of digits and a list of conversion rules\n"
 		"\tsplit the string into all possible substrings\n"
@@ -42,7 +42,7 @@ static const std::string Info_text =
 		"\te: Exit\n"
 	"\nenter anything to continue";
 
-static const std::string Test_text =
+const std::string Test_text =
 	"\ntest menu\n"
 		"\ti: Info\n"
 		"\tt: This\n"
@@ -50,17 +50,17 @@ static const std::string Test_text =
 		"\tf: False\n"
 		"\te: Exit\n"
 	"\nchoose one option";
-static const std::string Test_action_c = "c";
-static const std::string Test_action_f = "f";
+const std::string Test_action_c = "c";
+const std::string Test_action_f = "f";
 
-static const std::string Nums_text =
+const std::string Nums_text =
 	"\nNumber Sequence\n"
 		"\te: Exit\n"
 	"\nenter a number sequence";
-static std::string numberSequence;
 bool Nums_validate(std::string_view _sequence);
+std::string Nums_get();
 
-static const std::string Rule_text =
+const std::string Rule_text =
 	"\nSelect a Rule to add\n"
 		"\trnc: RomanNumeralConversion\n"
 		"\tanc: AsNumberConversion\n"
@@ -72,26 +72,28 @@ static const std::string Rule_text =
 		"\tc: Convert\n"
 		"\te: Exit\n"
 	"\nchoose one option";
-static const std::string Rule_action_rnc = "rnc";
-static const std::string Rule_action_anc = "anc";
-static const std::string Rule_action_arl = "arl";
-static const std::string Rule_action_nte = "nte";
-static const std::string Rule_action_rle = "rle";
-static const std::string Rule_action_las = "las";
-static const std::string Rule_action_c = "c";
-static RuleBook rulebook;
+const std::string Rule_action_rnc = "rnc";
+const std::string Rule_action_anc = "anc";
+const std::string Rule_action_arl = "arl";
+const std::string Rule_action_nte = "nte";
+const std::string Rule_action_rle = "rle";
+const std::string Rule_action_las = "las";
+const std::string Rule_action_c = "c";
 bool Rule_handle(std::string_view _sequence);
+RuleBook& Rule_get();
 
-static const std::string Conv_text =
+const std::string Conv_text =
 	"\none2III\n"
 	"\nenter anything to show all conversions";
 // bool Conv_show(std::string_view _sequence);//TODO implmnt
 
-static const std::string Exit_text =
+const std::string Exit_text =
 	"\none2III\n"
 	"\nenter anything to exit";
 
-static const SimpleMenu::State Info
+const std::string STRING_TEST = "1234567890";
+
+const SimpleMenu::State Info
 {
 	Info_text,
 	{
@@ -113,11 +115,9 @@ static const SimpleMenu::State Info
 	}
 };
 
-static size_t trueCounter = 0;
 bool trueCallback(std::string_view _string);
-static size_t falseCounter = 0;
 bool falseCallback(std::string_view _string);
-static const SimpleMenu::State Test
+const SimpleMenu::State Test
 {
 	Test_text,
 	{
@@ -149,7 +149,7 @@ static const SimpleMenu::State Test
 	}
 };
 
-static const SimpleMenu::State Exit
+const SimpleMenu::State Exit
 {
 	Exit_text,
 	{
@@ -161,7 +161,7 @@ static const SimpleMenu::State Exit
 	}
 };
 
-static const SimpleMenu::State Conv//TODO implmnt
+const SimpleMenu::State Conv//TODO implmnt
 {
 	Conv_text,
 	{
@@ -173,7 +173,7 @@ static const SimpleMenu::State Conv//TODO implmnt
 	}
 };
 
-static const SimpleMenu::State Rule
+const SimpleMenu::State Rule
 {
 	Rule_text,
 	{
@@ -195,7 +195,7 @@ static const SimpleMenu::State Rule
 	}
 };
 
-static const SimpleMenu::State Nums
+const SimpleMenu::State Nums
 {
 	Nums_text,
 	{

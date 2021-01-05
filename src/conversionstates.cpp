@@ -10,6 +10,7 @@
 
 namespace ConversionStates
 {
+	std::string numberSequence;
 	bool Nums_validate(std::string_view _sequence) 
 	{
 		if(isValidNumberSequence(_sequence))
@@ -20,6 +21,12 @@ namespace ConversionStates
 		return false;
 	}
 	
+	std::string Nums_get() 
+	{
+		return numberSequence;
+	}
+
+	RuleBook rulebook;
 	bool Rule_handle(std::string_view _sequence) 
 	{
 		if     (_sequence == Rule_action_anc)
@@ -54,14 +61,23 @@ namespace ConversionStates
 		}
 		return false;
 	}
+	
+	RuleBook& Rule_get() 
+	{
+		return rulebook;
+	}
 
-	bool trueCallback(std::string_view _string){
+	size_t trueCounter = 0;
+	bool trueCallback(std::string_view _string)
+	{
 		++trueCounter;
 		std::cout << " ~ trueCounter: " << trueCounter << "\n";
 		return true;
 	}
 
-	bool falseCallback(std::string_view _string){
+	size_t falseCounter = 0;
+	bool falseCallback(std::string_view _string)
+	{
 		++falseCounter;
 		std::cout << " ~ falseCounter: " << falseCounter << "\n";
 		return false;

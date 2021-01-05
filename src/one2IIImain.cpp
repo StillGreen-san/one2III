@@ -8,7 +8,6 @@
 
 #include "helperfunctions.hpp"
 #include "conversionrule.hpp"
-#include "rulebook.hpp"
 #include "conversionstates.hpp"
 
 int main()
@@ -22,8 +21,8 @@ int main()
 	sm.addState(SimpleMenu::State(ConversionStates::Exit));
 	sm.show();
 
-	RuleBook& ruleBook = ConversionStates::rulebook;
-	std::string& numberSequence = ConversionStates::numberSequence;
+	RuleBook& ruleBook = ConversionStates::Rule_get();
+	std::string& numberSequence = ConversionStates::Nums_get();
 
 	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
 	for(uint8_t parts = digits; parts > 0; --parts)
