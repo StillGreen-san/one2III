@@ -5,14 +5,14 @@
 
 #include <ruletype.hpp>
 
-enumType<RuleType> enumCount(RuleType) 
+enumType<RuleType> enumCount(RuleType)
 {
 	return static_cast<enumType<RuleType>>(RuleType::None);
 }
 
-std::string enumName(RuleType _rule) 
+std::string enumName(RuleType _rule)
 {
-	switch (_rule)
+	switch(_rule)
 	{
 	case RuleType::RomanNumeralConversion:
 		return {"RomanNumeralConversion"};
@@ -31,9 +31,9 @@ std::string enumName(RuleType _rule)
 	}
 }
 
-std::string enumDescription(RuleType _rule) 
+std::string enumDescription(RuleType _rule)
 {
-	switch (_rule)
+	switch(_rule)
 	{
 	case RuleType::RomanNumeralConversion:
 		return {"converts a number sequence to roman numerals"};

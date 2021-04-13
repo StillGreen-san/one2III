@@ -3,12 +3,12 @@
  * @brief this is the main file for one2III, tying all functionality together
  */
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
-#include "helperfunctions.hpp"
 #include "conversionrule.hpp"
 #include "conversionstates.hpp"
+#include "helperfunctions.hpp"
 
 int main()
 {
@@ -27,15 +27,16 @@ int main()
 	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
 	for(uint8_t parts = digits; parts > 0; --parts)
 	{
-		auto partitions = integerPartitions(digits, parts,
-								(uint8_t)ruleBook.getMinInputSize(), (uint8_t)ruleBook.getMaxInputSize());
+		auto partitions =
+		    integerPartitions(digits, parts, (uint8_t)ruleBook.getMinInputSize(), (uint8_t)ruleBook.getMaxInputSize());
 		for(auto& partition : partitions)
 		{
 			do
 			{
 				std::cout << partition << std::endl;
 				const auto views = partitionString(numberSequence, partition);
-				if(views.size() == 0) continue;
+				if(views.size() == 0)
+					continue;
 				std::vector<std::vector<std::string>> allConversions;
 				for(auto& view : views)
 				{
@@ -51,7 +52,7 @@ int main()
 					std::cout << " | ";
 					for(size_t y = 0; y < allConversions.size(); ++y)
 					{
-						std::cout << allConversions[y][x-1] << " | ";
+						std::cout << allConversions[y][x - 1] << " | ";
 					}
 					std::cout << std::endl;
 				}

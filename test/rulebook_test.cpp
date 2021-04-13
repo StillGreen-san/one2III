@@ -5,8 +5,8 @@
 
 #include <catch.hpp>
 
-#include "rulebook.hpp"
 #include "conversionrule.hpp"
+#include "rulebook.hpp"
 
 TEST_CASE("RuleBook")
 {

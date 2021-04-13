@@ -78,7 +78,7 @@ TEST_CASE("lookAndSay")
 	CHECK(lookAndSay("5336666") == "one five two three four six");
 	CHECK(lookAndSay("9999999") == "seven nine");
 	CHECK(lookAndSay("000000000000000000") == "eighteen zero");
-	//TODO test for really long sequences
+	// TODO test for really long sequences
 	CHECK(lookAndSay("888000") == "three eight three zero");
 	CHECK(lookAndSay("1") == "one one");
 	CHECK(lookAndSay("") == "");

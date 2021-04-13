@@ -8,6 +8,11 @@ set( CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE )
 
 find_package( Catch2 CONFIG REQUIRED )
 
+include( ${CMAKE_CURRENT_SOURCE_DIR}/cpp_starter_project/cmake/CompilerWarnings.cmake )
+add_library( project_warnings INTERFACE )
+set_project_warnings( project_warnings )
+add_compile_options( ${PROJECT_WARNINGS} )
+
 set( one2III_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc )
 set( one2III_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src )
 set( one2III_TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test )

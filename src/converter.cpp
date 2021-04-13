@@ -1,23 +1,25 @@
 /**
  * @file converter.cpp
  * @brief implementation for Converter
- * 
+ *
  */
 
 #include <algorithm>
 #include <random>
 
-#include "converter.hpp"
-#include "conversionrule.hpp"
 #include "conversionfunctions.hpp"
+#include "conversionrule.hpp"
+#include "converter.hpp"
 #include "helperfunctions.hpp"
+
+// TODO make min/max-partsize init statements prettier
 
 size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view _string)
 {
 	size_t totalPossibilities = 0;
-	uint8_t stringLength = static_cast<uint8_t>(_string.size()); //TODO do something with strings that are to long somewhere
+	uint8_t stringLength = static_cast<uint8_t>(_string.size()); // TODO handle strings that are to long somewhere
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
-	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));//TODO make these prettier
+	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
 	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
@@ -29,9 +31,8 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 				size_t partSizePossibilities = 0;
 				for(auto& rule : _rules)
 				{
-					//TODO better check here? (e.g. for AsRLE with even size req)
-					if( partSize >= ConversionRule::minInputSize(rule) &&
-						partSize <= ConversionRule::maxInputSize(rule))
+					// TODO better check here? (e.g. for AsRLE with even size req)
+					if(partSize >= ConversionRule::minInputSize(rule) && partSize <= ConversionRule::maxInputSize(rule))
 					{
 						++partSizePossibilities;
 					}
@@ -50,9 +51,9 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 }
 
 size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_view _string)
-{//TODO make this not as wasteful as this currently is
+{ // TODO make this not as wasteful as this currently is
 	size_t totalPossibilities = 0;
-	uint8_t stringLength = static_cast<uint8_t>(_string.size()); //TODO do something with strings that are to long somewhere
+	uint8_t stringLength = static_cast<uint8_t>(_string.size()); // TODO handle strings that are to long somewhere
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
 	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
 	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
@@ -71,7 +72,7 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 					partOffset += partSize;
 					for(auto& rule : _rules)
 					{
-						//TODO better check here? (e.g. for AsRLE with even size req)
+						// TODO better check here? (e.g. for AsRLE with even size req)
 						if(!ConversionRule::convert(rule, stringPart).empty())
 						{
 							++partSizePossibilities;
@@ -80,7 +81,7 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 					partitionPossibilities *= partSizePossibilities;
 				}
 				totalPossibilities += partitionPossibilities;
-			}while(std::next_permutation(rbegin(partition), rend(partition)));
+			} while(std::next_permutation(rbegin(partition), rend(partition)));
 		}
 	}
 	return totalPossibilities;
@@ -88,18 +89,20 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 
 std::string Converter::randomConversion(const RuleBook& _rules, std::string_view _string)
 {
-	size_t possibilities = calculatePossibilities(_rules, _string); //TODO have this cached somehow
+	size_t possibilities = calculatePossibilities(_rules, _string); // TODO have this cached somehow
 	std::uniform_int_distribution<size_t> dist(1, possibilities);
 	std::random_device rd;
-	std::mt19937_64 mt(rd()); //TODO have this cached somehow?
+	std::mt19937_64 mt(rd()); // TODO have this cached somehow?
 	return singleConversion(_rules, _string, dist(mt));
 }
 
 std::string Converter::singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number)
 {
-	if(auto possibilities = calculatePossibilities(_rules, _string);
-		_number > possibilities) _number %= possibilities; //TODO have this cached somehow
-	uint8_t stringLength = static_cast<uint8_t>(_string.size()); //TODO do something with strings that are to long somewhere
+	if(auto possibilities = calculatePossibilities(_rules, _string); _number > possibilities)
+	{
+		_number %= possibilities; // TODO have this cached somehow
+	}
+	uint8_t stringLength = static_cast<uint8_t>(_string.size()); // TODO handle that are to long somewhere
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
 	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
 	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
@@ -107,13 +110,17 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
 		for(auto& partition : possiblePartitions)
 		{
-			do{
+			do
+			{
 				std::vector<uint8_t> ruleIndices(partCount, 0);
 				auto incrementIndices = [&](uint8_t _index = 0) -> bool
 				{
 					auto impl = [&](auto& _impl) -> bool
 					{
-						if(_index == ruleIndices.size()) return false;
+						if(_index == ruleIndices.size())
+						{
+							return false;
+						}
 						++ruleIndices[_index];
 						if(ruleIndices[_index] == _rules.size())
 						{
@@ -134,18 +141,30 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 						std::string_view stringPart = _string.substr(partOffset, partition[i]);
 						partOffset += partition[i];
 						std::string convertedPart = ConversionRule::convert(_rules[ruleIndices[i]], stringPart);
-						if(convertedPart.empty() == true) break;
+						if(convertedPart.empty() == true)
+						{
+							break;
+						}
 						converted.append(convertedPart).append(" ");
 					}
 					if(partOffset == stringLength)
 					{
-						if(_number != 0) --_number;
-						if(auto size = converted.size(); size > 0) converted.erase(size-1);
-						if(_number == 0) return converted;
+						if(_number != 0)
+						{
+							--_number;
+						}
+						if(auto size = converted.size(); size > 0)
+						{
+							converted.erase(size - 1);
+						}
+						if(_number == 0)
+						{
+							return converted;
+						}
 					}
-				}while(incrementIndices());
-			}while(std::next_permutation(rbegin(partition), rend(partition)));
+				} while(incrementIndices());
+			} while(std::next_permutation(rbegin(partition), rend(partition)));
 		}
 	}
-	return {};//TODO handle number > calculatePossibilities
+	return {}; // TODO handle number > calculatePossibilities
 }

@@ -1,7 +1,7 @@
 /**
  * @file simplemenu.hpp
  * @brief include file for menu and state
- * 
+ *
  */
 
 #include "simplemenu.hpp"
@@ -10,7 +10,10 @@
 
 void SimpleMenu::show(size_t _startingState)
 {
-	if(states.size() == 0) return;
+	if(states.size() == 0)
+	{
+		return;
+	}
 	activeState = _startingState;
 
 	while(true)

@@ -6,11 +6,17 @@
 #include "rulebook.hpp"
 #include "conversionrule.hpp"
 
-bool RuleBook::add(RuleType _rule) 
+bool RuleBook::add(RuleType _rule)
 {
-	if(_rule == RuleType::None) return false;
+	if(_rule == RuleType::None)
+	{
+		return false;
+	}
 	auto result = rules.insert(_rule);
-	if(result.second == false) return false;
+	if(result.second == false)
+	{
+		return false;
+	}
 	minInputSize = std::min(minInputSize, ConversionRule::minInputSize(*(result.first)));
 	maxInputSize = std::max(maxInputSize, ConversionRule::maxInputSize(*(result.first)));
 	return true;

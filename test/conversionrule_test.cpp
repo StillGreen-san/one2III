@@ -5,8 +5,8 @@
 
 #include <catch.hpp>
 
-#include "conversionrule.hpp"
 #include "conversionfunctions.hpp"
+#include "conversionrule.hpp"
 
 TEST_CASE("RomanNumeralConversion")
 {
@@ -76,9 +76,12 @@ TEST_CASE("ConversionRule")
 	SECTION("maxInputSize")
 	{
 		CHECK(ConversionRule::maxInputSize(RuleType::RomanNumeralConversion) == 4);
-		CHECK(ConversionRule::maxInputSize(RuleType::RunLengthEncodingConversion) == std::numeric_limits<size_t>::max());
+		CHECK(
+		    ConversionRule::maxInputSize(RuleType::RunLengthEncodingConversion) == std::numeric_limits<size_t>::max());
 		CHECK(ConversionRule::maxInputSize(RuleType::NumberToEnglishConversion) == 3);
-		CHECK(ConversionRule::maxInputSize(RuleType::AsRunLengthEncodingConversion) == std::numeric_limits<size_t>::max());
+		CHECK(
+		    ConversionRule::maxInputSize(RuleType::AsRunLengthEncodingConversion) ==
+		    std::numeric_limits<size_t>::max());
 		CHECK(ConversionRule::maxInputSize(RuleType::LookAndSayConversion) == std::numeric_limits<size_t>::max());
 		CHECK(ConversionRule::maxInputSize(RuleType::AsNumberConversion) == std::numeric_limits<size_t>::max());
 		CHECK(ConversionRule::maxInputSize(RuleType::None) == std::numeric_limits<size_t>::min());

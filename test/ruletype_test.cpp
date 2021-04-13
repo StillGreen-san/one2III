@@ -27,11 +27,16 @@ TEST_CASE("enumName(RuleType)")
 TEST_CASE("enumDescription(RuleTyp)")
 {
 	CHECK(enumDescription(RuleType::AsNumberConversion) == "returns a number sequence as is");
-	CHECK(enumDescription(RuleType::AsRunLengthEncodingConversion) == "interprets a number sequence as run length encoding");
-	CHECK(enumDescription(RuleType::LookAndSayConversion) == "converts a number sequence with run length encoding then to english words");
+	CHECK(
+	    enumDescription(RuleType::AsRunLengthEncodingConversion) ==
+	    "interprets a number sequence as run length encoding");
+	CHECK(
+	    enumDescription(RuleType::LookAndSayConversion) ==
+	    "converts a number sequence with run length encoding then to english words");
 	CHECK(enumDescription(RuleType::NumberToEnglishConversion) == "converts a number sequence to english words");
 	CHECK(enumDescription(RuleType::RomanNumeralConversion) == "converts a number sequence to roman numerals");
-	CHECK(enumDescription(RuleType::RunLengthEncodingConversion) == "converts a number sequence as run length encoding");
+	CHECK(
+	    enumDescription(RuleType::RunLengthEncodingConversion) == "converts a number sequence as run length encoding");
 	CHECK(enumDescription(RuleType::None) == "invalid");
 	CHECK(enumDescription(static_cast<RuleType>(99)) == "invalid");
-}
+} // TODO remove hardcoded checks or use a central place for these strings
