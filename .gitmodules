@@ -1,0 +1,3 @@
+[submodule "cpp_starter_project"]
+	path = cpp_starter_project
+	url = https://github.com/lefticus/cpp_starter_project
