@@ -1,17 +1,51 @@
-cmake_minimum_required(VERSION 3.12.0)
+cmake_minimum_required( VERSION 3.17.0 )
 
-project(one2III VERSION 0.2.0)
+project( one2III CXX )
 
-set_property(GLOBAL PROPERTY CXX_STANDARD 17)
-set_property(GLOBAL PROPERTY CMAKE_CXX_STANDARD_REQUIRED ON)
-if(MSVC)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
-endif(MSVC)
+set( CMAKE_CXX_STANDARD 17 )
+set( CMAKE_CXX_STANDARD_REQUIRED ON )
+set( CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE )
 
-set(one2III_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc)
-set(one2III_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(one2III_TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
+find_package( Catch2 CONFIG REQUIRED )
 
-add_subdirectory(${one2III_SRC_DIR})
+set( one2III_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc )
+set( one2III_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src )
+set( one2III_TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test )
 
-add_subdirectory(${one2III_TEST_DIR})
+set( TARGET_LIB one2III-lib )
+set( TARGET_MAIN one2III )
+set( TARGET_TEST one2III-test )
+
+set( SOURCES_LIB
+	${one2III_SRC_DIR}/conversionfunctions.cpp
+	${one2III_SRC_DIR}/conversionrule.cpp
+	${one2III_SRC_DIR}/converter.cpp
+	${one2III_SRC_DIR}/helperfunctions.cpp
+	${one2III_SRC_DIR}/rulebook.cpp
+	${one2III_SRC_DIR}/ruletype.cpp
+)
+set( SOURCES_MAIN
+	${one2III_SRC_DIR}/simplemenu.cpp
+	${one2III_SRC_DIR}/conversionstates.cpp
+	${one2III_SRC_DIR}/one2IIImain.cpp
+)
+set( SOURCES_TEST
+	${one2III_TEST_DIR}/converter_test.cpp
+	${one2III_TEST_DIR}/conversionfunctions_test.cpp
+	${one2III_TEST_DIR}/conversionrule_test.cpp
+	${one2III_TEST_DIR}/converter_test.cpp
+	${one2III_TEST_DIR}/helperfunctions_test.cpp
+	${one2III_TEST_DIR}/rulebook_test.cpp
+	${one2III_TEST_DIR}/ruletype_test.cpp
+	${one2III_TEST_DIR}/testmain.cpp
+)
+
+add_library( ${TARGET_LIB} STATIC ${SOURCES_LIB} )
+target_include_directories( ${TARGET_LIB} PUBLIC ${one2III_INC_DIR} )
+
+add_executable( ${TARGET_MAIN} ${SOURCES_MAIN} )
+target_link_libraries( ${TARGET_MAIN} PRIVATE ${TARGET_LIB} )
+
+add_executable( ${TARGET_TEST} ${SOURCES_TEST} )
+target_include_directories( ${TARGET_TEST} SYSTEM PRIVATE ${Catch2_INCLUDE_DIRS} )
+target_link_libraries( ${TARGET_TEST} PRIVATE ${TARGET_LIB} Catch2::Catch2 )
