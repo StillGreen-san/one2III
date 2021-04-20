@@ -41,7 +41,6 @@ set( SOURCES_TEST
 	${one2III_TEST_DIR}/converter_test.cpp
 	${one2III_TEST_DIR}/helperfunctions_test.cpp
 	${one2III_TEST_DIR}/rulebook_test.cpp
-	${one2III_TEST_DIR}/ruletype_test.cpp
 	${one2III_TEST_DIR}/testmain.cpp
 )
 

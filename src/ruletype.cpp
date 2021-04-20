@@ -5,6 +5,8 @@
 
 #include <ruletype.hpp>
 
+// TODO use in menu
+
 enumType<RuleType> enumCount(RuleType)
 {
 	return static_cast<enumType<RuleType>>(RuleType::None);

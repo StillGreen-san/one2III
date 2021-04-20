@@ -86,7 +86,7 @@ std::vector<std::string_view> partitionString(std::string_view _string, const st
 	size_t partitionSize = std::accumulate(begin(_partition), end(_partition), 0ULL);
 	if(_string.size() != partitionSize)
 	{
-		return {}; //? 0?
+		return {};
 	}
 	std::vector<std::string_view> partitioned;
 	partitioned.reserve(_partition.size());

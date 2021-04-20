@@ -26,6 +26,6 @@ enum class RuleType : uint8_t
 template<typename ENUM>
 using enumType = typename std::underlying_type<ENUM>::type;
 
-enumType<RuleType> enumCount(RuleType); // TODO make template?
+enumType<RuleType> enumCount(RuleType);
 std::string enumName(RuleType _rule);
 std::string enumDescription(RuleType _rule);

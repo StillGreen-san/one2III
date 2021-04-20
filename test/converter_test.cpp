@@ -81,7 +81,8 @@ TEST_CASE("randomConversion")
 TEST_CASE("singleConversion")
 {
 	RuleBook rules;
-	// TODO what about 0?
+	// CHECK(Converter::singleConversion(rules, "1234", 50) == "");
+	// CHECK(Converter::singleConversion(rules, "1234", 8) == "");
 
 	rules.add(RuleType::RomanNumeralConversion);
 	CHECK(Converter::singleConversion(rules, "1234", 4) == "I II XXXIV");
