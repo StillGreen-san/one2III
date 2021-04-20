@@ -61,11 +61,12 @@ struct ConversionRule
 			return 4;
 		case RuleType::NumberToEnglishConversion:
 			return 3;
-		case RuleType::RunLengthEncodingConversion:
 		case RuleType::AsRunLengthEncodingConversion:
 		case RuleType::LookAndSayConversion:
 		case RuleType::AsNumberConversion:
 			return std::numeric_limits<size_t>::max();
+		case RuleType::RunLengthEncodingConversion:
+			return std::numeric_limits<size_t>::max() ^ 1;
 		default:
 			return std::numeric_limits<size_t>::min();
 		}

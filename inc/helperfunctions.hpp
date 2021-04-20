@@ -19,6 +19,7 @@
  */
 std::vector<std::vector<uint8_t>> integerPartitions(
     uint8_t _integer, uint8_t _partcount, uint8_t _minpart = 1, uint8_t _maxpart = 255);
+// TODO remove uint8 restriction on sizes (update converter functions after)
 
 /**
  * @brief checks if string is a valid number sequence

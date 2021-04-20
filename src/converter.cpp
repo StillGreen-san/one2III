@@ -12,14 +12,13 @@
 #include "converter.hpp"
 #include "helperfunctions.hpp"
 
-// TODO make min/max-partsize init statements prettier
-
 size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view _string)
 {
 	size_t totalPossibilities = 0;
-	uint8_t stringLength = static_cast<uint8_t>(_string.size()); // TODO handle strings that are to long somewhere
+	uint8_t stringLength = static_cast<uint8_t>(_string.size());
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
 	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
+
 	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
@@ -31,7 +30,6 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 				size_t partSizePossibilities = 0;
 				for(auto& rule : _rules)
 				{
-					// TODO better check here? (e.g. for AsRLE with even size req)
 					if(partSize >= ConversionRule::minInputSize(rule) && partSize <= ConversionRule::maxInputSize(rule))
 					{
 						++partSizePossibilities;
@@ -39,6 +37,7 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 				}
 				partitionPossibilities *= partSizePossibilities;
 			}
+
 			size_t permutationPossibilities = 1;
 			while(std::next_permutation(rbegin(partition), rend(partition)))
 			{
@@ -47,15 +46,19 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 			totalPossibilities += partitionPossibilities * permutationPossibilities;
 		}
 	}
+
 	return totalPossibilities;
 }
 
 size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_view _string)
 { // TODO make this not as wasteful as this currently is
+  // add a maximum value to stop at and return the coversion at that point -> can be used to combine calc & singlconv
+  // cache possibilities?
 	size_t totalPossibilities = 0;
-	uint8_t stringLength = static_cast<uint8_t>(_string.size()); // TODO handle strings that are to long somewhere
+	uint8_t stringLength = static_cast<uint8_t>(_string.size());
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
 	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
+
 	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
@@ -72,7 +75,6 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 					partOffset += partSize;
 					for(auto& rule : _rules)
 					{
-						// TODO better check here? (e.g. for AsRLE with even size req)
 						if(!ConversionRule::convert(rule, stringPart).empty())
 						{
 							++partSizePossibilities;
@@ -84,12 +86,13 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 			} while(std::next_permutation(rbegin(partition), rend(partition)));
 		}
 	}
+
 	return totalPossibilities;
 }
 
 std::string Converter::randomConversion(const RuleBook& _rules, std::string_view _string)
 {
-	size_t possibilities = calculatePossibilities(_rules, _string); // TODO have this cached somehow
+	size_t possibilities = calculatePossibilities(_rules, _string);
 	std::uniform_int_distribution<size_t> dist(1, possibilities);
 	std::random_device rd;
 	std::mt19937_64 mt(rd()); // TODO have this cached somehow?
@@ -100,11 +103,13 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 {
 	if(auto possibilities = calculatePossibilities(_rules, _string); _number > possibilities)
 	{
-		_number %= possibilities; // TODO have this cached somehow
+		_number %= possibilities;
 	}
-	uint8_t stringLength = static_cast<uint8_t>(_string.size()); // TODO handle that are to long somewhere
+
+	uint8_t stringLength = static_cast<uint8_t>(_string.size());
 	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
 	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
+
 	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
@@ -132,6 +137,7 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 					};
 					return impl(impl);
 				};
+
 				do
 				{
 					std::string converted;
@@ -147,6 +153,7 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 						}
 						converted.append(convertedPart).append(" ");
 					}
+
 					if(partOffset == stringLength)
 					{
 						if(_number != 0)
@@ -166,5 +173,6 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 			} while(std::next_permutation(rbegin(partition), rend(partition)));
 		}
 	}
-	return {}; // TODO handle number > calculatePossibilities
+
+	return {};
 }

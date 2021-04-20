@@ -61,29 +61,4 @@ TEST_CASE("ConversionRule")
 		CHECK(ConversionRule::convert(RuleType::None, "12") == "");
 		CHECK(ConversionRule::convert(RuleType::None, "") == "");
 	}
-
-	SECTION("minInputSize")
-	{
-		CHECK(ConversionRule::minInputSize(RuleType::RomanNumeralConversion) == 1);
-		CHECK(ConversionRule::minInputSize(RuleType::RunLengthEncodingConversion) == 1);
-		CHECK(ConversionRule::minInputSize(RuleType::NumberToEnglishConversion) == 1);
-		CHECK(ConversionRule::minInputSize(RuleType::AsRunLengthEncodingConversion) == 2);
-		CHECK(ConversionRule::minInputSize(RuleType::LookAndSayConversion) == 1);
-		CHECK(ConversionRule::minInputSize(RuleType::AsNumberConversion) == 1);
-		CHECK(ConversionRule::minInputSize(RuleType::None) == std::numeric_limits<size_t>::max());
-	}
-
-	SECTION("maxInputSize")
-	{
-		CHECK(ConversionRule::maxInputSize(RuleType::RomanNumeralConversion) == 4);
-		CHECK(
-		    ConversionRule::maxInputSize(RuleType::RunLengthEncodingConversion) == std::numeric_limits<size_t>::max());
-		CHECK(ConversionRule::maxInputSize(RuleType::NumberToEnglishConversion) == 3);
-		CHECK(
-		    ConversionRule::maxInputSize(RuleType::AsRunLengthEncodingConversion) ==
-		    std::numeric_limits<size_t>::max());
-		CHECK(ConversionRule::maxInputSize(RuleType::LookAndSayConversion) == std::numeric_limits<size_t>::max());
-		CHECK(ConversionRule::maxInputSize(RuleType::AsNumberConversion) == std::numeric_limits<size_t>::max());
-		CHECK(ConversionRule::maxInputSize(RuleType::None) == std::numeric_limits<size_t>::min());
-	}
 }

@@ -9,11 +9,12 @@
 
 std::string runLengthEncode(std::string_view _number)
 {
-	size_t size = _number.size();
+	const size_t size = _number.size();
 	if(size == 0)
 	{
 		return {};
 	}
+
 	std::string encoded;
 	uint32_t groupCount = 1;
 	for(size_t i = 1; i < size; ++i)
@@ -24,33 +25,39 @@ std::string runLengthEncode(std::string_view _number)
 		}
 		else
 		{
-			encoded.append(std::to_string(groupCount)).append(" ").append(1, _number[i - 1]).append(" ");
+			encoded.append(std::to_string(groupCount)).append(1, ' ').append(1, _number[i - 1]).append(1, ' ');
 			groupCount = 1;
 		}
 	}
-	encoded.append(std::to_string(groupCount)).append(" ").append(1, _number[size - 1]);
+	encoded.append(std::to_string(groupCount)).append(1, ' ').append(1, _number[size - 1]);
+
 	return encoded;
 }
 
 std::string asRunLengthEncode(std::string_view _number)
 {
-	size_t size = _number.size();
+	const size_t size = _number.size();
 	if(size == 0 || size % 2 != 0)
 	{
 		return {};
 	}
+
 	for(size_t i = 3; i < size; ++i)
 	{
 		if(_number[i - 2] == _number[i])
+		{
 			return {};
+		}
 	}
+
 	std::string converted;
 	converted.reserve((size * 2) - 1);
-	for(char c : _number)
+	for(const char chr : _number)
 	{
-		converted.append(1, c).append(1, ' ');
+		converted.append(1, chr).append(1, ' ');
 	}
 	converted.pop_back();
+
 	return converted;
 }
 
@@ -59,16 +66,19 @@ std::string romanNumerals(std::string_view _number)
 	static const std::vector<std::pair<uint16_t, const char*>> roman{
 	    {1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"}, {100, "C"}, {90, "XC"}, {50, "L"},
 	    {40, "XL"},  {10, "X"},   {9, "IX"},  {5, "V"},    {4, "IV"},  {1, "I"}};
+
 	if(_number.size() == 0)
 	{
 		return {};
 	}
-	uint16_t number = static_cast<uint16_t>(std::stoul(std::string(_number))); // TODO find way without converting?
+
+	uint16_t number = static_cast<uint16_t>(std::stoul(std::string(_number)));
 	if(number < 1 || number > 3999)
 	{
 		return {};
 	}
-	std::string converted{};
+
+	std::string converted;
 	for(auto& r : roman)
 	{
 		while(number >= r.first)
@@ -81,6 +91,7 @@ std::string romanNumerals(std::string_view _number)
 			break;
 		}
 	}
+
 	return converted;
 }
 
@@ -90,6 +101,7 @@ std::string numberToEnglish(std::string_view _number)
 	    "",       "one",    "two",    "three",    "four",     "five",    "six",     "seven",     "eight",    "nine",
 	    "ten",    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
 	    "twenty", "thirty", "forty",  "fifty",    "sixty",    "seventy", "eighty",  "ninety"};
+
 	unsigned number = std::stoul(std::string(_number));
 	if(number > 999)
 	{
@@ -103,6 +115,7 @@ std::string numberToEnglish(std::string_view _number)
 	{
 		return numeng[number];
 	}
+
 	std::string english;
 	if(number > 99)
 	{
@@ -122,6 +135,7 @@ std::string numberToEnglish(std::string_view _number)
 	{
 		english.pop_back();
 	}
+
 	return english;
 }
 
