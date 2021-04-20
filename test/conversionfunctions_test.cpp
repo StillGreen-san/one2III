@@ -82,11 +82,9 @@ TEST_CASE("lookAndSay")
 	CHECK(lookAndSay("1") == "one one");
 	CHECK(lookAndSay("") == "");
 
-	/*TODO handle long strings everywhere
 	std::string longSequence(256, '0');
 	longSequence.append(64, '1').append(128, '2').append(64, '6');
 	CHECK(
 	    lookAndSay(longSequence) ==
-	    "two hundered fifty six zero sixty four one one hundred twenty two two sixty four six");
-	*/
+	    "two hundred fifty six zero sixty four one one hundred twenty eight two sixty four six");
 }

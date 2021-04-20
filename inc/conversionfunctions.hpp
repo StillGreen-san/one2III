@@ -8,6 +8,7 @@
 #include <string>
 
 // TODO rename _number?
+// TODO increase supported number sizes/ranges
 
 /**
  * @brief returns a number sequence processed with RLE, space separated

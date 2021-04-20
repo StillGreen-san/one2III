@@ -90,7 +90,7 @@ std::string numberToEnglish(std::string_view _number)
 	    "",       "one",    "two",    "three",    "four",     "five",    "six",     "seven",     "eight",    "nine",
 	    "ten",    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
 	    "twenty", "thirty", "forty",  "fifty",    "sixty",    "seventy", "eighty",  "ninety"};
-	auto number = static_cast<uint16_t>(std::stoul(std::string(_number))); // TODO find way without converting?
+	unsigned number = std::stoul(std::string(_number));
 	if(number > 999)
 	{
 		return {};
@@ -128,25 +128,31 @@ std::string numberToEnglish(std::string_view _number)
 std::string lookAndSay(std::string_view _number)
 {
 	std::string runLengthEncoded = runLengthEncode(_number);
-	if(runLengthEncoded == "")
+	if(runLengthEncoded.empty())
 	{
-		return runLengthEncoded; // TODO check for really long sequences
+		return runLengthEncoded;
 	}
-	std::string separator = "";
-	std::string lookAndSay;
+
+	runLengthEncoded.append(1, ' '); // makes conversion algo easier for last item
 	for(char& chr : runLengthEncoded)
 	{
 		if(chr == ' ')
+		{
 			chr = '\0';
+		}
 	}
-	char* stringEnd = &runLengthEncoded.back() + 2;
-	char* sectionBegin = &runLengthEncoded.front();
+
+	std::string separator = "";
+	std::string lookAndSay;
+	const std::string::const_iterator stringEnd = runLengthEncoded.cend();
+	std::string::const_iterator sectionBegin = runLengthEncoded.cbegin();
 	while(sectionBegin != stringEnd)
 	{
-		lookAndSay.append(separator).append(numberToEnglish(std::string_view(sectionBegin)));
-		sectionBegin += strlen(sectionBegin) + 1;
-		lookAndSay.append(separator = " ").append(numberToEnglish(std::string_view(sectionBegin)));
-		sectionBegin += strlen(sectionBegin) + 1;
+		lookAndSay.append(separator).append(numberToEnglish(sectionBegin.operator->()));
+		sectionBegin += strlen(sectionBegin.operator->()) + 1;
+		lookAndSay.append(separator = " ").append(numberToEnglish(sectionBegin.operator->()));
+		sectionBegin += strlen(sectionBegin.operator->()) + 1;
 	}
+
 	return lookAndSay;
 }
