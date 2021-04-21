@@ -15,11 +15,10 @@
  * @param _partcount the amount of parts to be splitted into
  * @param _minpart the minimum value of a part
  * @param _maxpart the maximum value of a part
- * @return std::vector<std::vector<uint8_t>>
+ * @return std::vector<std::vector<size_t>>
  */
-std::vector<std::vector<uint8_t>> integerPartitions(
-    uint8_t _integer, uint8_t _partcount, uint8_t _minpart = 1, uint8_t _maxpart = 255);
-// TODO remove uint8 restriction on sizes (update converter functions after)
+std::vector<std::vector<size_t>> integerPartitions(
+    size_t _integer, size_t _partcount, size_t _minpart = 1, size_t _maxpart = 255);
 
 /**
  * @brief checks if string is a valid number sequence
@@ -37,7 +36,7 @@ bool isValidNumberSequence(std::string_view _sequence);
  * @param _partition a list of ints forming a partition
  * @return std::vector<std::string_view>
  */
-std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<uint8_t>& _partition);
+std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<size_t>& _partition);
 
 template<typename T>
 std::ostream& operator<<(std::ostream& _os, const std::vector<T>& _vec)

@@ -7,10 +7,10 @@
 
 #include "helperfunctions.hpp"
 
-std::vector<std::vector<uint8_t>> integerPartitions(
-    uint8_t _integer, uint8_t _partcount, uint8_t _minpart, uint8_t _maxpart)
+std::vector<std::vector<size_t>> integerPartitions(size_t _integer, size_t _partcount, size_t _minpart, size_t _maxpart)
 {
-	if(!_integer || !_partcount || _integer < _partcount || _integer < _minpart || _minpart > _maxpart)
+	if(!_integer || !_partcount || _integer < _partcount || _integer < _minpart || _minpart > _maxpart ||
+	   _partcount * _minpart > _integer || _partcount * _maxpart < _integer)
 	{
 		return {};
 	}
@@ -18,15 +18,19 @@ std::vector<std::vector<uint8_t>> integerPartitions(
 	{
 		return {{_integer}};
 	}
-	std::vector<std::vector<uint8_t>> partitions;
-	std::vector<uint8_t> current(_partcount, 1); // TODO init with _minpart?
+
+	std::vector<std::vector<size_t>> partitions;
+	std::vector<size_t> current(_partcount, 1);
 	current[0] = _integer - _partcount + 1;
+
 	while(true)
 	{
 		while(true)
 		{
 			if(current.front() <= _maxpart && current.back() >= _minpart)
+			{
 				partitions.push_back(current);
+			}
 			if(current[1] >= current[0] - 1)
 			{
 				if(_partcount < 3)
@@ -38,8 +42,9 @@ std::vector<std::vector<uint8_t>> integerPartitions(
 			current[0]--;
 			current[1]++;
 		}
-		uint8_t index = 2;
-		uint8_t newFirst = current[0] + current[1] - 1;
+
+		size_t index = 2;
+		size_t newFirst = current[0] + current[1] - 1;
 		if(current[index] >= current[0] - 1)
 		{
 			do
@@ -52,8 +57,9 @@ std::vector<std::vector<uint8_t>> integerPartitions(
 				}
 			} while(current[index] >= current[0] - 1);
 		}
+
 		current[index]++;
-		uint8_t newFill = current[index];
+		size_t newFill = current[index];
 		index--;
 		while(index > 0)
 		{
@@ -81,7 +87,7 @@ bool isValidNumberSequence(std::string_view _sequence)
 	return true;
 }
 
-std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<uint8_t>& _partition)
+std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<size_t>& _partition)
 {
 	size_t partitionSize = std::accumulate(begin(_partition), end(_partition), 0ULL);
 	if(_string.size() != partitionSize)
@@ -90,8 +96,8 @@ std::vector<std::string_view> partitionString(std::string_view _string, const st
 	}
 	std::vector<std::string_view> partitioned;
 	partitioned.reserve(_partition.size());
-	uint8_t beginOffset = 0;
-	for(uint8_t count : _partition)
+	size_t beginOffset = 0;
+	for(size_t count : _partition)
 	{
 		partitioned.push_back(_string.substr(beginOffset, count));
 		beginOffset += count;

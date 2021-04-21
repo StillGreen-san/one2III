@@ -24,11 +24,10 @@ int main()
 	RuleBook& ruleBook = ConversionStates::Rule_get();
 	std::string& numberSequence = ConversionStates::Nums_get();
 
-	uint8_t digits = static_cast<uint8_t>(numberSequence.size());
-	for(uint8_t parts = digits; parts > 0; --parts)
+	size_t digits = numberSequence.size();
+	for(size_t parts = digits; parts > 0; --parts)
 	{
-		auto partitions =
-		    integerPartitions(digits, parts, (uint8_t)ruleBook.getMinInputSize(), (uint8_t)ruleBook.getMaxInputSize());
+		auto partitions = integerPartitions(digits, parts, ruleBook.getMinInputSize(), ruleBook.getMaxInputSize());
 		for(auto& partition : partitions)
 		{
 			do

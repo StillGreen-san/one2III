@@ -15,17 +15,17 @@
 size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view _string)
 {
 	size_t totalPossibilities = 0;
-	uint8_t stringLength = static_cast<uint8_t>(_string.size());
-	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
-	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
+	size_t stringLength = _string.size();
+	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
+	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
 
-	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
+	for(size_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
 		for(auto& partition : possiblePartitions)
 		{
 			size_t partitionPossibilities = 1;
-			for(uint8_t partSize : partition)
+			for(size_t partSize : partition)
 			{
 				size_t partSizePossibilities = 0;
 				for(auto& rule : _rules)
@@ -55,11 +55,11 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
   // add a maximum value to stop at and return the coversion at that point -> can be used to combine calc & singlconv
   // cache possibilities?
 	size_t totalPossibilities = 0;
-	uint8_t stringLength = static_cast<uint8_t>(_string.size());
-	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
-	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
+	size_t stringLength = _string.size();
+	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
+	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
 
-	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
+	for(size_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
 		for(auto& partition : possiblePartitions)
@@ -68,7 +68,7 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 			{
 				size_t partitionPossibilities = 1;
 				size_t partOffset = 0;
-				for(uint8_t partSize : partition)
+				for(size_t partSize : partition)
 				{
 					size_t partSizePossibilities = 0;
 					std::string_view stringPart = _string.substr(partOffset, partSize);
@@ -106,19 +106,19 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 		_number %= possibilities;
 	}
 
-	uint8_t stringLength = static_cast<uint8_t>(_string.size());
-	uint8_t minPartSize = static_cast<uint8_t>(std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL));
-	uint8_t maxPartSize = static_cast<uint8_t>(std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL));
+	size_t stringLength = _string.size();
+	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
+	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
 
-	for(uint8_t partCount = stringLength; partCount > 0; --partCount)
+	for(size_t partCount = stringLength; partCount > 0; --partCount)
 	{
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
 		for(auto& partition : possiblePartitions)
 		{
 			do
 			{
-				std::vector<uint8_t> ruleIndices(partCount, 0);
-				auto incrementIndices = [&](uint8_t _index = 0) -> bool
+				std::vector<size_t> ruleIndices(partCount, 0);
+				auto incrementIndices = [&](size_t _index = 0) -> bool
 				{
 					auto impl = [&](auto& _impl) -> bool
 					{
@@ -142,7 +142,7 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 				{
 					std::string converted;
 					size_t partOffset = 0;
-					for(uint8_t i = 0; i < partCount; ++i)
+					for(size_t i = 0; i < partCount; ++i)
 					{
 						std::string_view stringPart = _string.substr(partOffset, partition[i]);
 						partOffset += partition[i];

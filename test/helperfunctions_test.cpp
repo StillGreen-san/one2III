@@ -9,7 +9,7 @@
 
 TEST_CASE("integerPartitions")
 {
-	using ptn = std::vector<std::vector<uint8_t>>;
+	using ptn = std::vector<std::vector<size_t>>;
 
 	CHECK(integerPartitions(0, 1) == ptn{});
 	CHECK(integerPartitions(5, 3) == ptn{{3, 1, 1}, {2, 2, 1}});
