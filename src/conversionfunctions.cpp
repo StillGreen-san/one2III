@@ -3,6 +3,7 @@
  * @brief implementation file for conversion functions
  */
 
+#include <algorithm>
 #include <vector>
 
 #include "conversionfunctions.hpp"
@@ -148,13 +149,7 @@ std::string lookAndSay(std::string_view _number)
 	}
 
 	runLengthEncoded.append(1, ' '); // makes conversion algo easier for last item
-	for(char& chr : runLengthEncoded)
-	{
-		if(chr == ' ')
-		{
-			chr = '\0';
-		}
-	}
+	std::replace(std::begin(runLengthEncoded), std::end(runLengthEncoded), ' ', '\000');
 
 	std::string separator = "";
 	std::string lookAndSay;

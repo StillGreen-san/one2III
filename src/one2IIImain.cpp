@@ -21,8 +21,8 @@ int main()
 	sm.addState(SimpleMenu::State(ConversionStates::Exit));
 	sm.show();
 
-	RuleBook& ruleBook = ConversionStates::Rule_get();
-	std::string& numberSequence = ConversionStates::Nums_get();
+	const RuleBook& ruleBook = ConversionStates::Rule_get();
+	std::string numberSequence = ConversionStates::Nums_get();
 
 	size_t digits = numberSequence.size();
 	for(size_t parts = digits; parts > 0; --parts)
@@ -40,11 +40,13 @@ int main()
 				for(auto& view : views)
 				{
 					std::vector<std::string> viewConversions;
-					for(auto& rule : ruleBook)
-					{
-						viewConversions.push_back(std::move(ConversionRule::convert(rule, view)));
-					}
-					allConversions.push_back(std::move(viewConversions));
+					std::transform(
+					    std::begin(ruleBook), std::end(ruleBook), std::back_inserter(viewConversions),
+					    [&](const RuleType& rule)
+					    {
+						    return ConversionRule::convert(rule, view);
+					    });
+					allConversions.emplace_back(std::move(viewConversions));
 				}
 				for(size_t x = allConversions.front().size(); x > 0; --x)
 				{

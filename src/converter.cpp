@@ -27,15 +27,13 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 			size_t partitionPossibilities = 1;
 			for(size_t partSize : partition)
 			{
-				size_t partSizePossibilities = 0;
-				for(auto& rule : _rules)
-				{
-					if(partSize >= ConversionRule::minInputSize(rule) && partSize <= ConversionRule::maxInputSize(rule))
-					{
-						++partSizePossibilities;
-					}
-				}
-				partitionPossibilities *= partSizePossibilities;
+				partitionPossibilities *= std::count_if(
+				    std::begin(_rules), std::end(_rules),
+				    [partSize](const RuleType& rule)
+				    {
+					    return partSize >= ConversionRule::minInputSize(rule) &&
+					           partSize <= ConversionRule::maxInputSize(rule);
+				    });
 			}
 
 			size_t permutationPossibilities = 1;
@@ -70,17 +68,14 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 				size_t partOffset = 0;
 				for(size_t partSize : partition)
 				{
-					size_t partSizePossibilities = 0;
 					std::string_view stringPart = _string.substr(partOffset, partSize);
+					partitionPossibilities *= std::count_if(
+					    std::begin(_rules), std::end(_rules),
+					    [&](const RuleType& rule)
+					    {
+						    return !ConversionRule::convert(rule, stringPart).empty();
+					    });
 					partOffset += partSize;
-					for(auto& rule : _rules)
-					{
-						if(!ConversionRule::convert(rule, stringPart).empty())
-						{
-							++partSizePossibilities;
-						}
-					}
-					partitionPossibilities *= partSizePossibilities;
 				}
 				totalPossibilities += partitionPossibilities;
 			} while(std::next_permutation(rbegin(partition), rend(partition)));

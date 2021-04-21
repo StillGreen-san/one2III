@@ -53,6 +53,9 @@ TEST_CASE("calculatePossibilities")
 		rules.add(RuleType::AsRunLengthEncodingConversion);
 		CHECK(Converter::calculatePossibilities(rules, "1234") == 15);
 	}
+
+	// TODO come up with more tests because they don't cover everything aperantly!
+	// LookAndSayConversion in random can fail after chaning calculatePossibilities without this failing
 }
 
 TEST_CASE("randomConversion")
