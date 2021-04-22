@@ -60,5 +60,5 @@ struct Converter
 	 * @param _string the string to convert
 	 * @return std::vector<std::string> all conversions
 	 */
-	// static std::vector<std::string> allConversions(const RuleBook& _rules, std::string_view _string);
+	static std::vector<std::string> allConversions(const RuleBook& _rules, std::string_view _string);
 };

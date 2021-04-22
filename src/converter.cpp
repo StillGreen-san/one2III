@@ -174,33 +174,69 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 	return {};
 }
 
-// std::vector<std::string> Converter::allConversions(const RuleBook& _rules, std::string_view _string)
-// {
-// 	std::vector<std::string> conversions;
-// 	const size_t stringLength = _string.size();
-// 	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
-// 	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
-// 	for(size_t partCount = stringLength; partCount > 0; --partCount)
-// 	{
-// 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
-// 		for(auto& partition : possiblePartitions)
-// 		{
-// 			do
-// 			{
-// 				size_t partOffset = 0;
-// 				for(size_t partSize : partition)
-// 				{
-// 					std::string_view stringPart = _string.substr(partOffset, partSize);
-// 					partitionPossibilities *= std::count_if(
-// 					    std::begin(_rules), std::end(_rules),
-// 					    [&](const RuleType& rule)
-// 					    {
-// 						    return !ConversionRule::convert(rule, stringPart).empty();
-// 					    });
-// 					partOffset += partSize;
-// 				}
-// 			} while(std::next_permutation(rbegin(partition), rend(partition)));
-// 		}
-// 	}
-// 	return conversions;
-// }
+std::vector<std::string> Converter::allConversions(const RuleBook& _rules, std::string_view _string)
+{ // TODO replace placeholder impl
+	std::vector<std::string> conversions;
+	const size_t stringLength = _string.size();
+	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
+	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
+
+	for(size_t partCount = stringLength; partCount > 0; --partCount)
+	{
+		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
+		for(auto& partition : possiblePartitions)
+		{
+			do
+			{
+				std::vector<size_t> ruleIndices(partCount, 0);
+				auto incrementIndices = [&](size_t _index = 0) -> bool
+				{
+					auto impl = [&](auto& _impl) -> bool
+					{
+						if(_index == ruleIndices.size())
+						{
+							return false;
+						}
+						++ruleIndices[_index];
+						if(ruleIndices[_index] == _rules.size())
+						{
+							ruleIndices[_index] = 0;
+							++_index;
+							return _impl(_impl);
+						}
+						return true;
+					};
+					return impl(impl);
+				};
+
+				do
+				{
+					std::string converted;
+					size_t partOffset = 0;
+					for(size_t i = 0; i < partCount; ++i)
+					{
+						std::string_view stringPart = _string.substr(partOffset, partition[i]);
+						partOffset += partition[i];
+						std::string convertedPart = ConversionRule::convert(_rules[ruleIndices[i]], stringPart);
+						if(convertedPart.empty() == true)
+						{
+							break;
+						}
+						converted.append(convertedPart).append(" ");
+					}
+
+					if(partOffset == stringLength)
+					{
+						if(auto size = converted.size(); size > 0)
+						{
+							converted.erase(size - 1);
+						}
+						conversions.emplace_back(std::move(converted));
+					}
+				} while(incrementIndices());
+			} while(std::next_permutation(rbegin(partition), rend(partition)));
+		}
+	}
+
+	return conversions;
+}

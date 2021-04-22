@@ -38,6 +38,8 @@ bool isValidNumberSequence(std::string_view _sequence);
  */
 std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<size_t>& _partition);
 
+// TODO stable_unique() to eliminate identical looking strings
+
 template<typename T>
 std::ostream& operator<<(std::ostream& _os, const std::vector<T>& _vec)
 {
