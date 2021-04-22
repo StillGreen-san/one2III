@@ -37,7 +37,6 @@ set( SOURCES_MAIN
 set( SOURCES_TEST
 	${one2III_TEST_DIR}/converter_test.cpp
 	${one2III_TEST_DIR}/conversionfunctions_test.cpp
-	${one2III_TEST_DIR}/conversionrule_test.cpp
 	${one2III_TEST_DIR}/converter_test.cpp
 	${one2III_TEST_DIR}/helperfunctions_test.cpp
 	${one2III_TEST_DIR}/rulebook_test.cpp

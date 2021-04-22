@@ -3,6 +3,7 @@
  * @brief implementation file for helper functions
  */
 
+#include <algorithm>
 #include <numeric>
 
 #include "helperfunctions.hpp"
@@ -73,18 +74,12 @@ std::vector<std::vector<size_t>> integerPartitions(size_t _integer, size_t _part
 
 bool isValidNumberSequence(std::string_view _sequence)
 {
-	if(_sequence.size() == 0)
-	{
-		return false;
-	}
-	for(const char& chr : _sequence)
-	{
-		if(std::isdigit(chr) == false)
-		{
-			return false;
-		}
-	}
-	return true;
+	return !_sequence.empty() && std::all_of(
+	                                 std::begin(_sequence), std::end(_sequence),
+	                                 [](char chr)
+	                                 {
+		                                 return static_cast<bool>(std::isdigit(chr));
+	                                 });
 }
 
 std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<size_t>& _partition)

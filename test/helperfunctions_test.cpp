@@ -42,16 +42,3 @@ TEST_CASE("partitionString")
 	CHECK(partitionString(tc_1234, {2, 2}) == svv{{tc_1234, 2}, {tc_1234 + 2, 2}});
 	CHECK(partitionString(tc_1234, {2, 2, 2, 2}) == svv{});
 }
-
-TEST_CASE("isValidNumberSequence")
-{
-	CHECK(isValidNumberSequence("") == false);
-	CHECK(isValidNumberSequence("123456") == true);
-	CHECK(isValidNumberSequence("1 34 6") == false);
-	CHECK(isValidNumberSequence("abcdef") == false);
-	CHECK(isValidNumberSequence("1b3d5e") == false);
-	CHECK(isValidNumberSequence("ABCDEF") == false);
-	CHECK(isValidNumberSequence("0") == true);
-	CHECK(isValidNumberSequence("12==56") == false);
-	CHECK(isValidNumberSequence("$%&/)") == false);
-}

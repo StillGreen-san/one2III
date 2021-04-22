@@ -52,4 +52,13 @@ struct Converter
 	 * @return std::string the converted string
 	 */
 	static std::string singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number);
+
+	/**
+	 * @brief returns all conversions possible
+	 *
+	 * @param _rules the rules used for conversion
+	 * @param _string the string to convert
+	 * @return std::vector<std::string> all conversions
+	 */
+	// static std::vector<std::string> allConversions(const RuleBook& _rules, std::string_view _string);
 };

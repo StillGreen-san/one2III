@@ -7,6 +7,9 @@
 
 #include "converter.hpp"
 
+// TODO redo all these tests
+// TODO check for no rules
+
 TEST_CASE("estimatePossibilities")
 {
 	RuleBook rules;
