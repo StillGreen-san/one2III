@@ -144,7 +144,7 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 						std::string_view stringPart = _string.substr(partOffset, partition[i]);
 						partOffset += partition[i];
 						std::string convertedPart = ConversionRule::convert(_rules[ruleIndices[i]], stringPart);
-						if(convertedPart.empty() == true)
+						if(convertedPart.empty())
 						{
 							break;
 						}
@@ -216,12 +216,12 @@ std::vector<std::string> Converter::allConversions(const RuleBook& _rules, std::
 					for(size_t i = 0; i < partCount; ++i)
 					{
 						std::string_view stringPart = _string.substr(partOffset, partition[i]);
-						partOffset += partition[i];
 						std::string convertedPart = ConversionRule::convert(_rules[ruleIndices[i]], stringPart);
-						if(convertedPart.empty() == true)
+						if(convertedPart.empty())
 						{
 							break;
 						}
+						partOffset += partition[i];
 						converted.append(convertedPart).append(" ");
 					}
 
