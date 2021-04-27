@@ -47,18 +47,69 @@ void SimpleMenu::show(int id)
 		return;
 	}
 
+	const int initialId = id;
+
 	while(id != Exit)
 	{
 		// find id
-		auto it = findScreen(id);
-		if(it == std::end(screens))
+		auto screen = findScreen(id);
+		if(screen == std::end(screens))
 		{
-			it = std::begin(screens);
+			screen = std::begin(screens);
 		}
 
 		// display screen
+		std::cout << '\n' << screen->description << '\n';
+		for(const SimpleScreen::Option& opt : screen->options)
+		{
+			if(opt.key == AnyKey)
+			{
+				std::cout << " any";
+			}
+			else
+			{
+				std::cout << "  " << opt.key << ' ';
+			}
+			std::cout << ": " << opt.description << '\n';
+		}
+
+		const auto noOption = std::end(screen->options);
+		auto option = noOption;
+
 		// get input
+		char key;
+		std::cin.get(key);
+		if(key != '\n')
+		{
+			std::cin.ignore();
+		}
+
+		// find option
+		option = std::find_if(
+		    std::begin(screen->options), noOption,
+		    [key](const SimpleScreen::Option& opt)
+		    {
+			    return opt.key == key || opt.key == AnyKey;
+		    });
+		if(option == noOption)
+		{
+			continue;
+		}
+
 		// call callback
+		if(option->callback)
+		{
+			option->callback();
+		}
+
 		// check/set id
+		if(option->nextScreen == Restart)
+		{
+			id = initialId;
+		}
+		else
+		{
+			id = option->nextScreen;
+		}
 	}
 }
