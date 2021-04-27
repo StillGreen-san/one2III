@@ -107,7 +107,7 @@ void SimpleMenu::show(int id)
 		{
 			id = initialId;
 		}
-		else
+		else if(option->nextScreen != This)
 		{
 			id = option->nextScreen;
 		}

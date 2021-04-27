@@ -11,30 +11,9 @@
 #include "rulebook.hpp"
 #include "simplemenu.hpp"
 
-int main()
+void mainConvert(RuleBook& ruleBook, std::string& numberSequence)
 {
-	SimpleMenu sm;
-
-	sm.addScreen(1)
-	    .setDescription("Main Test Menu")
-	    .addOption('t', "open this screen again", SimpleMenu::This)
-	    .addOption('e', "show the exit screen", -1);
-	sm.addScreen(-1)
-	    .setDescription("here you can exit this menu")
-	    .addOption(SimpleMenu::AnyKey, "exit this menu", SimpleMenu::Exit);
-
-	// sm.addState(SimpleMenu::State(ConversionStates::Info));
-	// sm.addState(SimpleMenu::State(ConversionStates::Test));
-	// sm.addState(SimpleMenu::State(ConversionStates::Nums));
-	// sm.addState(SimpleMenu::State(ConversionStates::Rule));
-	// sm.addState(SimpleMenu::State(ConversionStates::Conv));
-	// sm.addState(SimpleMenu::State(ConversionStates::Exit));
-
-	sm.show(1);
-
-	RuleBook ruleBook;          // = ConversionStates::Rule_get();
-	std::string numberSequence; // = ConversionStates::Nums_get();
-
+	std::cout << std::endl;
 	size_t digits = numberSequence.size();
 	for(size_t parts = digits; parts > 0; --parts)
 	{
@@ -46,7 +25,9 @@ int main()
 				std::cout << partition << std::endl;
 				const auto views = partitionString(numberSequence, partition);
 				if(views.size() == 0)
+				{
 					continue;
+				}
 				std::vector<std::vector<std::string>> allConversions;
 				for(auto& view : views)
 				{
@@ -59,6 +40,7 @@ int main()
 					    });
 					allConversions.emplace_back(std::move(viewConversions));
 				}
+
 				for(size_t x = allConversions.front().size(); x > 0; --x)
 				{
 					std::cout << " | ";
@@ -72,4 +54,78 @@ int main()
 			std::cout << std::endl;
 		}
 	}
+
+	numberSequence.clear();
+	ruleBook = RuleBook();
+}
+
+int main()
+{
+	RuleBook ruleBook;
+	std::string numberSequence;
+
+	SimpleMenu sm;
+	sm.addScreen(1)
+	    .setDescription("one2III\n"
+	                    "given a string of digits and a list of conversion rules\n"
+	                    "split the string into all possible substrings\n"
+	                    "convert every substring using every possible conversion rule\n")
+	    .addOption('e', "Exit", SimpleMenu::Exit)
+	    .addOption(
+	        SimpleMenu::AnyKey, "press enter to continue", 2,
+	        [&]()
+	        {
+		        while(!isValidNumberSequence(numberSequence))
+		        {
+			        std::cout << "enter a number sequence\n";
+			        std::cin >> numberSequence;
+		        }
+		        std::cin.get();
+	        });
+	sm.addScreen(2)
+	    .setDescription("Select a Rule to add")
+	    .addOption(
+	        'r', "RomanNumeralConversion", SimpleMenu::This,
+	        [&]()
+	        {
+		        ruleBook.add(RuleType::RomanNumeralConversion);
+	        })
+	    .addOption(
+	        'n', "AsNumberConversion", SimpleMenu::This,
+	        [&]()
+	        {
+		        ruleBook.add(RuleType::AsNumberConversion);
+	        })
+	    .addOption(
+	        'a', "AsRunLengthEncodingConversion", SimpleMenu::This,
+	        [&]()
+	        {
+		        ruleBook.add(RuleType::AsRunLengthEncodingConversion);
+	        })
+	    .addOption(
+	        'e', "NumberToEnglishConversion", SimpleMenu::This,
+	        [&]()
+	        {
+		        ruleBook.add(RuleType::NumberToEnglishConversion);
+	        })
+	    .addOption(
+	        'l', "RunLengthEncodingConversion", SimpleMenu::This,
+	        [&]()
+	        {
+		        ruleBook.add(RuleType::RunLengthEncodingConversion);
+	        })
+	    .addOption(
+	        's', "LookAndSayConversion", SimpleMenu::This,
+	        [&]()
+	        {
+		        ruleBook.add(RuleType::LookAndSayConversion);
+	        })
+	    .addOption(
+	        'c', "Convert", SimpleMenu::Restart,
+	        [&]()
+	        {
+		        mainConvert(ruleBook, numberSequence);
+	        });
+
+	sm.show(1);
 }
