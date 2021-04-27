@@ -31,7 +31,6 @@ set( SOURCES_LIB
 )
 set( SOURCES_MAIN
 	${one2III_SRC_DIR}/simplemenu.cpp
-	${one2III_SRC_DIR}/conversionstates.cpp
 	${one2III_SRC_DIR}/one2IIImain.cpp
 )
 set( SOURCES_TEST

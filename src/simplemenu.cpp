@@ -10,50 +10,55 @@
 
 SimpleMenu::SimpleScreen& SimpleMenu::SimpleScreen::setDescription(std::string desc)
 {
+	description = std::move(desc);
 	return *this;
 }
 
 SimpleMenu::SimpleScreen& SimpleMenu::SimpleScreen::addOption(
     char key, std::string desc, int screen, std::function<void()> cllbck)
 {
+	options.emplace_back(key, std::move(desc), screen, std::move(cllbck));
 	return *this;
 }
 
-SimpleMenu::SimpleScreen& SimpleMenu::addScreen(int id)
+std::vector<SimpleMenu::SimpleScreen>::iterator SimpleMenu::findScreen(int id)
 {
-	auto it = std::find_if(
+	return std::find_if(
 	    std::begin(screens), std::end(screens),
 	    [id](const SimpleScreen& screen)
 	    {
 		    return screen.id == id;
 	    });
-	if(it != std::cend(screens))
+}
+
+SimpleMenu::SimpleScreen& SimpleMenu::addScreen(int id)
+{
+	if(auto it = findScreen(id); it != std::end(screens))
 	{
 		return *it;
 	}
-	return screens.emplace_back(id);
+	return screens.emplace_back(SimpleScreen(id));
 }
 
 void SimpleMenu::show(int id)
 {
-	//
-}
+	if(screens.empty())
+	{
+		return;
+	}
 
-// ##########################################
+	while(id != Exit)
+	{
+		// find id
+		auto it = findScreen(id);
+		if(it == std::end(screens))
+		{
+			it = std::begin(screens);
+		}
 
-void NSMtest()
-{
-	SimpleMenu menu;
-	menu.addScreen(69).setDescription("valuable text").addOption('k', "som optn", 42);
-	menu.addScreen(42)
-	    .setDescription("valuable text")
-	    .addOption(
-	        'k', "som optn", SimpleMenu::This,
-	        []()
-	        {
-	        });
-	menu.addScreen(-1).setDescription("valuable text").addOption('e', "baiii", SimpleMenu::Exit);
-	menu.addScreen(-2).setDescription("valuable text").addOption(SimpleMenu::AnyKey, "baiii", SimpleMenu::Exit);
-
-	menu.show(-1);
+		// display screen
+		// get input
+		// call callback
+		// check/set id
+	}
 }

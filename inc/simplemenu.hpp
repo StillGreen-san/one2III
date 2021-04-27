@@ -16,34 +16,7 @@
  */
 struct SimpleMenu
 {
-public:
-	enum : int
-	{
-		/**
-		 * @brief screen id to signal the menu should exit when the option is choosen
-		 *
-		 */
-		Exit = std::numeric_limits<int>::min(),
-
-		/**
-		 * @brief screen id to signal the menu should go to the screen specified with show() when the option is choosen
-		 *
-		 */
-		Restart,
-
-		/**
-		 * @brief screen id to signal the menu should go to this screen when the option is choosen
-		 *
-		 */
-		This,
-
-		/**
-		 * @brief key code to signal the menu should accept any input for this option
-		 *
-		 */
-		AnyKey
-	};
-
+private:
 	/**
 	 * @brief screen obj used with SimpleMenu
 	 *
@@ -73,10 +46,14 @@ public:
 		SimpleScreen& addOption(char key, std::string desc, int screen, std::function<void()> cllbck = nullptr);
 
 	private:
-		friend SimpleMenu;
+		friend class SimpleMenu;
 		explicit SimpleScreen(int id) : id{id} {};
 		struct Option
 		{
+			Option(char k, std::string&& d, int s, std::function<void()>&& c) :
+			    key{k}, description{std::move(d)}, nextScreen{s}, callback{std::move(c)}
+			{
+			}
 			char key;
 			std::string description;
 			int nextScreen;
@@ -85,6 +62,40 @@ public:
 		int id;
 		std::string description;
 		std::vector<Option> options;
+	};
+
+	std::vector<SimpleScreen> screens;
+
+	std::vector<SimpleScreen>::iterator findScreen(int id);
+
+public:
+	enum : int
+	{
+		/**
+		 * @brief screen id to signal the menu should exit when the option is choosen
+		 *
+		 */
+		Exit = std::numeric_limits<int>::min(),
+
+		/**
+		 * @brief screen id to signal the menu should go to the screen specified with show() when the option is choosen
+		 *
+		 */
+		Restart,
+
+		/**
+		 * @brief screen id to signal the menu should go to this screen when the option is choosen
+		 *
+		 */
+		This
+	};
+	enum : char
+	{
+		/**
+		 * @brief key code to signal the menu should accept any input for this option
+		 *
+		 */
+		AnyKey = std::numeric_limits<char>::min()
 	};
 
 	/**
@@ -104,7 +115,4 @@ public:
 	 * @param id the screen id to show
 	 */
 	void show(int id);
-
-private:
-	std::vector<SimpleScreen> screens;
 };

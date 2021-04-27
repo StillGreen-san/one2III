@@ -7,22 +7,33 @@
 #include <iostream>
 
 #include "conversionrule.hpp"
-#include "conversionstates.hpp"
 #include "helperfunctions.hpp"
+#include "rulebook.hpp"
+#include "simplemenu.hpp"
 
 int main()
 {
 	SimpleMenu sm;
-	sm.addState(SimpleMenu::State(ConversionStates::Info));
-	sm.addState(SimpleMenu::State(ConversionStates::Test));
-	sm.addState(SimpleMenu::State(ConversionStates::Nums));
-	sm.addState(SimpleMenu::State(ConversionStates::Rule));
-	sm.addState(SimpleMenu::State(ConversionStates::Conv));
-	sm.addState(SimpleMenu::State(ConversionStates::Exit));
-	sm.show();
 
-	const RuleBook& ruleBook = ConversionStates::Rule_get();
-	std::string numberSequence = ConversionStates::Nums_get();
+	sm.addScreen(1)
+	    .setDescription("Main Test Menu")
+	    .addOption('t', "open this screen again", SimpleMenu::This)
+	    .addOption('e', "show the exit screen", -1);
+	sm.addScreen(-1)
+	    .setDescription("here you can exit this menu")
+	    .addOption(SimpleMenu::AnyKey, "exit this menu", SimpleMenu::Exit);
+
+	// sm.addState(SimpleMenu::State(ConversionStates::Info));
+	// sm.addState(SimpleMenu::State(ConversionStates::Test));
+	// sm.addState(SimpleMenu::State(ConversionStates::Nums));
+	// sm.addState(SimpleMenu::State(ConversionStates::Rule));
+	// sm.addState(SimpleMenu::State(ConversionStates::Conv));
+	// sm.addState(SimpleMenu::State(ConversionStates::Exit));
+
+	sm.show(1);
+
+	RuleBook ruleBook;          // = ConversionStates::Rule_get();
+	std::string numberSequence; // = ConversionStates::Nums_get();
 
 	size_t digits = numberSequence.size();
 	for(size_t parts = digits; parts > 0; --parts)
