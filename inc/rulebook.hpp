@@ -61,7 +61,7 @@ public:
 	 * @param _index the index to return (unchecked)
 	 * @return RuleType the rule at _index
 	 */
-	RuleType operator[](size_t _index) const; // TODO check me
+	RuleType operator[](size_t _index) const;
 
 private:
 	/**

@@ -5,12 +5,12 @@
 
 std::string runLengthEncode(std::string_view _number)
 {
-	const size_t size = _number.size();
-	if(size == 0)
+	if(_number.empty())
 	{
 		return {};
 	}
 
+	const size_t size = _number.size();
 	std::string encoded;
 	uint32_t groupCount = 1;
 	for(size_t i = 1; i < size; ++i)
@@ -63,7 +63,7 @@ std::string romanNumerals(std::string_view _number)
 	    {1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"}, {100, "C"}, {90, "XC"}, {50, "L"},
 	    {40, "XL"},  {10, "X"},   {9, "IX"},  {5, "V"},    {4, "IV"},  {1, "I"}};
 
-	if(_number.size() == 0)
+	if(_number.empty())
 	{
 		return {};
 	}

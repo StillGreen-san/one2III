@@ -69,12 +69,13 @@ std::vector<std::vector<size_t>> integerPartitions(size_t _integer, size_t _part
 
 bool isValidNumberSequence(std::string_view _sequence)
 {
-	return !_sequence.empty() && std::all_of(
-	                                 std::begin(_sequence), std::end(_sequence),
-	                                 [](char chr)
-	                                 {
-		                                 return static_cast<bool>(std::isdigit(chr));
-	                                 });
+	return std::all_of(
+	           std::begin(_sequence), std::end(_sequence),
+	           [](char chr)
+	           {
+		           return static_cast<bool>(std::isdigit(chr));
+	           }) &&
+	       !_sequence.empty();
 }
 
 std::vector<std::string_view> partitionString(std::string_view _string, const std::vector<size_t>& _partition)

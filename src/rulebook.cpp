@@ -8,7 +8,7 @@ bool RuleBook::add(RuleType _rule)
 		return false;
 	}
 	auto result = rules.insert(_rule);
-	if(result.second == false)
+	if(!result.second)
 	{
 		return false;
 	}
