@@ -1,9 +1,3 @@
-/**
- * @file converter.cpp
- * @brief implementation for Converter
- *
- */
-
 #include <algorithm>
 #include <random>
 

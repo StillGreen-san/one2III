@@ -1,8 +1,3 @@
-/**
- * @file rulebook_test.cpp
- * @brief gathers all tests for rulebook.hpp
- */
-
 #include <catch.hpp>
 
 #include "conversionrule.hpp"

@@ -1,8 +1,3 @@
-/**
- * @file helperfunctions_test.cpp
- * @brief gathers all tests for helperfunctions.hpp
- */
-
 #include <catch.hpp>
 
 #include "helperfunctions.hpp"

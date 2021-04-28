@@ -1,8 +1,3 @@
-/**
- * @file helperfunctions.cpp
- * @brief implementation file for helper functions
- */
-
 #include <algorithm>
 #include <numeric>
 

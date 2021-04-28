@@ -1,8 +1,3 @@
-/**
- * @file helperfunctions.hpp
- * @brief include file for helper functions
- */
-
 #pragma once
 
 #include <string>

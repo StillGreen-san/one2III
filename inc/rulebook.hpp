@@ -1,8 +1,3 @@
-/**
- * @file rulebook.hpp
- * @brief include file for RuleBook class
- */
-
 #pragma once
 
 #include <set>

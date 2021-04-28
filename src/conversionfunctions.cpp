@@ -1,8 +1,3 @@
-/**
- * @file conversionfunctions.cpp
- * @brief implementation file for conversion functions
- */
-
 #include <algorithm>
 #include <vector>
 

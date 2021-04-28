@@ -1,8 +1,3 @@
-/**
- * @file conversionfunctions_test.cpp
- * @brief gathers all tests for conversionfunctions.hpp
- */
-
 #include <catch.hpp>
 
 #include "conversionfunctions.hpp"

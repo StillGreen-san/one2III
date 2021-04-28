@@ -1,8 +1,3 @@
-/**
- * @file ruletype.hpp
- * @brief include file for RuleType enum
- */
-
 #pragma once
 
 #include <string>

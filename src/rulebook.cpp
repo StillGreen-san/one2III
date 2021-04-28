@@ -1,8 +1,3 @@
-/**
- * @file rulebook.hpp
- * @brief implementation file for RuleBook
- */
-
 #include "rulebook.hpp"
 #include "conversionrule.hpp"
 

@@ -1,8 +1,3 @@
-/**
- * @file conversionfunctions.hpp
- * @brief include file for conversion functions
- */
-
 #pragma once
 
 #include <string>

@@ -1,9 +1,3 @@
-/**
- * @file simplemenu.cpp
- * @brief implementation file for menu
- *
- */
-
 #include "simplemenu.hpp"
 
 #include <iostream>

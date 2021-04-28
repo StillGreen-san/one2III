@@ -1,8 +1,3 @@
-/**
- * @file conversionrule.hpp
- * @brief implementation file for ConversionRule
- */
-
 #include "conversionrule.hpp"
 #include "conversionfunctions.hpp"
 

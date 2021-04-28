@@ -1,9 +1,3 @@
-/**
- * @file simplemenu.hpp
- * @brief include file for menu
- *
- */
-
 #pragma once
 
 #include <functional>

@@ -1,8 +1,3 @@
-/**
- * @file converter.hpp
- * @brief include file for Converter static struct
- */
-
 #pragma once
 
 #include <string>

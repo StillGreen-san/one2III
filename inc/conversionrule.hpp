@@ -1,8 +1,3 @@
-/**
- * @file conversionrule.hpp
- * @brief include file for ConversionRule static struct
- */
-
 #pragma once
 
 #include <string>
