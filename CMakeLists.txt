@@ -27,7 +27,6 @@ set( SOURCES_LIB
 	${one2III_SRC_DIR}/converter.cpp
 	${one2III_SRC_DIR}/helperfunctions.cpp
 	${one2III_SRC_DIR}/rulebook.cpp
-	${one2III_SRC_DIR}/ruletype.cpp
 )
 set( SOURCES_MAIN
 	${one2III_SRC_DIR}/simplemenu.cpp

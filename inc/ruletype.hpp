@@ -13,19 +13,45 @@
  */
 enum class RuleType : uint8_t
 {
-	RomanNumeralConversion,        /* converts a number sequence to roman numerals */
-	AsNumberConversion,            /* returns a number sequence as is */
-	AsRunLengthEncodingConversion, /* interprets a number sequence as run length encoding */
-	NumberToEnglishConversion,     /* converts a number sequence to english words */
-	RunLengthEncodingConversion,   /* converts a number sequence as run length encoding */
-	LookAndSayConversion,          /* converts a number sequence with run length encoding then to english words */
+	/**
+	 * @brief  converts a number sequence to roman numerals
+	 *
+	 */
+	RomanNumeralConversion,
 
-	None /* invalid */ //! needs to be at the end of enum definition
+	/**
+	 * @brief  returns a number sequence as is
+	 *
+	 */
+	AsNumberConversion,
+
+	/**
+	 * @brief  interprets a number sequence as run length encoding
+	 *
+	 */
+	AsRunLengthEncodingConversion,
+
+	/**
+	 * @brief  converts a number sequence to english words
+	 *
+	 */
+	NumberToEnglishConversion,
+
+	/**
+	 * @brief  converts a number sequence as run length encoding
+	 *
+	 */
+	RunLengthEncodingConversion,
+
+	/**
+	 * @brief  converts a number sequence with run length encoding then to english words
+	 *
+	 */
+	LookAndSayConversion,
+
+	/**
+	 * @brief  invalid
+	 *
+	 */
+	None
 };
-
-template<typename ENUM>
-using enumType = typename std::underlying_type<ENUM>::type;
-
-enumType<RuleType> enumCount(RuleType);
-std::string enumName(RuleType _rule);
-std::string enumDescription(RuleType _rule);
