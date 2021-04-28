@@ -1,22 +1,22 @@
 #include "conversionrule.hpp"
 #include "conversionfunctions.hpp"
 
-std::string ConversionRule::convert(RuleType _rule, std::string_view _string)
+std::string ConversionRule::convert(RuleType rule, std::string_view string)
 {
-	switch(_rule)
+	switch(rule)
 	{
 	case RuleType::RomanNumeralConversion:
-		return romanNumerals(_string);
+		return romanNumerals(string);
 	case RuleType::RunLengthEncodingConversion:
-		return runLengthEncode(_string);
+		return runLengthEncode(string);
 	case RuleType::NumberToEnglishConversion:
-		return numberToEnglish(_string);
+		return numberToEnglish(string);
 	case RuleType::AsRunLengthEncodingConversion:
-		return asRunLengthEncode(_string);
+		return asRunLengthEncode(string);
 	case RuleType::LookAndSayConversion:
-		return lookAndSay(_string);
+		return lookAndSay(string);
 	case RuleType::AsNumberConversion:
-		return std::string(_string);
+		return std::string(string);
 	default:
 		return {};
 	}

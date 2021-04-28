@@ -13,21 +13,21 @@ struct ConversionRule
 	/**
 	 * @brief returns a number sequence converted according to rule type
 	 *
-	 * @param _rule the rule type to convert by
-	 * @param _string the number sequence to convert
+	 * @param rule the rule type to convert by
+	 * @param string the number sequence to convert
 	 * @return std::string the converted number sequence
 	 */
-	static std::string convert(RuleType _rule, std::string_view _string);
+	static std::string convert(RuleType rule, std::string_view string);
 
 	/**
 	 * @brief returns the minimum supported input size for conversion with rule type
 	 *
-	 * @param _rule the rule type to return the minimum supported input size for
+	 * @param rule the rule type to return the minimum supported input size for
 	 * @return constexpr size_t the minimum supported input size for conversion with rule type
 	 */
-	static constexpr size_t minInputSize(RuleType _rule) noexcept
+	static constexpr size_t minInputSize(RuleType rule) noexcept
 	{
-		switch(_rule)
+		switch(rule)
 		{
 		case RuleType::RomanNumeralConversion:
 		case RuleType::RunLengthEncodingConversion:
@@ -45,12 +45,12 @@ struct ConversionRule
 	/**
 	 * @brief returns the maximum supported input size for conversion with rule type
 	 *
-	 * @param _rule the rule type to return the maximum supported input size for
+	 * @param rule the rule type to return the maximum supported input size for
 	 * @return constexpr size_t the maximum supported input size for conversion with rule type
 	 */
-	static constexpr size_t maxInputSize(RuleType _rule) noexcept
+	static constexpr size_t maxInputSize(RuleType rule) noexcept
 	{
-		switch(_rule)
+		switch(rule)
 		{
 		case RuleType::RomanNumeralConversion:
 			return 4;

@@ -18,7 +18,7 @@ public:
 	 * @return true if rule was added
 	 * @return false if was rule already added
 	 */
-	bool add(RuleType _rule);
+	bool add(RuleType rule);
 
 	/**
 	 * @brief gets the minimum supported input size for conversion
@@ -58,10 +58,10 @@ public:
 	/**
 	 * @brief returns the rules at the specified index
 	 *
-	 * @param _index the index to return (unchecked)
+	 * @param index the index to return (unchecked)
 	 * @return RuleType the rule at _index
 	 */
-	RuleType operator[](size_t _index) const;
+	RuleType operator[](size_t index) const;
 
 private:
 	/**

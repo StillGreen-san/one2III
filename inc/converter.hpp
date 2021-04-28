@@ -14,46 +14,46 @@ struct Converter
 	/**
 	 * @brief estimates the total possible conversions
 	 *
-	 * @param _rules the rules used for conversion
-	 * @param _string the string to convert
+	 * @param rules the rules used for conversion
+	 * @param string the string to convert
 	 * @return size_t the estimated amount of possible conversions (always higher)
 	 */
-	static size_t estimatePossibilities(const RuleBook& _rules, std::string_view _string);
+	static size_t estimatePossibilities(const RuleBook& rules, std::string_view string);
 
 	/**
 	 * @brief calculate the total possible conversions
 	 *
-	 * @param _rules the rules used for conversion
-	 * @param _string the string to convert
+	 * @param rules the rules used for conversion
+	 * @param string the string to convert
 	 * @return size_t the calcualated amount of possible conversions
 	 */
-	static size_t calculatePossibilities(const RuleBook& _rules, std::string_view _string);
+	static size_t calculatePossibilities(const RuleBook& rules, std::string_view string);
 
 	/**
 	 * @brief returns a random conversion of all possible ones
 	 *
-	 * @param _rules the rules used for conversion
-	 * @param _string the string to convert
+	 * @param rules the rules used for conversion
+	 * @param string the string to convert
 	 * @return std::string the converted string
 	 */
-	static std::string randomConversion(const RuleBook& _rules, std::string_view _string);
+	static std::string randomConversion(const RuleBook& rules, std::string_view string);
 
 	/**
 	 * @brief returns the Nth conversion of all possible ones
 	 *
-	 * @param _rules the rules used for conversion
-	 * @param _string the string to convert
-	 * @param _number the number(id) to return from all possible conversions
+	 * @param rules the rules used for conversion
+	 * @param string the string to convert
+	 * @param number the number(id) to return from all possible conversions
 	 * @return std::string the converted string
 	 */
-	static std::string singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number);
+	static std::string singleConversion(const RuleBook& rules, std::string_view string, size_t number);
 
 	/**
 	 * @brief returns all conversions possible
 	 *
-	 * @param _rules the rules used for conversion
-	 * @param _string the string to convert
+	 * @param rules the rules used for conversion
+	 * @param string the string to convert
 	 * @return std::vector<std::string> all conversions
 	 */
-	static std::vector<std::string> allConversions(const RuleBook& _rules, std::string_view _string);
+	static std::vector<std::string> allConversions(const RuleBook& rules, std::string_view string);
 };

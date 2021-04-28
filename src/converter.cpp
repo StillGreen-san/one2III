@@ -8,12 +8,12 @@
 
 // TODO remove the massive amount of code duplication
 
-size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view _string)
+size_t Converter::estimatePossibilities(const RuleBook& rules, std::string_view string)
 {
 	size_t totalPossibilities = 0;
-	size_t stringLength = _string.size();
-	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
-	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
+	size_t stringLength = string.size();
+	size_t minPartSize = std::clamp(rules.getMinInputSize(), 1ULL, 255ULL);
+	size_t maxPartSize = std::clamp(rules.getMaxInputSize(), 1ULL, 255ULL);
 
 	for(size_t partCount = stringLength; partCount > 0; --partCount)
 	{
@@ -24,7 +24,7 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 			for(size_t partSize : partition)
 			{
 				partitionPossibilities *= std::count_if(
-				    std::begin(_rules), std::end(_rules),
+				    std::begin(rules), std::end(rules),
 				    [partSize](const RuleType& rule)
 				    {
 					    return partSize >= ConversionRule::minInputSize(rule) &&
@@ -44,14 +44,14 @@ size_t Converter::estimatePossibilities(const RuleBook& _rules, std::string_view
 	return totalPossibilities;
 }
 
-size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_view _string)
+size_t Converter::calculatePossibilities(const RuleBook& rules, std::string_view string)
 { // TODO make this not as wasteful as this currently is
   // add a maximum value to stop at and return the coversion at that point -> can be used to combine calc & singlconv
   // cache possibilities?
 	size_t totalPossibilities = 0;
-	size_t stringLength = _string.size();
-	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
-	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
+	size_t stringLength = string.size();
+	size_t minPartSize = std::clamp(rules.getMinInputSize(), 1ULL, 255ULL);
+	size_t maxPartSize = std::clamp(rules.getMaxInputSize(), 1ULL, 255ULL);
 
 	for(size_t partCount = stringLength; partCount > 0; --partCount)
 	{
@@ -64,9 +64,9 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 				size_t partOffset = 0;
 				for(size_t partSize : partition)
 				{
-					std::string_view stringPart = _string.substr(partOffset, partSize);
+					std::string_view stringPart = string.substr(partOffset, partSize);
 					partitionPossibilities *= std::count_if(
-					    std::begin(_rules), std::end(_rules),
+					    std::begin(rules), std::end(rules),
 					    [&](const RuleType& rule)
 					    {
 						    return !ConversionRule::convert(rule, stringPart).empty();
@@ -81,25 +81,25 @@ size_t Converter::calculatePossibilities(const RuleBook& _rules, std::string_vie
 	return totalPossibilities;
 }
 
-std::string Converter::randomConversion(const RuleBook& _rules, std::string_view _string)
+std::string Converter::randomConversion(const RuleBook& rules, std::string_view string)
 {
-	size_t possibilities = calculatePossibilities(_rules, _string);
+	size_t possibilities = calculatePossibilities(rules, string);
 	std::uniform_int_distribution<size_t> dist(1, possibilities);
 	std::random_device rd;
 	std::mt19937_64 mt(rd()); // TODO have this cached somehow?
-	return singleConversion(_rules, _string, dist(mt));
+	return singleConversion(rules, string, dist(mt));
 }
 
-std::string Converter::singleConversion(const RuleBook& _rules, std::string_view _string, size_t _number)
+std::string Converter::singleConversion(const RuleBook& rules, std::string_view string, size_t number)
 {
-	if(auto possibilities = calculatePossibilities(_rules, _string); _number > possibilities)
+	if(auto possibilities = calculatePossibilities(rules, string); number > possibilities)
 	{
-		_number %= possibilities;
+		number %= possibilities;
 	}
 
-	size_t stringLength = _string.size();
-	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
-	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
+	size_t stringLength = string.size();
+	size_t minPartSize = std::clamp(rules.getMinInputSize(), 1ULL, 255ULL);
+	size_t maxPartSize = std::clamp(rules.getMaxInputSize(), 1ULL, 255ULL);
 
 	for(size_t partCount = stringLength; partCount > 0; --partCount)
 	{
@@ -118,7 +118,7 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 							return false;
 						}
 						++ruleIndices[_index];
-						if(ruleIndices[_index] == _rules.size())
+						if(ruleIndices[_index] == rules.size())
 						{
 							ruleIndices[_index] = 0;
 							++_index;
@@ -135,9 +135,9 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 					size_t partOffset = 0;
 					for(size_t i = 0; i < partCount; ++i)
 					{
-						std::string_view stringPart = _string.substr(partOffset, partition[i]);
+						std::string_view stringPart = string.substr(partOffset, partition[i]);
 						partOffset += partition[i];
-						std::string convertedPart = ConversionRule::convert(_rules[ruleIndices[i]], stringPart);
+						std::string convertedPart = ConversionRule::convert(rules[ruleIndices[i]], stringPart);
 						if(convertedPart.empty())
 						{
 							break;
@@ -147,15 +147,15 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 
 					if(partOffset == stringLength)
 					{
-						if(_number != 0)
+						if(number != 0)
 						{
-							--_number;
+							--number;
 						}
 						if(auto size = converted.size(); size > 0)
 						{
 							converted.erase(size - 1);
 						}
-						if(_number == 0)
+						if(number == 0)
 						{
 							return converted;
 						}
@@ -168,12 +168,12 @@ std::string Converter::singleConversion(const RuleBook& _rules, std::string_view
 	return {};
 }
 
-std::vector<std::string> Converter::allConversions(const RuleBook& _rules, std::string_view _string)
+std::vector<std::string> Converter::allConversions(const RuleBook& rules, std::string_view string)
 { // TODO replace placeholder impl
 	std::vector<std::string> conversions;
-	const size_t stringLength = _string.size();
-	size_t minPartSize = std::clamp(_rules.getMinInputSize(), 1ULL, 255ULL);
-	size_t maxPartSize = std::clamp(_rules.getMaxInputSize(), 1ULL, 255ULL);
+	const size_t stringLength = string.size();
+	size_t minPartSize = std::clamp(rules.getMinInputSize(), 1ULL, 255ULL);
+	size_t maxPartSize = std::clamp(rules.getMaxInputSize(), 1ULL, 255ULL);
 
 	for(size_t partCount = stringLength; partCount > 0; --partCount)
 	{
@@ -192,7 +192,7 @@ std::vector<std::string> Converter::allConversions(const RuleBook& _rules, std::
 							return false;
 						}
 						++ruleIndices[_index];
-						if(ruleIndices[_index] == _rules.size())
+						if(ruleIndices[_index] == rules.size())
 						{
 							ruleIndices[_index] = 0;
 							++_index;
@@ -209,8 +209,8 @@ std::vector<std::string> Converter::allConversions(const RuleBook& _rules, std::
 					size_t partOffset = 0;
 					for(size_t i = 0; i < partCount; ++i)
 					{
-						std::string_view stringPart = _string.substr(partOffset, partition[i]);
-						std::string convertedPart = ConversionRule::convert(_rules[ruleIndices[i]], stringPart);
+						std::string_view stringPart = string.substr(partOffset, partition[i]);
+						std::string convertedPart = ConversionRule::convert(rules[ruleIndices[i]], stringPart);
 						if(convertedPart.empty())
 						{
 							break;

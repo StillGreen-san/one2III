@@ -1,13 +1,13 @@
 #include "rulebook.hpp"
 #include "conversionrule.hpp"
 
-bool RuleBook::add(RuleType _rule)
+bool RuleBook::add(RuleType rule)
 {
-	if(_rule == RuleType::None)
+	if(rule == RuleType::None)
 	{
 		return false;
 	}
-	auto result = rules.insert(_rule);
+	auto result = rules.insert(rule);
 	if(!result.second)
 	{
 		return false;
@@ -42,13 +42,13 @@ size_t RuleBook::size() const
 	return rules.size();
 }
 
-RuleType RuleBook::operator[](size_t _index) const
+RuleType RuleBook::operator[](size_t index) const
 {
 	auto iterator = rules.begin();
-	if(_index > static_cast<size_t>(std::numeric_limits<ptrdiff_t>::max()))
+	if(index > static_cast<size_t>(std::numeric_limits<ptrdiff_t>::max()))
 	{
 		std::advance(iterator, std::numeric_limits<ptrdiff_t>::max());
-		_index -= std::numeric_limits<ptrdiff_t>::max();
+		index -= std::numeric_limits<ptrdiff_t>::max();
 	}
-	return *std::next(iterator, _index);
+	return *std::next(iterator, index);
 }
