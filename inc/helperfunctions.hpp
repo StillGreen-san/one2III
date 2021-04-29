@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ostream>
 #include <string>
 #include <vector>
 
@@ -33,7 +34,7 @@ bool isValidNumberSequence(std::string_view sequence);
  */
 std::vector<std::string_view> partitionString(std::string_view string, const std::vector<size_t>& partition);
 
-// TODO stable_unique() to eliminate identical looking strings
+// TODO stable/unsorted_unique() to eliminate identical looking strings
 
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec)

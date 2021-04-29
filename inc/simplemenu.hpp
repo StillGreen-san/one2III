@@ -40,7 +40,7 @@ private:
 		SimpleScreen& addOption(char key, std::string desc, int screen, std::function<void()> cllbck = nullptr);
 
 	private:
-		friend class SimpleMenu;
+		friend struct SimpleMenu;
 		explicit SimpleScreen(int id) : id{id} {};
 		struct Option
 		{

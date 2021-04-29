@@ -59,7 +59,7 @@ std::string asRunLengthEncode(std::string_view number)
 
 std::string romanNumerals(std::string_view number)
 {
-	static const std::vector<std::pair<uint16_t, const char*>> roman{
+	static const std::vector<std::pair<int, const char*>> roman{
 	    {1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"}, {100, "C"}, {90, "XC"}, {50, "L"},
 	    {40, "XL"},  {10, "X"},   {9, "IX"},  {5, "V"},    {4, "IV"},  {1, "I"}};
 
