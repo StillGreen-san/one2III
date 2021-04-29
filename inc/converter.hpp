@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include "rulebook.hpp"
+
+#include <functional>
 
 /**
  * @brief static Converster struct with functions for converting a string
@@ -37,7 +37,7 @@ struct Converter
 	 * @return std::string the converted string
 	 */
 	static std::string randomConversion(const RuleBook& rules, std::string_view string);
-
+	// TODO remove random & single as they can be implemented via outputFunc of all ?
 	/**
 	 * @brief returns the Nth conversion of all possible ones
 	 *
@@ -53,7 +53,9 @@ struct Converter
 	 *
 	 * @param rules the rules used for conversion
 	 * @param string the string to convert
-	 * @return std::vector<std::string> all conversions
+	 * @param outputFunc function called everytime a conversion is created (like output iterator)
+	 * @return size_t number of conversions
 	 */
-	static std::vector<std::string> allConversions(const RuleBook& rules, std::string_view string);
+	static size_t allConversions(
+	    const RuleBook& rules, std::string_view string, std::function<void(std::string&&)> outputFunc);
 };

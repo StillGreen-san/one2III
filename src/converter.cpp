@@ -147,7 +147,7 @@ std::string Converter::singleConversion(const RuleBook& rules, std::string_view 
 
 					if(partOffset == stringLength)
 					{
-						if(number != 0)
+						if(number != 0) //! if not needed?
 						{
 							--number;
 						}
@@ -168,9 +168,10 @@ std::string Converter::singleConversion(const RuleBook& rules, std::string_view 
 	return {};
 }
 
-std::vector<std::string> Converter::allConversions(const RuleBook& rules, std::string_view string)
+size_t Converter::allConversions(
+    const RuleBook& rules, std::string_view string, std::function<void(std::string&&)> outputFunc)
 { // TODO replace placeholder impl
-	std::vector<std::string> conversions;
+	size_t conversions = 0;
 	const size_t stringLength = string.size();
 	size_t minPartSize = std::clamp(rules.getMinInputSize(), 1ULL, 255ULL);
 	size_t maxPartSize = std::clamp(rules.getMaxInputSize(), 1ULL, 255ULL);
@@ -213,7 +214,7 @@ std::vector<std::string> Converter::allConversions(const RuleBook& rules, std::s
 						std::string convertedPart = ConversionRule::convert(rules[ruleIndices[i]], stringPart);
 						if(convertedPart.empty())
 						{
-							break;
+							break; //? move checks out before loop similar to estimate to avoid some conversions?
 						}
 						partOffset += partition[i];
 						converted.append(convertedPart).append(" ");
@@ -225,7 +226,8 @@ std::vector<std::string> Converter::allConversions(const RuleBook& rules, std::s
 						{
 							converted.erase(size - 1);
 						}
-						conversions.emplace_back(std::move(converted));
+						++conversions;
+						outputFunc(std::move(converted));
 					}
 				} while(incrementIndices());
 			} while(std::next_permutation(rbegin(partition), rend(partition)));
