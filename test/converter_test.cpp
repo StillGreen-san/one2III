@@ -177,8 +177,8 @@ TEST_CASE("TEST MEM USAGE", "[.]")
 		actual = Converter::allConversions(rules, svMedium, outputFunc);
 
 		// estimated = Converter::estimatePossibilities(rules, svLong);
-		calculated = Converter::calculatePossibilities(rules, svLong); // TODO find what causes crash here
-		// output.clear();
+		calculated = Converter::calculatePossibilities(rules, svLong); // TODO find crash somewhere else
+		                                                               // output.clear();
 		// actual = Converter::allConversions(rules, svLong, outputFunc);
 	};
 

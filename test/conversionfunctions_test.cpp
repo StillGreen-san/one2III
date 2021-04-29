@@ -52,6 +52,7 @@ TEST_CASE("romanNumerals")
 	CHECK(romanNumerals("2421") == "MMCDXXI");
 	CHECK(romanNumerals("3999") == "MMMCMXCIX");
 	CHECK(romanNumerals("5432") == "");
+	CHECK(numberToEnglish("4444555666") == "");
 }
 
 TEST_CASE("numberToEnglish")
@@ -66,6 +67,7 @@ TEST_CASE("numberToEnglish")
 	CHECK(numberToEnglish("500") == "five hundred");
 	CHECK(numberToEnglish("999") == "nine hundred ninety nine");
 	CHECK(numberToEnglish("9875") == "");
+	CHECK(numberToEnglish("4444555666") == "");
 }
 
 TEST_CASE("lookAndSay")

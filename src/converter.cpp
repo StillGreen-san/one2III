@@ -58,6 +58,7 @@ size_t Converter::calculatePossibilities(const RuleBook& rules, std::string_view
 		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
 		for(auto& partition : possiblePartitions)
 		{
+			partition.empty(); // TODO why does this compile?
 			do
 			{
 				size_t partitionPossibilities = 1;

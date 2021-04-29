@@ -98,7 +98,7 @@ std::string numberToEnglish(std::string_view number)
 	    "ten",    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
 	    "twenty", "thirty", "forty",  "fifty",    "sixty",    "seventy", "eighty",  "ninety"};
 
-	unsigned integer = std::stoul(std::string(number));
+	auto integer = std::stoull(std::string(number));
 	if(integer > 999)
 	{
 		return {};
