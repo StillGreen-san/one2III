@@ -156,49 +156,56 @@ TEST_CASE("TEST MEM USAGE", "[.]")
 	{
 		output.emplace_back(std::move(conversion));
 	};
-	size_t calculated;
+	size_t calculated = 0;
 	// size_t estimated;
-	size_t actual;
+	size_t actual = 0;
 	constexpr std::string_view svShort = "12345";
 	constexpr std::string_view svMedium = "1337420690";
 	constexpr std::string_view svLong = "11112223344445556666";
 	auto DOIT = [&]()
 	{
+		std::swap(calculated, actual);
 		// estimated = Converter::estimatePossibilities(rules, svShort);
-		calculated = Converter::calculatePossibilities(rules, svShort);
-		output.clear();
-		output.reserve(calculated);
-		actual = Converter::allConversions(rules, svShort, outputFunc);
+		// calculated = Converter::calculatePossibilities(rules, svShort);
+		// output.clear();
+		// output.reserve(calculated);
+		// actual = Converter::allConversions(rules, svShort, outputFunc);
 
 		// estimated = Converter::estimatePossibilities(rules, svMedium);
-		calculated = Converter::calculatePossibilities(rules, svMedium);
-		output.clear();
-		output.reserve(calculated);
-		actual = Converter::allConversions(rules, svMedium, outputFunc);
+		// calculated = Converter::calculatePossibilities(rules, svMedium);
+		// output.clear();
+		// output.reserve(calculated);
+		// actual = Converter::allConversions(rules, svMedium, outputFunc);
 
 		// estimated = Converter::estimatePossibilities(rules, svLong);
-		calculated = Converter::calculatePossibilities(rules, svLong); // TODO find crash somewhere else
-		                                                               // output.clear();
+		calculated = Converter::calculatePossibilities(rules, svLong);
+		// output.clear();
 		// actual = Converter::allConversions(rules, svLong, outputFunc);
 	};
 
 	rules.add(RuleType::AsNumberConversion);
 	DOIT();
+	REQUIRE(calculated > actual);
 
 	rules.add(RuleType::NumberToEnglishConversion);
 	DOIT();
+	REQUIRE(calculated > actual);
 
 	rules.add(RuleType::RomanNumeralConversion);
 	DOIT();
+	REQUIRE(calculated > actual);
 
 	rules.add(RuleType::RunLengthEncodingConversion);
 	DOIT();
+	REQUIRE(calculated > actual);
 
 	rules.add(RuleType::LookAndSayConversion);
 	DOIT();
+	REQUIRE(calculated > actual);
 
 	rules.add(RuleType::AsRunLengthEncodingConversion);
 	DOIT();
+	REQUIRE(calculated > actual);
 
 	SUCCEED();
 }

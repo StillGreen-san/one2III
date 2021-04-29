@@ -52,7 +52,7 @@ TEST_CASE("romanNumerals")
 	CHECK(romanNumerals("2421") == "MMCDXXI");
 	CHECK(romanNumerals("3999") == "MMMCMXCIX");
 	CHECK(romanNumerals("5432") == "");
-	CHECK(numberToEnglish("4444555666") == "");
+	CHECK(romanNumerals("4444555666") == "");
 }
 
 TEST_CASE("numberToEnglish")

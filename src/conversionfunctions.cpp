@@ -68,7 +68,7 @@ std::string romanNumerals(std::string_view number)
 		return {};
 	}
 
-	uint16_t integer = static_cast<uint16_t>(std::stoul(std::string(number)));
+	auto integer = std::stoull(std::string(number));
 	if(integer < 1 || integer > 3999)
 	{
 		return {};
