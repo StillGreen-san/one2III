@@ -13,6 +13,8 @@ add_library( project_warnings INTERFACE )
 set_project_warnings( project_warnings )
 link_libraries( project_warnings )
 
+include( ${CMAKE_CURRENT_SOURCE_DIR}/cpp_starter_project/cmake/StaticAnalyzers.cmake )
+
 set( one2III_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc )
 set( one2III_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src )
 set( one2III_TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test )

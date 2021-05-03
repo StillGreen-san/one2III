@@ -45,14 +45,12 @@ void SimpleMenu::show(int id)
 
 	while(id != Exit)
 	{
-		// find id
 		auto screen = findScreen(id);
 		if(screen == std::end(screens))
 		{
 			screen = std::begin(screens);
 		}
 
-		// display screen
 		std::cout << '\n' << screen->description << '\n';
 		for(const SimpleScreen::Option& opt : screen->options)
 		{
@@ -70,15 +68,13 @@ void SimpleMenu::show(int id)
 		const auto noOption = std::end(screen->options);
 		auto option = noOption;
 
-		// get input
-		char key;
+		char key = '\000';
 		std::cin.get(key);
 		if(key != '\n')
 		{
 			std::cin.ignore();
 		}
 
-		// find option
 		option = std::find_if(
 		    std::begin(screen->options), noOption,
 		    [key](const SimpleScreen::Option& opt)
@@ -90,13 +86,11 @@ void SimpleMenu::show(int id)
 			continue;
 		}
 
-		// call callback
 		if(option->callback)
 		{
 			option->callback();
 		}
 
-		// check/set id
 		if(option->nextScreen == Restart)
 		{
 			id = initialId;

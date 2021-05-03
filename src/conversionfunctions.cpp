@@ -62,27 +62,29 @@ std::string romanNumerals(std::string_view number)
 	static const std::vector<std::pair<int, const char*>> roman{
 	    {1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"}, {100, "C"}, {90, "XC"}, {50, "L"},
 	    {40, "XL"},  {10, "X"},   {9, "IX"},  {5, "V"},    {4, "IV"},  {1, "I"}};
+	constexpr auto MIN_ROMAN_INT = 1ULL;
+	constexpr auto MAX_ROMAN_INT = 3999ULL;
 
-	if(number.empty())
+	if(number.empty()) // TODO add check for string that are to long
 	{
 		return {};
 	}
 
 	auto integer = std::stoull(std::string(number));
-	if(integer < 1 || integer > 3999)
+	if(integer < MIN_ROMAN_INT || integer > MAX_ROMAN_INT)
 	{
 		return {};
 	}
 
 	std::string converted;
-	for(auto& r : roman)
+	for(const auto& r : roman)
 	{
 		while(integer >= r.first)
 		{
 			integer -= r.first;
 			converted += r.second;
 		}
-		if(!integer)
+		if(integer == 0)
 		{
 			break;
 		}
@@ -97,8 +99,9 @@ std::string numberToEnglish(std::string_view number)
 	    "",       "one",    "two",    "three",    "four",     "five",    "six",     "seven",     "eight",    "nine",
 	    "ten",    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
 	    "twenty", "thirty", "forty",  "fifty",    "sixty",    "seventy", "eighty",  "ninety"};
+	constexpr auto TENTH_OFFSET = 18ULL;
 
-	auto integer = std::stoull(std::string(number));
+	auto integer = std::stoull(std::string(number)); // TODO add check for string that are to long
 	if(integer > 999)
 	{
 		return {};
@@ -124,7 +127,7 @@ std::string numberToEnglish(std::string_view number)
 	}
 	else
 	{
-		english += numeng[(integer / 10) + 18];
+		english += numeng[(integer / 10) + TENTH_OFFSET];
 		english += " " + numeng[integer % 10];
 	}
 	if(english.back() == ' ')
@@ -146,7 +149,7 @@ std::string lookAndSay(std::string_view number)
 	runLengthEncoded.append(1, ' '); // makes conversion algo easier for last item
 	std::replace(std::begin(runLengthEncoded), std::end(runLengthEncoded), ' ', '\000');
 
-	std::string separator = "";
+	std::string separator;
 	std::string lookAndSay;
 	const std::string::const_iterator stringEnd = runLengthEncoded.cend();
 	std::string::const_iterator sectionBegin = runLengthEncoded.cbegin();

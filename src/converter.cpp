@@ -92,7 +92,7 @@ std::string Converter::randomConversion(const RuleBook& rules, std::string_view 
 
 std::string Converter::singleConversion(const RuleBook& rules, std::string_view string, size_t number)
 {
-	if(auto possibilities = calculatePossibilities(rules, string); number > possibilities)
+	if(auto possibilities = calculatePossibilities(rules, string); number > possibilities && possibilities != 0)
 	{
 		number %= possibilities;
 	}
@@ -201,7 +201,7 @@ size_t Converter::allConversions(
 						}
 						return true;
 					};
-					return impl(impl);
+					return impl(impl); // TODO check removal of recursion else nolint (also for other functions)
 				};
 
 				do

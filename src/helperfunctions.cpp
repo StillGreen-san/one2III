@@ -5,7 +5,7 @@
 
 std::vector<std::vector<size_t>> integerPartitions(size_t integer, size_t partcount, size_t minpart, size_t maxpart)
 {
-	if(!integer || !partcount || integer < partcount || integer < minpart || minpart > maxpart ||
+	if(integer == 0 || partcount == 0 || integer < partcount || integer < minpart || minpart > maxpart ||
 	   partcount * minpart > integer || partcount * maxpart < integer)
 	{
 		return {};
