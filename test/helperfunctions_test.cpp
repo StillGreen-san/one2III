@@ -29,11 +29,9 @@ TEST_CASE("partitionString")
 {
 	using svv = std::vector<std::string_view>;
 
-	const char* tc_1234 = "1234";
-	CHECK(partitionString(tc_1234, {}) == svv{});
-	CHECK(
-	    partitionString(tc_1234, {1, 1, 1, 1}) ==
-	    svv{{tc_1234, 1}, {tc_1234 + 1, 1}, {tc_1234 + 2, 1}, {tc_1234 + 3, 1}});
-	CHECK(partitionString(tc_1234, {2, 2}) == svv{{tc_1234, 2}, {tc_1234 + 2, 2}});
-	CHECK(partitionString(tc_1234, {2, 2, 2, 2}) == svv{});
+	CHECK(partitionString("1234", {}) == svv{});
+	CHECK(partitionString("1234", {1, 1, 1, 1}) == svv{"1", "2", "3", "4"});
+	CHECK(partitionString("1234", {2, 2}) == svv{"12", "34"});
+	CHECK(partitionString("1234", {2, 2, 2, 2}) == svv{});
+	CHECK(partitionString("12345678", {3, 1, 4}) == svv{"123", "4", "5678"});
 }
