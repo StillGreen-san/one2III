@@ -137,22 +137,48 @@ TEST_CASE("randomConversion")
 	}
 }
 
-// TODO redo all these tests
-// TODO check for no rules
-
 TEST_CASE("singleConversion")
 {
 	RuleBook rules;
-	// CHECK(Converter::singleConversion(rules, "1234", 50) == "");
-	// CHECK(Converter::singleConversion(rules, "1234", 8) == "");
 
-	rules.add(RuleType::RomanNumeralConversion);
-	CHECK(Converter::singleConversion(rules, "1234", 4) == "I II XXXIV");
-	CHECK(Converter::singleConversion(rules, "1234", 8) == "MCCXXXIV");
+	SECTION("no rules")
+	{
+		CHECK(Converter::singleConversion(rules, "1234", 16) == "");
+		CHECK(Converter::singleConversion(rules, "", 8) == "");
+		CHECK(Converter::singleConversion(rules, {}, 4) == "");
+	}
 
-	rules.add(RuleType::NumberToEnglishConversion);
-	CHECK(Converter::singleConversion(rules, "1234", 12) == "one two III four");
-	CHECK(Converter::singleConversion(rules, "1234", 666) == "one XXIII four");
+	SECTION("one rule RNC")
+	{
+		rules.add(RuleType::RomanNumeralConversion);
+		CHECK(Converter::singleConversion(rules, "1234", 4) == "I II XXXIV");
+		CHECK(Converter::singleConversion(rules, "1234", 4096) == "I II III IV");
+		CHECK(Converter::singleConversion(rules, "", 4) == "");
+		CHECK(Converter::singleConversion(rules, {}, 8) == "");
+	}
+
+	SECTION("two rules RNC,numToEng")
+	{
+		rules.add(RuleType::RomanNumeralConversion);
+		rules.add(RuleType::NumberToEnglishConversion);
+		CHECK(Converter::singleConversion(rules, "1234", 12) == "one two III four");
+		CHECK(Converter::singleConversion(rules, "1234", 66666) == "I CCXXXIV");
+		CHECK(Converter::singleConversion(rules, "", 666) == "");
+		CHECK(Converter::singleConversion(rules, {}, 12) == "");
+	}
+
+	SECTION("three rules RLE,LAS,asRLE")
+	{
+		rules.add(RuleType::RunLengthEncodingConversion);
+		rules.add(RuleType::LookAndSayConversion);
+		rules.add(RuleType::AsRunLengthEncodingConversion);
+		CHECK(Converter::singleConversion(rules, "1234", 4096) == "one one one two 3 4");
+		CHECK(
+		    Converter::singleConversion(rules, "12345678", 16384) ==
+		    "1 2 one three 1 4 one five 1 6 one seven one eight");
+		CHECK(Converter::singleConversion(rules, "", 1024) == "");
+		CHECK(Converter::singleConversion(rules, {}, 16) == "");
+	}
 }
 
 TEST_CASE("allConversions")
@@ -160,53 +186,70 @@ TEST_CASE("allConversions")
 	using sv = std::vector<std::string>;
 	using Catch::Matchers::Contains;
 	using Catch::Matchers::UnorderedEquals;
-	// "1234" = 1,1,1,1 2,1,1 1,2,1 1,1,2 2,2 3,1 1,3 4
+
 	RuleBook rules;
-	std::string_view string = "1234";
 	sv output;
 	auto outputFunc = [&](std::string&& conversion)
 	{
 		output.emplace_back(std::move(conversion));
 	};
 
-	CHECK(Converter::allConversions(rules, string, outputFunc) == 0);
+	SECTION("no rules")
+	{
+		CHECK(Converter::allConversions(rules, "1234", outputFunc) == 0);
+		CHECK(output.empty());
+	}
 
-	rules.add(RuleType::AsNumberConversion);
-	output.clear();
-	CHECK(Converter::allConversions(rules, string, outputFunc) == 8);
-	CHECK_THAT(output, UnorderedEquals(sv{"1 2 3 4", "12 3 4", "1 23 4", "1 2 34", "12 34", "123 4", "1 234", "1234"}));
+	SECTION("one rule asNum")
+	{
+		rules.add(RuleType::AsNumberConversion);
+		CHECK(Converter::allConversions(rules, "1234", outputFunc) == 8);
+		CHECK_THAT(
+		    output, UnorderedEquals(sv{"1 2 3 4", "12 3 4", "1 23 4", "1 2 34", "12 34", "123 4", "1 234", "1234"}));
+	}
 
-	rules.add(RuleType::AsRunLengthEncodingConversion);
-	output.clear();
-	CHECK(Converter::allConversions(rules, string, outputFunc) == 15);
-	CHECK_THAT(
-	    output, UnorderedEquals(
-	                sv{"1 2 3 4", "12 3 4", "1 2 3 4", "1 23 4", "1 2 3 4", "1 2 34", "1 2 3 4", "12 34", "1 2 34",
-	                   "12 3 4", "1 2 3 4", "123 4", "1 234", "1234", "1 2 3 4"}));
+	SECTION("two rules asNum,asRLE")
+	{
+		rules.add(RuleType::AsNumberConversion);
+		rules.add(RuleType::AsRunLengthEncodingConversion);
+		CHECK(Converter::allConversions(rules, "1234", outputFunc) == 15);
+		CHECK_THAT(
+		    output, UnorderedEquals(
+		                sv{"1 2 3 4", "12 3 4", "1 2 3 4", "1 23 4", "1 2 3 4", "1 2 34", "1 2 3 4", "12 34", "1 2 34",
+		                   "12 3 4", "1 2 3 4", "123 4", "1 234", "1234", "1 2 3 4"}));
+	}
 
-	rules = RuleBook();
-	rules.add(RuleType::AsNumberConversion);
-	rules.add(RuleType::RomanNumeralConversion);
-	output.clear();
-	CHECK(Converter::allConversions(rules, string, outputFunc) == 54);
-	CHECK_THAT(
-	    output, UnorderedEquals(sv{"1 2 3 4",    "I 2 3 4",    "1 II 3 4",    "1 2 III 4",   "1 2 3 IV",  "I II 3 4",
-	                               "1 2 III IV", "I 2 3 IV",   "1 II III 4",  "I 2 III 4",   "1 II 3 IV", "I II III 4",
-	                               "I II 3 IV",  "I 2 III IV", "1 II III IV", "I II III IV", "12 3 4",    "XII 3 4",
-	                               "12 III 4",   "12 3 IV",    "XII III 4",   "12 III IV",   "XII 3 IV",  "XII III IV",
-	                               "1 23 4",     "I 23 4",     "1 XXIII 4",   "1 23 IV",     "I XXIII 4", "1 XXIII IV",
-	                               "I 23 IV",    "I XXIII IV", "1 2 34",      "I 2 34",      "1 II 34",   "1 2 XXXIV",
-	                               "I II 34",    "1 II XXXIV", "I 2 XXXIV",   "I II XXXIV",  "12 34",     "XII 34",
-	                               "12 XXXIV",   "XII XXXIV",  "123 4",       "CXXIII 4",    "123 IV",    "CXXIII IV",
-	                               "1 234",      "I 234",      "1 CCXXXIV",   "I CCXXXIV",   "1234",      "MCCXXXIV"}));
+	SECTION("two rules asNum,RNC")
+	{
+		rules.add(RuleType::AsNumberConversion);
+		rules.add(RuleType::RomanNumeralConversion);
+		CHECK(Converter::allConversions(rules, "1234", outputFunc) == 54);
+		CHECK_THAT(
+		    output,
+		    UnorderedEquals(sv{"1 2 3 4",    "I 2 3 4",    "1 II 3 4",    "1 2 III 4",   "1 2 3 IV",  "I II 3 4",
+		                       "1 2 III IV", "I 2 3 IV",   "1 II III 4",  "I 2 III 4",   "1 II 3 IV", "I II III 4",
+		                       "I II 3 IV",  "I 2 III IV", "1 II III IV", "I II III IV", "12 3 4",    "XII 3 4",
+		                       "12 III 4",   "12 3 IV",    "XII III 4",   "12 III IV",   "XII 3 IV",  "XII III IV",
+		                       "1 23 4",     "I 23 4",     "1 XXIII 4",   "1 23 IV",     "I XXIII 4", "1 XXIII IV",
+		                       "I 23 IV",    "I XXIII IV", "1 2 34",      "I 2 34",      "1 II 34",   "1 2 XXXIV",
+		                       "I II 34",    "1 II XXXIV", "I 2 XXXIV",   "I II XXXIV",  "12 34",     "XII 34",
+		                       "12 XXXIV",   "XII XXXIV",  "123 4",       "CXXIII 4",    "123 IV",    "CXXIII IV",
+		                       "1 234",      "I 234",      "1 CCXXXIV",   "I CCXXXIV",   "1234",      "MCCXXXIV"}));
+	}
 
-	rules.add(RuleType::NumberToEnglishConversion);
-	output.clear();
-	Converter::allConversions(rules, string, outputFunc);
-	CHECK_THAT(
-	    output, Contains(
-	                sv{"1 2 3 4", "I two 3 4", "one 2 three four", "I II thirty four", "one twenty three four",
-	                   "one XXIII 4", "I II 34", "one hundred twenty three IV", "1 234", "one 234", "one CCXXXIV"}));
+	SECTION("three rules asNum,RNC,NTE")
+	{
+		rules.add(RuleType::AsNumberConversion);
+		rules.add(RuleType::RomanNumeralConversion);
+		rules.add(RuleType::NumberToEnglishConversion);
+		CHECK(Converter::allConversions(rules, "1234", outputFunc) == 191);
+		CHECK_THAT(
+		    output,
+		    Contains(
+		        sv{"one II three IV", "I two 3 4", "one 2 three four", "I II thirty four", "one twenty three four",
+		           "one XXIII 4", "I II 34", "one hundred twenty three IV", "1 234", "one 234", "one CCXXXIV", "1234",
+		           "twelve XXXIV", "I 2 thirty four", "one 23 four", "XII III four", "I 2 3 four", "1 2 3 4"}));
+	}
 }
 
 TEST_CASE("TEST MEM USAGE", "[.]") //! temporary manual testing function
