@@ -2,82 +2,143 @@
 
 #include "converter.hpp"
 
-// TODO redo all these tests
-// TODO check for no rules
-
 TEST_CASE("estimatePossibilities")
 {
 	RuleBook rules;
-	// "1234" = 1,1,1,1 2,1,1 1,2,1 1,1,2 2,2 3,1 1,3 4
-	SECTION("one rule Roman")
+
+	SECTION("no rule")
+	{
+		CHECK(Converter::estimatePossibilities(rules, "1234") == 0);
+		CHECK(Converter::estimatePossibilities(rules, "") == 0);
+	}
+
+	SECTION("one rule RNC")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
 		CHECK(Converter::estimatePossibilities(rules, "1234") == 8);
+		CHECK(Converter::calculatePossibilities(rules, "12345678") == 96);
 	}
 
 	SECTION("one rule asRLE")
 	{
 		rules.add(RuleType::AsRunLengthEncodingConversion);
 		CHECK(Converter::estimatePossibilities(rules, "1234") == 2);
+		CHECK(Converter::estimatePossibilities(rules, "") == 0);
 	}
 
-	SECTION("two rules Roman,asRLE")
+	SECTION("two rules RNC,asRLE")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
 		rules.add(RuleType::AsRunLengthEncodingConversion);
 		CHECK(Converter::estimatePossibilities(rules, "1234") == 17);
+		CHECK(Converter::estimatePossibilities(rules, "") == 0);
+	}
+
+	SECTION("nullptr view")
+	{
+		CHECK(Converter::estimatePossibilities(rules, {}) == 0);
+		rules.add(RuleType::NumberToEnglishConversion);
+		CHECK(Converter::estimatePossibilities(rules, {}) == 0);
 	}
 }
 
 TEST_CASE("calculatePossibilities")
 {
 	RuleBook rules;
-	// "1234" = 1,1,1,1 2,1,1 1,2,1 1,1,2 2,2 3,1 1,3 4
-	SECTION("one rule Roman")
+
+	SECTION("no rule")
+	{
+		CHECK(Converter::calculatePossibilities(rules, "1234") == 0);
+		CHECK(Converter::calculatePossibilities(rules, "") == 0);
+	}
+
+	SECTION("one rule RNC")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
 		CHECK(Converter::calculatePossibilities(rules, "1234") == 8);
+		CHECK(Converter::calculatePossibilities(rules, "12345678") == 96);
 	}
 
-	SECTION("one rule numToEng")
+	SECTION("one rule NTE")
 	{
 		rules.add(RuleType::NumberToEnglishConversion);
 		CHECK(Converter::calculatePossibilities(rules, "1234") == 7);
+		CHECK(Converter::calculatePossibilities(rules, "") == 0);
 	}
 
-	SECTION("two rules Roman,asRLE")
+	SECTION("two rules RNC,asRLE")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
 		rules.add(RuleType::AsRunLengthEncodingConversion);
 		CHECK(Converter::calculatePossibilities(rules, "1234") == 15);
+		CHECK(Converter::calculatePossibilities(rules, "") == 0);
 	}
 
-	// TODO come up with more tests because they don't cover everything aperantly!
-	// LookAndSayConversion in random can fail after chaning calculatePossibilities without this failing
+	SECTION("two rules LAS,RLE")
+	{
+		rules.add(RuleType::LookAndSayConversion);
+		rules.add(RuleType::RunLengthEncodingConversion);
+		CHECK(Converter::calculatePossibilities(rules, "1234") == 54);
+	}
+
+	SECTION("three rules asNum,RNC,NTE")
+	{
+		rules.add(RuleType::AsNumberConversion);
+		rules.add(RuleType::RomanNumeralConversion);
+		rules.add(RuleType::NumberToEnglishConversion);
+		CHECK(Converter::calculatePossibilities(rules, "1234") == 191);
+	}
+
+	SECTION("nullptr view")
+	{
+		CHECK(Converter::calculatePossibilities(rules, {}) == 0);
+		rules.add(RuleType::LookAndSayConversion);
+		CHECK(Converter::calculatePossibilities(rules, {}) == 0);
+	}
 }
 
 TEST_CASE("randomConversion")
 {
 	RuleBook rules;
-	rules.add(RuleType::NumberToEnglishConversion);
-	CHECK(Converter::randomConversion(rules, "1234") != "");
 
-	rules.add(RuleType::LookAndSayConversion);
-	CHECK(Converter::randomConversion(rules, "1234") != "");
+	SECTION("no rules")
+	{
+		CHECK(Converter::randomConversion(rules, "1234") == "");
+		CHECK(Converter::randomConversion(rules, "") == "");
+		CHECK(Converter::randomConversion(rules, {}) == "");
+	}
 
-	rules.add(RuleType::RunLengthEncodingConversion);
-	CHECK(Converter::randomConversion(rules, "1234") != "");
+	SECTION("one rule NTE")
+	{
+		rules.add(RuleType::NumberToEnglishConversion);
+		CHECK(Converter::randomConversion(rules, "1234") != "");
+		CHECK(Converter::randomConversion(rules, "") == "");
+		CHECK(Converter::randomConversion(rules, {}) == "");
+	}
 
-	rules = RuleBook();
-	rules.add(RuleType::AsNumberConversion);
-	CHECK(Converter::randomConversion(rules, "1234") != "");
+	SECTION("two rules NTE,LAS")
+	{
+		rules.add(RuleType::NumberToEnglishConversion);
+		rules.add(RuleType::LookAndSayConversion);
+		CHECK(Converter::randomConversion(rules, "1234") != "");
+		CHECK(Converter::randomConversion(rules, "") == "");
+		CHECK(Converter::randomConversion(rules, {}) == "");
+	}
 
-	rules.add(RuleType::AsRunLengthEncodingConversion);
-	CHECK(Converter::randomConversion(rules, "1234") != "");
-
-	rules.add(RuleType::RomanNumeralConversion);
-	CHECK(Converter::randomConversion(rules, "1234") != "");
+	SECTION("three rules RNC,asNum,asRLE")
+	{
+		rules.add(RuleType::RomanNumeralConversion);
+		rules.add(RuleType::AsNumberConversion);
+		rules.add(RuleType::AsRunLengthEncodingConversion);
+		CHECK(Converter::randomConversion(rules, "1234") != "");
+		CHECK(Converter::randomConversion(rules, "12345678") != "");
+		CHECK(Converter::randomConversion(rules, "") == "");
+		CHECK(Converter::randomConversion(rules, {}) == "");
+	}
 }
+
+// TODO redo all these tests
+// TODO check for no rules
 
 TEST_CASE("singleConversion")
 {
@@ -148,7 +209,7 @@ TEST_CASE("allConversions")
 	                   "one XXIII 4", "I II 34", "one hundred twenty three IV", "1 234", "one 234", "one CCXXXIV"}));
 }
 
-TEST_CASE("TEST MEM USAGE", "[.]")
+TEST_CASE("TEST MEM USAGE", "[.]") //! temporary manual testing function
 {
 	RuleBook rules;
 	std::vector<std::string> output;

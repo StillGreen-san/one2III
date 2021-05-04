@@ -84,7 +84,11 @@ size_t Converter::calculatePossibilities(const RuleBook& rules, std::string_view
 std::string Converter::randomConversion(const RuleBook& rules, std::string_view string)
 {
 	size_t possibilities = calculatePossibilities(rules, string);
-	std::uniform_int_distribution<size_t> dist(1, possibilities);
+	if(possibilities == 0)
+	{
+		return {};
+	}
+	std::uniform_int_distribution<size_t> dist(1, possibilities); // TODO replace with modolu?
 	std::random_device rd;
 	std::mt19937_64 mt(rd()); // TODO have this cached somehow?
 	return singleConversion(rules, string, dist(mt));
