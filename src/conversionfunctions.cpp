@@ -59,9 +59,8 @@ std::string asRunLengthEncode(std::string_view number)
 
 std::string romanNumerals(std::string_view number)
 {
-	static const std::vector<std::pair<int, const char*>> roman{
-	    {1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"}, {100, "C"}, {90, "XC"}, {50, "L"},
-	    {40, "XL"},  {10, "X"},   {9, "IX"},  {5, "V"},    {4, "IV"},  {1, "I"}};
+	static const std::vector<std::pair<int, const char*>> roman{{1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"},
+	    {100, "C"}, {90, "XC"}, {50, "L"}, {40, "XL"}, {10, "X"}, {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"}};
 	constexpr auto MIN_ROMAN_INT = 1ULL;
 	constexpr auto MAX_ROMAN_INT = 3999ULL;
 
@@ -95,10 +94,9 @@ std::string romanNumerals(std::string_view number)
 
 std::string numberToEnglish(std::string_view number)
 {
-	static const std::vector<std::string> numeng{
-	    "",       "one",    "two",    "three",    "four",     "five",    "six",     "seven",     "eight",    "nine",
-	    "ten",    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
-	    "twenty", "thirty", "forty",  "fifty",    "sixty",    "seventy", "eighty",  "ninety"};
+	static const std::vector<std::string> numeng{"", "one", "two", "three", "four", "five", "six", "seven", "eight",
+	    "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+	    "nineteen", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
 	constexpr auto TENTH_OFFSET = 18ULL;
 
 	auto integer = std::stoull(std::string(number)); // TODO add check for string that are to long

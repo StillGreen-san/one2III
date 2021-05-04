@@ -17,8 +17,7 @@ SimpleMenu::SimpleScreen& SimpleMenu::SimpleScreen::addOption(
 
 std::vector<SimpleMenu::SimpleScreen>::iterator SimpleMenu::findScreen(int id)
 {
-	return std::find_if(
-	    std::begin(screens), std::end(screens),
+	return std::find_if(std::begin(screens), std::end(screens),
 	    [id](const SimpleScreen& screen)
 	    {
 		    return screen.id == id;
@@ -75,8 +74,7 @@ void SimpleMenu::show(int id)
 			std::cin.ignore();
 		}
 
-		option = std::find_if(
-		    std::begin(screen->options), noOption,
+		option = std::find_if(std::begin(screen->options), noOption,
 		    [key](const SimpleScreen::Option& opt)
 		    {
 			    return opt.key == key || opt.key == AnyKey;

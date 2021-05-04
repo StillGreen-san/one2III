@@ -27,8 +27,7 @@ void mainConvert(RuleBook& ruleBook, std::string& numberSequence)
 				for(auto& view : views)
 				{
 					std::vector<std::string> viewConversions;
-					std::transform(
-					    std::begin(ruleBook), std::end(ruleBook), std::back_inserter(viewConversions),
+					std::transform(std::begin(ruleBook), std::end(ruleBook), std::back_inserter(viewConversions),
 					    [&](const RuleType& rule)
 					    {
 						    return ConversionRule::convert(rule, view);
@@ -66,8 +65,7 @@ int main()
 	                    "split the string into all possible substrings\n"
 	                    "convert every substring using every possible conversion rule\n")
 	    .addOption('e', "Exit", SimpleMenu::Exit)
-	    .addOption(
-	        SimpleMenu::AnyKey, "press enter to continue", 2,
+	    .addOption(SimpleMenu::AnyKey, "press enter to continue", 2,
 	        [&]()
 	        {
 		        while(!isValidNumberSequence(numberSequence))
@@ -79,44 +77,37 @@ int main()
 	        });
 	sm.addScreen(2)
 	    .setDescription("Select a Rule to add")
-	    .addOption(
-	        'r', "RomanNumeralConversion", SimpleMenu::This,
+	    .addOption('r', "RomanNumeralConversion", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::RomanNumeralConversion);
 	        })
-	    .addOption(
-	        'n', "AsNumberConversion", SimpleMenu::This,
+	    .addOption('n', "AsNumberConversion", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::AsNumberConversion);
 	        })
-	    .addOption(
-	        'a', "AsRunLengthEncodingConversion", SimpleMenu::This,
+	    .addOption('a', "AsRunLengthEncodingConversion", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::AsRunLengthEncodingConversion);
 	        })
-	    .addOption(
-	        'e', "NumberToEnglishConversion", SimpleMenu::This,
+	    .addOption('e', "NumberToEnglishConversion", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::NumberToEnglishConversion);
 	        })
-	    .addOption(
-	        'l', "RunLengthEncodingConversion", SimpleMenu::This,
+	    .addOption('l', "RunLengthEncodingConversion", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::RunLengthEncodingConversion);
 	        })
-	    .addOption(
-	        's', "LookAndSayConversion", SimpleMenu::This,
+	    .addOption('s', "LookAndSayConversion", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::LookAndSayConversion);
 	        })
-	    .addOption(
-	        'c', "Convert", SimpleMenu::Restart,
+	    .addOption('c', "Convert", SimpleMenu::Restart,
 	        [&]()
 	        {
 		        mainConvert(ruleBook, numberSequence);

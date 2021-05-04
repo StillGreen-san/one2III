@@ -81,7 +81,6 @@ TEST_CASE("lookAndSay")
 
 	std::string longSequence(256, '0');
 	longSequence.append(64, '1').append(128, '2').append(64, '6');
-	CHECK(
-	    lookAndSay(longSequence) ==
-	    "two hundred fifty six zero sixty four one one hundred twenty eight two sixty four six");
+	CHECK(lookAndSay(longSequence) ==
+	      "two hundred fifty six zero sixty four one one hundred twenty eight two sixty four six");
 }

@@ -23,8 +23,7 @@ size_t Converter::estimatePossibilities(const RuleBook& rules, std::string_view 
 			size_t partitionPossibilities = 1;
 			for(size_t partSize : partition)
 			{
-				partitionPossibilities *= std::count_if(
-				    std::begin(rules), std::end(rules),
+				partitionPossibilities *= std::count_if(std::begin(rules), std::end(rules),
 				    [partSize](const RuleType& rule)
 				    {
 					    return partSize >= ConversionRule::minInputSize(rule) &&
@@ -65,8 +64,7 @@ size_t Converter::calculatePossibilities(const RuleBook& rules, std::string_view
 				for(size_t partSize : partition)
 				{
 					std::string_view stringPart = string.substr(partOffset, partSize);
-					partitionPossibilities *= std::count_if(
-					    std::begin(rules), std::end(rules),
+					partitionPossibilities *= std::count_if(std::begin(rules), std::end(rules),
 					    [&](const RuleType& rule)
 					    {
 						    return !ConversionRule::convert(rule, stringPart).empty();

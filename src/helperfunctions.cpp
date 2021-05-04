@@ -6,7 +6,7 @@
 std::vector<std::vector<size_t>> integerPartitions(size_t integer, size_t partcount, size_t minpart, size_t maxpart)
 {
 	if(integer == 0 || partcount == 0 || integer < partcount || integer < minpart || minpart > maxpart ||
-	   partcount * minpart > integer || partcount * maxpart < integer)
+	    partcount * minpart > integer || partcount * maxpart < integer)
 	{
 		return {};
 	}
@@ -69,8 +69,7 @@ std::vector<std::vector<size_t>> integerPartitions(size_t integer, size_t partco
 
 bool isValidNumberSequence(std::string_view sequence)
 {
-	return std::all_of(
-	           std::begin(sequence), std::end(sequence),
+	return std::all_of(std::begin(sequence), std::end(sequence),
 	           [](char chr)
 	           {
 		           return static_cast<bool>(std::isdigit(chr));
