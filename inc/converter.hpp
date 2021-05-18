@@ -53,9 +53,10 @@ struct Converter
 	 *
 	 * @param rules the rules used for conversion
 	 * @param string the string to convert
-	 * @param outputFunc function called everytime a conversion is created (like output iterator)
+	 * @param outputFunc function called everytime a conversion is created (like output iterator),
+	 * returns false to stop conversions
 	 * @return size_t number of conversions
 	 */
 	static size_t allConversions(
-	    const RuleBook& rules, std::string_view string, std::function<void(std::string&&)> outputFunc);
+	    const RuleBook& rules, std::string_view string, std::function<bool(std::string&&)> outputFunc);
 };

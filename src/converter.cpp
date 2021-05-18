@@ -7,7 +7,6 @@
 #include "helperfunctions.hpp"
 
 // TODO remove the massive amount of code duplication
-// TODO use "static" buffer string for conversions to reduce allocations?
 
 size_t Converter::estimatePossibilities(const RuleBook& rules, std::string_view string)
 {
@@ -88,7 +87,7 @@ std::string Converter::randomConversion(const RuleBook& rules, std::string_view 
 	}
 	std::uniform_int_distribution<size_t> dist(1, possibilities);
 	std::random_device rd;
-	std::mt19937_64 mt(rd()); // TODO have this cached somehow?
+	std::mt19937_64 mt(rd());
 	return singleConversion(rules, string, dist(mt));
 }
 
@@ -103,74 +102,30 @@ std::string Converter::singleConversion(const RuleBook& rules, std::string_view 
 		number = 1;
 	}
 
-	const size_t stringLength = string.size();
-	const size_t minPartSize = std::clamp(rules.getMinInputSize(), 1ULL, 255ULL);
-	const size_t maxPartSize = std::clamp(rules.getMaxInputSize(), 1ULL, 255ULL);
+	std::string conversion;
 
-	for(size_t partCount = stringLength; partCount > 0; --partCount)
+	auto singleFunc = [&](std::string&& singleConv)
 	{
-		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
-		for(auto& partition : possiblePartitions)
+		--number;
+		if(number == 0)
 		{
-			do
-			{
-				std::vector<size_t> ruleIndices(partCount, 0);
-				auto incrementIndices = [&](size_t _index = 0) -> bool
-				{
-					auto impl = [&](auto& _impl) -> bool
-					{
-						if(_index == ruleIndices.size())
-						{
-							return false;
-						}
-						++ruleIndices[_index];
-						if(ruleIndices[_index] == rules.size())
-						{
-							ruleIndices[_index] = 0;
-							++_index;
-							return _impl(_impl);
-						}
-						return true;
-					};
-					return impl(impl);
-				};
-
-				do
-				{
-					std::string converted;
-					size_t partOffset = 0;
-					for(size_t i = 0; i < partCount; ++i)
-					{
-						const std::string_view stringPart = string.substr(partOffset, partition[i]);
-						const std::string convertedPart = ConversionRule::convert(rules[ruleIndices[i]], stringPart);
-						if(convertedPart.empty())
-						{
-							break;
-						}
-						partOffset += partition[i];
-						converted.append(convertedPart).append(" ");
-					}
-
-					if(partOffset == stringLength)
-					{
-						--number;
-						converted.erase(converted.size() - 1);
-						if(number == 0)
-						{
-							return converted;
-						}
-					}
-				} while(incrementIndices());
-			} while(std::next_permutation(rbegin(partition), rend(partition)));
+			conversion = std::move(singleConv);
+			return false;
 		}
-	}
+		return true;
+	};
 
-	return {};
+	allConversions(rules, string, singleFunc);
+
+	return conversion;
+
+	// TODO combine with allConversions since it keeps track of number also?
+	// TODO use allConversions as calcualte step?
 }
 
 size_t Converter::allConversions(
-    const RuleBook& rules, std::string_view string, std::function<void(std::string&&)> outputFunc)
-{ // TODO replace placeholder impl
+    const RuleBook& rules, std::string_view string, std::function<bool(std::string&&)> outputFunc)
+{
 	size_t conversions = 0;
 	const size_t stringLength = string.size();
 	const size_t minPartSize = std::clamp(rules.getMinInputSize(), 1ULL, 255ULL);
@@ -224,7 +179,10 @@ size_t Converter::allConversions(
 					{
 						converted.erase(converted.size() - 1);
 						++conversions;
-						outputFunc(std::move(converted));
+						if(!outputFunc(std::move(converted)))
+						{
+							return conversions;
+						}
 					}
 				} while(incrementIndices());
 			} while(std::next_permutation(rbegin(partition), rend(partition)));

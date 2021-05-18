@@ -79,6 +79,7 @@ TEST_CASE("calculatePossibilities")
 		rules.add(RuleType::LookAndSayConversion);
 		rules.add(RuleType::RunLengthEncodingConversion);
 		CHECK(Converter::calculatePossibilities(rules, "1234") == 54);
+		CHECK(Converter::calculatePossibilities(rules, "12345678") == 4374);
 	}
 
 	SECTION("three rules asNum,RNC,NTE")
@@ -87,6 +88,7 @@ TEST_CASE("calculatePossibilities")
 		rules.add(RuleType::RomanNumeralConversion);
 		rules.add(RuleType::NumberToEnglishConversion);
 		CHECK(Converter::calculatePossibilities(rules, "1234") == 191);
+		CHECK(Converter::calculatePossibilities(rules, "12345678") == 47586);
 	}
 
 	SECTION("nullptr view")
@@ -191,6 +193,7 @@ TEST_CASE("allConversions")
 	auto outputFunc = [&](std::string&& conversion)
 	{
 		output.emplace_back(std::move(conversion));
+		return true;
 	};
 
 	SECTION("no rules")
