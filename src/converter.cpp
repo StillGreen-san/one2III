@@ -18,8 +18,8 @@ size_t Converter::estimatePossibilities(const RuleBook& rules, std::string_view 
 
 	for(size_t partCount = stringLength; partCount > 0; --partCount)
 	{
-		auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
-		for(auto& partition : possiblePartitions)
+		const auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
+		for(const auto& partition : possiblePartitions)
 		{
 			size_t partitionPossibilities = 1;
 			for(const size_t partSize : partition)
@@ -32,13 +32,9 @@ size_t Converter::estimatePossibilities(const RuleBook& rules, std::string_view 
 				    });
 			}
 
-			size_t permutationPossibilities = 1;
-			while(std::next_permutation(rbegin(partition), rend(partition)))
-			{
-				++permutationPossibilities; // TODO number of possible permutations should be static for each length
-				                            // (can make psblPrtns const)
-			}
+			size_t permutationPossibilities = permutationsWithRepetitions(partition);
 			totalPossibilities += partitionPossibilities * permutationPossibilities;
+			// TODO find max string length to use as global limit
 		}
 	}
 

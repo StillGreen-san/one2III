@@ -26,3 +26,10 @@ TEST_CASE("partitionString")
 	CHECK(partitionString("1234", {2, 2, 2, 2}) == svv{});
 	CHECK(partitionString("12345678", {3, 1, 4}) == svv{"123", "4", "5678"});
 }
+
+TEST_CASE("permutationsWithRepetitions")
+{
+	CHECK(permutationsWithRepetitions({}) == 0);
+	CHECK(permutationsWithRepetitions({3, 3, 2, 1}) == 12);
+	CHECK(permutationsWithRepetitions({3, 3, 2, 2}) == 6);
+}

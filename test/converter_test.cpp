@@ -16,7 +16,7 @@ TEST_CASE("estimatePossibilities")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
 		CHECK(Converter::estimatePossibilities(rules, "1234") == 8);
-		CHECK(Converter::calculatePossibilities(rules, "12345678") == 96);
+		CHECK(Converter::estimatePossibilities(rules, "12345678") == 108);
 	}
 
 	SECTION("one rule asRLE")

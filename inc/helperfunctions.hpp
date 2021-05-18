@@ -36,6 +36,22 @@ std::vector<std::string_view> partitionString(std::string_view string, const std
 
 // TODO stable/unsorted_unique() to eliminate identical looking strings
 
+/**
+ * @brief returns factorial for given number
+ *
+ * @param number the number to get the factorial of
+ * @return size_t the factorial or 0 if number > 20
+ */
+size_t factorial(size_t number);
+
+/**
+ * @brief return the number of possible permutations for a partition with repetitions
+ *
+ * @param partition partition with repetitions
+ * @return size_t the number of possible permutations
+ */
+size_t permutationsWithRepetitions(const std::vector<size_t>& partition);
+
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec)
 {
