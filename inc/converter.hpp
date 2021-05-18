@@ -37,7 +37,7 @@ struct Converter
 	 * @return std::string the converted string
 	 */
 	static std::string randomConversion(const RuleBook& rules, std::string_view string);
-	// TODO remove random & single as they can be implemented via outputFunc of all ?
+
 	/**
 	 * @brief returns the Nth conversion of all possible ones
 	 *

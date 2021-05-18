@@ -64,7 +64,7 @@ std::string romanNumerals(std::string_view number)
 	constexpr auto MIN_ROMAN_INT = 1ULL;
 	constexpr auto MAX_ROMAN_INT = 3999ULL;
 
-	if(number.empty()) // TODO add check for string that are to long
+	if(number.empty())
 	{
 		return {};
 	}
@@ -98,9 +98,15 @@ std::string numberToEnglish(std::string_view number)
 	    "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
 	    "nineteen", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
 	constexpr auto TENTH_OFFSET = 18ULL;
+	constexpr auto MAX_ENG_INT = 999ULL;
 
-	auto integer = std::stoull(std::string(number)); // TODO add check for string that are to long
-	if(integer > 999)
+	if(number.empty())
+	{
+		return {};
+	}
+
+	auto integer = std::stoull(std::string(number));
+	if(integer > MAX_ENG_INT)
 	{
 		return {};
 	}

@@ -66,6 +66,7 @@ TEST_CASE("numberToEnglish")
 	CHECK(numberToEnglish("216") == "two hundred sixteen");
 	CHECK(numberToEnglish("500") == "five hundred");
 	CHECK(numberToEnglish("999") == "nine hundred ninety nine");
+	CHECK(numberToEnglish("00999") == "nine hundred ninety nine");
 	CHECK(numberToEnglish("9875") == "");
 	CHECK(numberToEnglish("4444555666") == "");
 }

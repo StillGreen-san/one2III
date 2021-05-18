@@ -69,6 +69,7 @@ size_t Converter::calculatePossibilities(const RuleBook& rules, std::string_view
 					    {
 						    return !ConversionRule::convert(rule, stringPart).empty();
 					    });
+					// TODO early escape if partitionPossibilities == 0
 					partOffset += partSize;
 				}
 				totalPossibilities += partitionPossibilities;
@@ -86,7 +87,7 @@ std::string Converter::randomConversion(const RuleBook& rules, std::string_view 
 	{
 		return {};
 	}
-	std::uniform_int_distribution<size_t> dist(1, possibilities); // TODO replace with modolu?
+	std::uniform_int_distribution<size_t> dist(1, possibilities);
 	std::random_device rd;
 	std::mt19937_64 mt(rd()); // TODO have this cached somehow?
 	return singleConversion(rules, string, dist(mt));
@@ -216,7 +217,7 @@ size_t Converter::allConversions(
 						std::string convertedPart = ConversionRule::convert(rules[ruleIndices[i]], stringPart);
 						if(convertedPart.empty())
 						{
-							break; //? move checks out before loop similar to estimate to avoid some conversions?
+							break; // TODO move checks out before loop similar to estimate to avoid some conversions?
 						}
 						partOffset += partition[i];
 						converted.append(convertedPart).append(" ");
