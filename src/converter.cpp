@@ -6,8 +6,6 @@
 #include "converter.hpp"
 #include "helperfunctions.hpp"
 
-// TODO remove the massive amount of code duplication
-
 size_t Converter::estimatePossibilities(const RuleBook& rules, std::string_view string)
 {
 	size_t totalPossibilities = 0;
@@ -118,9 +116,6 @@ std::string Converter::singleConversion(const RuleBook& rules, std::string_view 
 	allConversions(rules, string, singleFunc);
 
 	return conversion;
-
-	// TODO combine with allConversions since it keeps track of number also?
-	// TODO use allConversions as calcualte step?
 }
 
 size_t Converter::allConversions(
@@ -139,24 +134,24 @@ size_t Converter::allConversions(
 			do
 			{
 				std::vector<size_t> ruleIndices(partCount, 0);
-				auto incrementIndices = [&](size_t _index = 0) -> bool
+				auto incrementIndices = [&]() -> bool
 				{
-					auto impl = [&](auto& _impl) -> bool
+					size_t _index = 0;
+					const size_t rulesSize = rules.size();
+					while(true)
 					{
 						if(_index == ruleIndices.size())
 						{
 							return false;
 						}
 						++ruleIndices[_index];
-						if(ruleIndices[_index] == rules.size())
+						if(ruleIndices[_index] != rulesSize)
 						{
-							ruleIndices[_index] = 0;
-							++_index;
-							return _impl(_impl);
+							return true;
 						}
-						return true;
-					};
-					return impl(impl); // TODO check removal of recursion else nolint (also for other functions)
+						ruleIndices[_index] = 0;
+						++_index;
+					}
 				};
 
 				do
@@ -169,7 +164,7 @@ size_t Converter::allConversions(
 						const std::string convertedPart = ConversionRule::convert(rules[ruleIndices[i]], stringPart);
 						if(convertedPart.empty())
 						{
-							break; // TODO move checks out before loop similar to estimate to avoid some conversions?
+							break;
 						}
 						partOffset += partition[i];
 						converted.append(convertedPart).append(" ");
