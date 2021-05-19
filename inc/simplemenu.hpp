@@ -5,7 +5,7 @@
 #include <vector>
 
 /**
- * @brief a simple console menu system
+ * @brief a simple console menu system (as in not much internal code)
  *
  */
 struct SimpleMenu
@@ -109,4 +109,12 @@ public:
 	 * @param id the screen id to show
 	 */
 	void show(int id);
+
+	/**
+	 * @brief will try to return a reference to a screen
+	 *
+	 * @param id ID for which to return the reference
+	 * @return SimpleScreen& reference for id, throws if not found
+	 */
+	SimpleScreen& at(int id);
 };

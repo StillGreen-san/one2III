@@ -2,72 +2,38 @@
 #include <iostream>
 
 #include "conversionrule.hpp"
+#include "converter.hpp"
 #include "helperfunctions.hpp"
 #include "rulebook.hpp"
 #include "simplemenu.hpp"
 
-void mainConvert(RuleBook& ruleBook, std::string& numberSequence)
-{
-	std::cout << std::endl;
-	size_t digits = numberSequence.size();
-	for(size_t parts = digits; parts > 0; --parts)
-	{
-		auto partitions = integerPartitions(digits, parts, ruleBook.getMinInputSize(), ruleBook.getMaxInputSize());
-		for(auto& partition : partitions)
-		{
-			do
-			{
-				std::cout << partition << std::endl;
-				const auto views = partitionString(numberSequence, partition);
-				if(views.size() == 0)
-				{
-					continue;
-				}
-				std::vector<std::vector<std::string>> allConversions;
-				for(auto& view : views)
-				{
-					std::vector<std::string> viewConversions;
-					std::transform(std::begin(ruleBook), std::end(ruleBook), std::back_inserter(viewConversions),
-					    [&](const RuleType& rule)
-					    {
-						    return ConversionRule::convert(rule, view);
-					    });
-					allConversions.emplace_back(std::move(viewConversions));
-				}
-
-				for(size_t x = allConversions.front().size(); x > 0; --x)
-				{
-					std::cout << " | ";
-					for(size_t y = 0; y < allConversions.size(); ++y)
-					{
-						std::cout << allConversions[y][x - 1] << " | ";
-					}
-					std::cout << std::endl;
-				}
-			} while(std::next_permutation(rbegin(partition), rend(partition)));
-			std::cout << std::endl;
-		}
-	}
-
-	numberSequence.clear();
-	ruleBook = RuleBook();
-}
+// TODO add noexecpt where possible
 
 int main()
 {
 	RuleBook ruleBook;
 	std::string numberSequence;
 
+	enum ID : int
+	{
+		Main = 1,
+		Rules,
+		Convert
+	};
+
 	SimpleMenu sm;
-	sm.addScreen(1)
+	sm.addScreen(ID::Main)
 	    .setDescription("one2III\n"
 	                    "given a string of digits and a list of conversion rules\n"
 	                    "split the string into all possible substrings\n"
 	                    "convert every substring using every possible conversion rule\n")
 	    .addOption('e', "Exit", SimpleMenu::Exit)
-	    .addOption(SimpleMenu::AnyKey, "press enter to continue", 2,
+	    .addOption(SimpleMenu::AnyKey, "press enter to continue", ID::Rules,
 	        [&]()
 	        {
+		        numberSequence.clear();
+		        ruleBook = RuleBook();
+
 		        while(!isValidNumberSequence(numberSequence))
 		        {
 			        std::cout << "enter a number sequence\n";
@@ -75,7 +41,8 @@ int main()
 		        }
 		        std::cin.get();
 	        });
-	sm.addScreen(2)
+
+	sm.addScreen(ID::Rules)
 	    .setDescription("Select a Rule to add")
 	    .addOption('r', "RomanNumeralConversion", SimpleMenu::This,
 	        [&]()
@@ -107,11 +74,43 @@ int main()
 	        {
 		        ruleBook.add(RuleType::LookAndSayConversion);
 	        })
-	    .addOption('c', "Convert", SimpleMenu::Restart,
+	    .addOption('c', "Convert", ID::Convert,
 	        [&]()
 	        {
-		        mainConvert(ruleBook, numberSequence);
-	        });
+		        sm.at(ID::Convert)
+		            .setDescription(std::to_string(Converter::calculatePossibilities(ruleBook, numberSequence))
+		                                .append(" possible conversions. Choose which to display."));
+	        })
+	    .addOption('b', "Restart", SimpleMenu::Restart);
 
-	sm.show(1);
+	sm.addScreen(ID::Convert)
+	    .setDescription("")
+	    .addOption('a', "Show all", SimpleMenu::This,
+	        [&]()
+	        {
+		        Converter::allConversions(ruleBook, numberSequence,
+		            [](std::string&& conversion)
+		            {
+			            std::cout << '\n' << conversion;
+			            return true;
+		            });
+		        std::cout << '\n' << '\n';
+	        })
+	    .addOption('r', "Show a random", SimpleMenu::This,
+	        [&]()
+	        {
+		        std::cout << '\n' << Converter::randomConversion(ruleBook, numberSequence) << '\n';
+	        })
+	    .addOption('s', "Show a single", SimpleMenu::This,
+	        [&]()
+	        {
+		        size_t number;
+		        std::cout << "\nEnter a number: ";
+		        std::cin >> number;
+		        std::cout << Converter::singleConversion(ruleBook, numberSequence, number) << '\n';
+		        std::cin.get();
+	        })
+	    .addOption('b', "Restart", SimpleMenu::Restart);
+
+	sm.show(ID::Main);
 }

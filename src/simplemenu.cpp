@@ -1,5 +1,6 @@
 #include "simplemenu.hpp"
 
+#include <exception>
 #include <iostream>
 
 SimpleMenu::SimpleScreen& SimpleMenu::SimpleScreen::setDescription(std::string desc)
@@ -98,4 +99,16 @@ void SimpleMenu::show(int id)
 			id = option->nextScreen;
 		}
 	}
+}
+
+SimpleMenu::SimpleScreen& SimpleMenu::at(int id)
+{
+	for(auto& screen : screens)
+	{
+		if(screen.id == id)
+		{
+			return screen;
+		}
+	}
+	throw std::invalid_argument("No Screen with this ID");
 }
