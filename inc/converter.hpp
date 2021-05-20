@@ -10,6 +10,12 @@
  */
 struct Converter
 {
+	Converter() = delete;
+	Converter(Converter&&) = delete;
+	Converter(const Converter&) = delete;
+	Converter& operator=(Converter&&) = delete;
+	Converter& operator=(const Converter&) = delete;
+	~Converter() = delete;
 
 	/**
 	 * @brief estimates the total possible conversions

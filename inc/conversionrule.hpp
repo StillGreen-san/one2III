@@ -10,6 +10,13 @@
  */
 struct ConversionRule
 {
+	ConversionRule() = delete;
+	ConversionRule(ConversionRule&&) = delete;
+	ConversionRule(const ConversionRule&) = delete;
+	ConversionRule& operator=(ConversionRule&&) = delete;
+	ConversionRule& operator=(const ConversionRule&) = delete;
+	~ConversionRule() = delete;
+
 	/**
 	 * @brief returns a number sequence converted according to rule type
 	 *

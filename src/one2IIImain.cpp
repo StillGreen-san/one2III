@@ -7,7 +7,7 @@
 #include "rulebook.hpp"
 #include "simplemenu.hpp"
 
-// TODO add noexecpt where possible
+// TODO add noexecpt/constexpr where possible/sensible
 
 int main()
 {
