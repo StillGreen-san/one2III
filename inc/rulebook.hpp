@@ -25,35 +25,35 @@ public:
 	 *
 	 * @return size_t minimum supported input size for conversion
 	 */
-	size_t getMinInputSize() const;
+	size_t getMinInputSize() const noexcept;
 
 	/**
 	 * @brief gets the maximum supported input size for conversion
 	 *
 	 * @return size_t maximum supported input size for conversion
 	 */
-	size_t getMaxInputSize() const;
+	size_t getMaxInputSize() const noexcept;
 
 	/**
 	 * @brief returns an iterator to the first rule
 	 *
 	 * @return std::set<RuleType>::const_iterator
 	 */
-	std::set<RuleType>::const_iterator begin() const;
+	std::set<RuleType>::const_iterator begin() const noexcept;
 
 	/**
 	 * @brief returns an iterator to one past the last rule
 	 *
 	 * @return std::set<RuleType>::const_iterator
 	 */
-	std::set<RuleType>::const_iterator end() const;
+	std::set<RuleType>::const_iterator end() const noexcept;
 
 	/**
 	 * @brief returns the number of added rules
 	 *
 	 * @return size_t the number of rules
 	 */
-	size_t size() const;
+	size_t size() const noexcept;
 
 	/**
 	 * @brief returns the rules at the specified index

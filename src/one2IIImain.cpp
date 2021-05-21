@@ -7,8 +7,6 @@
 #include "rulebook.hpp"
 #include "simplemenu.hpp"
 
-// TODO add noexecpt/constexpr where possible/sensible
-
 int main()
 {
 	RuleBook ruleBook;

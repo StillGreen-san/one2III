@@ -95,18 +95,6 @@ std::vector<std::string_view> partitionString(std::string_view string, const std
 	return partitioned;
 }
 
-static constexpr size_t FACTORIAL_RESULTS[] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800,
-    479001600, 6227020800, 87178291200, 1307674368000, 20922789888000, 355687428096000, 6402373705728000,
-    121645100408832000, 2432902008176640000};
-size_t factorial(size_t number)
-{
-	if(number < ((sizeof(FACTORIAL_RESULTS)) / (sizeof(*FACTORIAL_RESULTS))))
-	{
-		return FACTORIAL_RESULTS[number];
-	}
-	return 0;
-}
-
 size_t countUnique(const std::vector<size_t>& sorted)
 {
 	if(sorted.empty())

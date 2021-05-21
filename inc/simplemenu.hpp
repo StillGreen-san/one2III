@@ -104,7 +104,7 @@ public:
 
 	/**
 	 * @brief enters the menu loop with the screen specified by id,
-	 * will exit imediatly if id was not found
+	 * will exit immediatly if id was not found
 	 *
 	 * @param id the screen id to show
 	 */

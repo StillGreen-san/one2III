@@ -17,27 +17,27 @@ bool RuleBook::add(RuleType rule)
 	return true;
 }
 
-size_t RuleBook::getMinInputSize() const
+size_t RuleBook::getMinInputSize() const noexcept
 {
 	return minInputSize;
 }
 
-size_t RuleBook::getMaxInputSize() const
+size_t RuleBook::getMaxInputSize() const noexcept
 {
 	return maxInputSize;
 }
 
-std::set<RuleType>::const_iterator RuleBook::begin() const
+std::set<RuleType>::const_iterator RuleBook::begin() const noexcept
 {
 	return rules.cbegin();
 }
 
-std::set<RuleType>::const_iterator RuleBook::end() const
+std::set<RuleType>::const_iterator RuleBook::end() const noexcept
 {
 	return rules.cend();
 }
 
-size_t RuleBook::size() const
+size_t RuleBook::size() const noexcept
 {
 	return rules.size();
 }
