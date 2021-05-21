@@ -34,7 +34,7 @@ int main()
 
 		        while(!isValidNumberSequence(numberSequence))
 		        {
-			        std::cout << "enter a number sequence\n";
+			        std::cout << "enter a number sequence with up to 20 digits\n";
 			        std::cin >> numberSequence;
 		        }
 		        std::cin.get();

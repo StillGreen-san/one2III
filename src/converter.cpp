@@ -31,7 +31,6 @@ size_t Converter::estimatePossibilities(const RuleBook& rules, std::string_view 
 
 			size_t permutationPossibilities = permutationsWithRepetitions(partition);
 			totalPossibilities += partitionPossibilities * permutationPossibilities;
-			// TODO find max string length to use as global limit
 		}
 	}
 

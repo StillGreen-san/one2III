@@ -34,8 +34,6 @@ bool isValidNumberSequence(std::string_view sequence);
  */
 std::vector<std::string_view> partitionString(std::string_view string, const std::vector<size_t>& partition);
 
-// TODO stable/unsorted_unique() to eliminate identical looking strings
-
 namespace detail
 {
 static constexpr size_t FACTORIAL_RESULTS[] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800,
