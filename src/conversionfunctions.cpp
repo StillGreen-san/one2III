@@ -159,10 +159,23 @@ std::string lookAndSay(std::string_view number)
 	std::string::const_iterator sectionBegin = runLengthEncoded.cbegin();
 	while(sectionBegin != stringEnd)
 	{
-		lookAndSay.append(separator).append(numberToEnglish(sectionBegin.operator->()));
+		const std::string& firstNumber = numberToEnglish(sectionBegin.operator->());
+
+		lookAndSay.append(separator).append(firstNumber);
 		sectionBegin += strlen(sectionBegin.operator->()) + 1;
-		lookAndSay.append(separator = " ").append(numberToEnglish(sectionBegin.operator->()));
+
+		const std::string& secondNumber = numberToEnglish(sectionBegin.operator->());
+		lookAndSay.append(separator = " ").append(secondNumber);
 		sectionBegin += strlen(sectionBegin.operator->()) + 1;
+
+		if(firstNumber != "one")
+		{
+			if(secondNumber == "six")
+			{
+				lookAndSay.append(1, 'e');
+			}
+			lookAndSay.append(1, 's');
+		}
 	}
 
 	return lookAndSay;

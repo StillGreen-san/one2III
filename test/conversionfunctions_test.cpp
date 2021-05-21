@@ -73,15 +73,15 @@ TEST_CASE("numberToEnglish")
 
 TEST_CASE("lookAndSay")
 {
-	CHECK(lookAndSay("5336666") == "one five two three four six");
-	CHECK(lookAndSay("9999999") == "seven nine");
-	CHECK(lookAndSay("000000000000000000") == "eighteen zero");
-	CHECK(lookAndSay("888000") == "three eight three zero");
+	CHECK(lookAndSay("5336666") == "one five two threes four sixes");
+	CHECK(lookAndSay("9999999") == "seven nines");
+	CHECK(lookAndSay("000000000000000000") == "eighteen zeros");
+	CHECK(lookAndSay("888000") == "three eights three zeros");
 	CHECK(lookAndSay("1") == "one one");
 	CHECK(lookAndSay("") == "");
 
 	std::string longSequence(256, '0');
-	longSequence.append(64, '1').append(128, '2').append(64, '6');
+	longSequence.append(64, '1').append(128, '2').append(61, '6');
 	CHECK(lookAndSay(longSequence) ==
-	      "two hundred fifty six zero sixty four one one hundred twenty eight two sixty four six");
+	      "two hundred fifty six zeros sixty four ones one hundred twenty eight twos sixty one sixes");
 }

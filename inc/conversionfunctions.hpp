@@ -42,4 +42,4 @@ std::string numberToEnglish(std::string_view number);
  * @param number 1<=len=>inf
  * @return std::string the converted string
  */
-std::string lookAndSay(std::string_view number); // TODO add 's' when !one
+std::string lookAndSay(std::string_view number);
