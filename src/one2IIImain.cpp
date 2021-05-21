@@ -42,32 +42,32 @@ int main()
 
 	sm.addScreen(ID::Rules)
 	    .setDescription("Select a Rule to add")
-	    .addOption('r', "RomanNumeralConversion", SimpleMenu::This,
+	    .addOption('r', "Roman Numeral", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::RomanNumeralConversion);
 	        })
-	    .addOption('n', "AsNumberConversion", SimpleMenu::This,
+	    .addOption('n', "As Number", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::AsNumberConversion);
 	        })
-	    .addOption('a', "AsRunLengthEncodingConversion", SimpleMenu::This,
+	    .addOption('a', "As Run Length Encoding", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::AsRunLengthEncodingConversion);
 	        })
-	    .addOption('e', "NumberToEnglishConversion", SimpleMenu::This,
+	    .addOption('e', "Number To English", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::NumberToEnglishConversion);
 	        })
-	    .addOption('l', "RunLengthEncodingConversion", SimpleMenu::This,
+	    .addOption('l', "Run Length Encoding", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::RunLengthEncodingConversion);
 	        })
-	    .addOption('s', "LookAndSayConversion", SimpleMenu::This,
+	    .addOption('s', "Look And Say", SimpleMenu::This,
 	        [&]()
 	        {
 		        ruleBook.add(RuleType::LookAndSayConversion);
@@ -99,6 +99,7 @@ int main()
 	        {
 		        std::cout << '\n' << Converter::randomConversion(ruleBook, numberSequence) << '\n';
 	        })
+	    // TODO show N random
 	    .addOption('s', "Show a single", SimpleMenu::This,
 	        [&]()
 	        {

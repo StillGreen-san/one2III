@@ -10,7 +10,7 @@
  * @param number 1<=len=>inf
  * @return std::string the converted string
  */
-std::string runLengthEncode(std::string_view number);
+std::string runLengthEncode(std::string_view number); // TODO change RLE formatting from "n i" to "n:i"
 
 /**
  * @brief returns a number sequence interpreted as RLE, space separated
@@ -18,7 +18,7 @@ std::string runLengthEncode(std::string_view number);
  * @param number 2<=len=>inf
  * @return std::string the converted string
  */
-std::string asRunLengthEncode(std::string_view number);
+std::string asRunLengthEncode(std::string_view number); // TODO change to decode to be more destinct
 
 /**
  * @brief returns a number sequence as roman numerals

@@ -1,21 +1,27 @@
 # one2III
 
-given a string of digits and a list of conversion rules
+a commandline utility that:
 
-split the string into all possible combination of substrings
+- given a string of digits and a list of conversion rules
+- splits the string into all possible combination of substrings
+- converts every substring using every possible conversion rule
 
-convert every substring using every possible conversion rule
+A bit like the [Worst Wifi Password Ever](https://www.youtube.com/watch?v=bLE7zsJk4AI), but for numbers only.
 
 ## available rules:
 
-- number: (just take the number as is) 55 -> 55
-- run length encoding: 112 -> 2112
-- roman numerals: 123 -> CXXIII
-- words in english: 321 -> three hundred twenty one
-- look and say: (combination of rle (converted/interpreted) and english) 770 -> two zewens one zero
+| rule                   | from | to                       |
+| ---------------------- | ---- | ------------------------ |
+| as number              | 55   | 55                       |
+| run length encoding    | 112  | 2:1 1:2                  |
+| as run length encoding | 3211 | 2221                     |
+| roman numeral          | 123  | CXXIII                   |
+| to english             | 321  | three hundred twenty one |
+| look and say           | 770  | two sevens one zero      |
 
 ## e.g. 123 with rules rle & roman:
 
+! UDATE THIS !
 - "123"
   - 111213 , CXXIII
 - "12" "3"
