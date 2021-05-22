@@ -9,6 +9,8 @@ std::string ConversionRule::convert(RuleType rule, std::string_view string)
 		return romanNumerals(string);
 	case RuleType::RunLengthEncodingConversion:
 		return runLengthEncode(string);
+	case RuleType::RunLengthDecodingConversion:
+		return runLengthDecode(string);
 	case RuleType::NumberToEnglishConversion:
 		return numberToEnglish(string);
 	case RuleType::AsRunLengthEncodingConversion:

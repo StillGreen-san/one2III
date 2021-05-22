@@ -43,6 +43,7 @@ struct ConversionRule
 		case RuleType::AsNumberConversion:
 			return 1;
 		case RuleType::AsRunLengthEncodingConversion:
+		case RuleType::RunLengthDecodingConversion:
 			return 2;
 		default:
 			return std::numeric_limits<size_t>::max();
@@ -68,6 +69,7 @@ struct ConversionRule
 		case RuleType::AsNumberConversion:
 			return std::numeric_limits<size_t>::max();
 		case RuleType::RunLengthEncodingConversion:
+		case RuleType::RunLengthDecodingConversion:
 			return std::numeric_limits<size_t>::max() - 1;
 		default:
 			return std::numeric_limits<size_t>::min();

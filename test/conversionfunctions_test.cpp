@@ -21,6 +21,26 @@ TEST_CASE("runLengthEncode")
 	CHECK(runLengthEncode("1000000000033333333333") == "1 1 10 0 11 3");
 }
 
+TEST_CASE("runLengthDecode")
+{
+	CHECK(runLengthDecode("") == "");
+	CHECK(runLengthDecode("12345") == "");
+	CHECK(runLengthDecode("1") == "");
+	CHECK(runLengthDecode("1001") == "");
+	CHECK(runLengthDecode("0110") == "");
+	CHECK(runLengthDecode("11") == "1");
+	CHECK(runLengthDecode("10") == "0");
+	CHECK(runLengthDecode("1112") == "12");
+	CHECK(runLengthDecode("22") == "22");
+	CHECK(runLengthDecode("111213") == "123");
+	CHECK(runLengthDecode("31") == "111");
+	CHECK(runLengthDecode("40") == "0000");
+	CHECK(runLengthDecode("293511") == "995551");
+	CHECK(runLengthDecode("1614112618") == "641668");
+	CHECK(runLengthDecode("11122334") == "1233444");
+	CHECK(runLengthDecode("5122611221") == "1111122111111211");
+}
+
 TEST_CASE("asRunLengthEncode")
 {
 	CHECK(asRunLengthEncode("") == "");

@@ -2,6 +2,8 @@
 
 #include "converter.hpp"
 
+// TODO add RLE decode to test
+
 TEST_CASE("estimatePossibilities")
 {
 	RuleBook rules;

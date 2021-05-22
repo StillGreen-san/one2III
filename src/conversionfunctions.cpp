@@ -30,6 +30,37 @@ std::string runLengthEncode(std::string_view number)
 	return encoded;
 }
 
+std::string runLengthDecode(std::string_view number)
+{
+	const size_t size = number.size();
+	if(size == 0 || size % 2 != 0)
+	{
+		return {};
+	}
+
+	std::string decoded;
+
+	unsigned count = 0;
+	for(char n : number)
+	{
+		if(count == 0)
+		{
+			count = n - '0';
+			if(count == 0)
+			{
+				return {};
+			}
+		}
+		else
+		{
+			decoded.append(count, n);
+			count = 0;
+		}
+	}
+
+	return decoded;
+}
+
 std::string asRunLengthEncode(std::string_view number)
 {
 	const size_t size = number.size();
