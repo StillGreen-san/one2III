@@ -64,5 +64,5 @@ struct Converter
 	 * @return size_t number of conversions
 	 */
 	static size_t allConversions(
-	    const RuleBook& rules, std::string_view string, std::function<bool(std::string&&)> outputFunc);
+	    const RuleBook& rules, std::string_view string, const std::function<bool(std::string&&)>& outputFunc);
 };

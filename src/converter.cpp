@@ -101,24 +101,23 @@ std::string Converter::singleConversion(const RuleBook& rules, std::string_view 
 
 	std::string conversion;
 
-	auto singleFunc = [&](std::string&& singleConv)
-	{
-		--number;
-		if(number == 0)
-		{
-			conversion = std::move(singleConv);
-			return false;
-		}
-		return true;
-	};
-
-	allConversions(rules, string, singleFunc);
+	allConversions(rules, string,
+	    [&](std::string&& singleConv)
+	    {
+		    --number;
+		    if(number == 0)
+		    {
+			    conversion = std::move(singleConv);
+			    return false;
+		    }
+		    return true;
+	    });
 
 	return conversion;
 }
 
 size_t Converter::allConversions(
-    const RuleBook& rules, std::string_view string, std::function<bool(std::string&&)> outputFunc)
+    const RuleBook& rules, std::string_view string, const std::function<bool(std::string&&)>& outputFunc)
 {
 	size_t conversions = 0;
 	const size_t stringLength = string.size();

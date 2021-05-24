@@ -66,7 +66,6 @@ void SimpleMenu::show(int id)
 		}
 
 		const auto noOption = std::end(screen->options);
-		auto option = noOption;
 
 		char key = '\000';
 		std::cin.get(key);
@@ -75,7 +74,7 @@ void SimpleMenu::show(int id)
 			std::cin.ignore();
 		}
 
-		option = std::find_if(std::begin(screen->options), noOption,
+		auto option = std::find_if(std::begin(screen->options), noOption,
 		    [key](const SimpleScreen::Option& opt)
 		    {
 			    return opt.key == key || opt.key == AnyKey;
