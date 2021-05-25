@@ -1,5 +1,7 @@
 #include <algorithm>
 #include <iostream>
+#include <random>
+#include <set>
 
 #include "conversionrule.hpp"
 #include "converter.hpp"
@@ -7,10 +9,14 @@
 #include "rulebook.hpp"
 #include "simplemenu.hpp"
 
+// TODO move lambdas out of addOption?
+// TODO remove identical looking conversions or make conversions more destinct
+
 int main()
 {
 	RuleBook ruleBook;
 	std::string numberSequence;
+	size_t possibilities = 0;
 
 	enum ID : int
 	{
@@ -75,9 +81,10 @@ int main()
 	    .addOption('c', "Convert", ID::Convert,
 	        [&]()
 	        {
+		        possibilities = Converter::calculatePossibilities(ruleBook, numberSequence);
 		        sm.at(ID::Convert)
-		            .setDescription(std::to_string(Converter::calculatePossibilities(ruleBook, numberSequence))
-		                                .append(" possible conversions. Choose which to display."));
+		            .setDescription(
+		                std::to_string(possibilities).append(" possible conversions. Choose which to display."));
 	        })
 	    .addOption('b', "Restart", SimpleMenu::Restart);
 
@@ -99,7 +106,30 @@ int main()
 	        {
 		        std::cout << '\n' << Converter::randomConversion(ruleBook, numberSequence) << '\n';
 	        })
-	    // TODO show N random
+	    .addOption('n', "Show N random", SimpleMenu::This,
+	        [&]()
+	        {
+		        size_t number;
+		        std::cout << "\nHow many to show: ";
+		        std::cin >> number;
+		        std::cin.get();
+		        number = std::min(number, possibilities);
+
+		        std::random_device rd;
+		        std::uniform_int_distribution<size_t> dist(1, possibilities);
+		        std::set<size_t> ids;
+
+		        while(ids.size() < number)
+		        {
+			        ids.insert(dist(rd));
+		        }
+
+		        for(size_t id : ids)
+		        {
+			        std::cout << '\n' << Converter::singleConversion(ruleBook, numberSequence, id);
+		        }
+		        std::cout << '\n';
+	        })
 	    .addOption('s', "Show a single", SimpleMenu::This,
 	        [&]()
 	        {
