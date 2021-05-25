@@ -41,17 +41,6 @@ TEST_CASE("runLengthDecode")
 	CHECK(runLengthDecode("5122611221") == "1111122111111211");
 }
 
-TEST_CASE("asRunLengthEncode")
-{
-	CHECK(asRunLengthEncode("") == "");
-	CHECK(asRunLengthEncode("1234") == "1 2 3 4");
-	CHECK(asRunLengthEncode("12345") == "");
-	CHECK(asRunLengthEncode("6481") == "6 4 8 1");
-	CHECK(asRunLengthEncode("13684684") == "1 3 6 8 4 6 8 4");
-	CHECK(asRunLengthEncode("99999888") == "");
-	CHECK(asRunLengthEncode("1121") == "");
-}
-
 TEST_CASE("romanNumerals")
 {
 	CHECK(romanNumerals("") == "");

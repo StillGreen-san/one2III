@@ -61,33 +61,6 @@ std::string runLengthDecode(std::string_view number)
 	return decoded;
 }
 
-std::string asRunLengthEncode(std::string_view number)
-{
-	const size_t size = number.size();
-	if(size == 0 || size % 2 != 0)
-	{
-		return {};
-	}
-
-	for(size_t i = 3; i < size; ++i)
-	{
-		if(number[i - 2] == number[i])
-		{
-			return {};
-		}
-	}
-
-	std::string converted;
-	converted.reserve((size * 2) - 1);
-	for(const char chr : number)
-	{
-		converted.append(1, chr).append(1, ' ');
-	}
-	converted.pop_back();
-
-	return converted;
-}
-
 std::string romanNumerals(std::string_view number)
 {
 	static const std::vector<std::pair<int, const char*>> roman{{1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"},

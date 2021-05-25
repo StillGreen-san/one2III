@@ -52,11 +52,6 @@ int main()
 	        {
 		        ruleBook.add(RuleType::AsNumberConversion);
 	        })
-	    .addOption('a', "As Run Length Encoding", SimpleMenu::This,
-	        [&]()
-	        {
-		        ruleBook.add(RuleType::AsRunLengthEncodingConversion);
-	        })
 	    .addOption('e', "Number To English", SimpleMenu::This,
 	        [&]()
 	        {

@@ -13,8 +13,6 @@ std::string ConversionRule::convert(RuleType rule, std::string_view string)
 		return runLengthDecode(string);
 	case RuleType::NumberToEnglishConversion:
 		return numberToEnglish(string);
-	case RuleType::AsRunLengthEncodingConversion:
-		return asRunLengthEncode(string);
 	case RuleType::LookAndSayConversion:
 		return lookAndSay(string);
 	case RuleType::AsNumberConversion:

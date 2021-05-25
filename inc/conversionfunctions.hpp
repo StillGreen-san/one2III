@@ -21,14 +21,6 @@ std::string runLengthEncode(std::string_view number); // TODO change RLE formatt
 std::string runLengthDecode(std::string_view number);
 
 /**
- * @brief returns a number sequence interpreted as RLE, space separated
- *
- * @param number 2<=len=>inf
- * @return std::string the converted string
- */
-std::string asRunLengthEncode(std::string_view number); // TODO change to decode to be more destinct
-
-/**
  * @brief returns a number sequence as roman numerals
  *
  * @param number "0" <=> "3999"

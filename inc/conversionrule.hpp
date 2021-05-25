@@ -42,7 +42,6 @@ struct ConversionRule
 		case RuleType::LookAndSayConversion:
 		case RuleType::AsNumberConversion:
 			return 1;
-		case RuleType::AsRunLengthEncodingConversion:
 		case RuleType::RunLengthDecodingConversion:
 			return 2;
 		default:
@@ -64,7 +63,6 @@ struct ConversionRule
 			return 4;
 		case RuleType::NumberToEnglishConversion:
 			return 3;
-		case RuleType::AsRunLengthEncodingConversion:
 		case RuleType::LookAndSayConversion:
 		case RuleType::AsNumberConversion:
 			return std::numeric_limits<size_t>::max();

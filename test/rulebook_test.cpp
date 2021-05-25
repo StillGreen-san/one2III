@@ -16,7 +16,7 @@ TEST_CASE("RuleBook")
 
 	SECTION("add none")
 	{
-		CHECK(rules.add(RuleType::None) == false);
+		CHECK(rules.add(RuleType::None) == false); // TODO clean "== bool"
 
 		CHECK(rules.getMinInputSize() == std::numeric_limits<size_t>::max());
 		CHECK(rules.getMaxInputSize() == std::numeric_limits<size_t>::min());
@@ -26,10 +26,10 @@ TEST_CASE("RuleBook")
 
 	SECTION("one rule")
 	{
-		CHECK(rules.add(RuleType::AsRunLengthEncodingConversion) == true);
+		CHECK(rules.add(RuleType::RunLengthDecodingConversion) == true);
 
-		CHECK(rules.getMaxInputSize() == ConversionRule::maxInputSize(RuleType::AsRunLengthEncodingConversion));
-		CHECK(rules.getMinInputSize() == ConversionRule::minInputSize(RuleType::AsRunLengthEncodingConversion));
+		CHECK(rules.getMaxInputSize() == ConversionRule::maxInputSize(RuleType::RunLengthDecodingConversion));
+		CHECK(rules.getMinInputSize() == ConversionRule::minInputSize(RuleType::RunLengthDecodingConversion));
 
 		CHECK(rules.size() == 1);
 	}

@@ -21,12 +21,6 @@ enum class RuleType : uint8_t
 	AsNumberConversion,
 
 	/**
-	 * @brief interprets a number sequence as run length encoding
-	 *
-	 */
-	AsRunLengthEncodingConversion,
-
-	/**
 	 * @brief converts a number sequence to english words
 	 *
 	 */
