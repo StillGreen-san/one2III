@@ -2,8 +2,6 @@
 
 #include "converter.hpp"
 
-// TODO add RLE decode to test
-
 TEST_CASE("estimatePossibilities")
 {
 	RuleBook rules;
@@ -23,7 +21,7 @@ TEST_CASE("estimatePossibilities")
 
 	SECTION("one rule asRLE")
 	{
-		rules.add(RuleType::AsRunLengthEncodingConversion);
+		rules.add(RuleType::RunLengthDecodingConversion);
 		CHECK(Converter::estimatePossibilities(rules, "1234") == 2);
 		CHECK(Converter::estimatePossibilities(rules, "") == 0);
 	}
@@ -31,7 +29,7 @@ TEST_CASE("estimatePossibilities")
 	SECTION("two rules RNC,asRLE")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
-		rules.add(RuleType::AsRunLengthEncodingConversion);
+		rules.add(RuleType::RunLengthDecodingConversion);
 		CHECK(Converter::estimatePossibilities(rules, "1234") == 17);
 		CHECK(Converter::estimatePossibilities(rules, "") == 0);
 	}
@@ -71,7 +69,7 @@ TEST_CASE("calculatePossibilities")
 	SECTION("two rules RNC,asRLE")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
-		rules.add(RuleType::AsRunLengthEncodingConversion);
+		rules.add(RuleType::RunLengthDecodingConversion);
 		CHECK(Converter::calculatePossibilities(rules, "1234") == 15);
 		CHECK(Converter::calculatePossibilities(rules, "") == 0);
 	}
@@ -133,7 +131,7 @@ TEST_CASE("randomConversion")
 	{
 		rules.add(RuleType::RomanNumeralConversion);
 		rules.add(RuleType::AsNumberConversion);
-		rules.add(RuleType::AsRunLengthEncodingConversion);
+		rules.add(RuleType::RunLengthDecodingConversion);
 		CHECK(Converter::randomConversion(rules, "1234") != "");
 		CHECK(Converter::randomConversion(rules, "12345678") != "");
 		CHECK(Converter::randomConversion(rules, "") == "");
@@ -175,8 +173,8 @@ TEST_CASE("singleConversion")
 	{
 		rules.add(RuleType::RunLengthEncodingConversion);
 		rules.add(RuleType::LookAndSayConversion);
-		rules.add(RuleType::AsRunLengthEncodingConversion);
-		CHECK(Converter::singleConversion(rules, "1234", 4096) == "1 2 1 3 1 4");
+		rules.add(RuleType::RunLengthDecodingConversion);
+		CHECK(Converter::singleConversion(rules, "1234", 4096) == "1 1 1 2 444");
 		CHECK(Converter::singleConversion(rules, "12345678", 16384) ==
 		      "one one one two one three one four one five one six one seven one eight");
 		CHECK(Converter::singleConversion(rules, "", 1024) == "");
@@ -215,10 +213,10 @@ TEST_CASE("allConversions")
 	SECTION("two rules asNum,asRLE")
 	{
 		rules.add(RuleType::AsNumberConversion);
-		rules.add(RuleType::AsRunLengthEncodingConversion);
+		rules.add(RuleType::RunLengthDecodingConversion);
 		CHECK(Converter::allConversions(rules, "1234", outputFunc) == 15);
-		CHECK_THAT(output, UnorderedEquals(sv{"1 2 3 4", "12 3 4", "1 2 3 4", "1 23 4", "1 2 3 4", "1 2 34", "1 2 3 4",
-		                       "12 34", "1 2 34", "12 3 4", "1 2 3 4", "123 4", "1 234", "1234", "1 2 3 4"}));
+		CHECK_THAT(output, UnorderedEquals(sv{"1 2 3 4", "12 3 4", "2 3 4", "1 23 4", "1 33 4", "1 2 34", "1 2 444",
+		                       "123 4", "1 234", "12 34", "2 34", "12 444", "2 444", "1234", "2444"}));
 	}
 
 	SECTION("two rules asNum,RNC")
