@@ -62,11 +62,11 @@ int main()
 	        {
 		        ruleBook.add(RuleType::RunLengthEncodingConversion);
 	        })
-	    // .addOption('d', "Run Length Decoding", SimpleMenu::This,
-	    //     [&]()
-	    //     {
-	    // TODO     ruleBook.add(RuleType::RunLengthDecodingConversion);
-	    //     })
+	    .addOption('d', "Run Length Decoding", SimpleMenu::This,
+	        [&]()
+	        {
+		        ruleBook.add(RuleType::RunLengthDecodingConversion);
+	        })
 	    .addOption('s', "Look And Say", SimpleMenu::This,
 	        [&]()
 	        {
