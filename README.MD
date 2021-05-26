@@ -1,36 +1,39 @@
 # one2III
 
-a commandline utility that:
+a commandline utility that generates possible ways of reading a number.
 
+or more formally:
 - given a string of digits and a list of conversion rules
-- splits the string into all possible combination of substrings
-- converts every substring using every possible conversion rule
+- split the string into all possible combination of substrings
+- convert every substring using every possible conversion rule
 
-A bit like the [Worst Wifi Password Ever](https://www.youtube.com/watch?v=bLE7zsJk4AI), but for numbers only.
+a bit like the ["Worst Wifi Password Ever"](https://www.youtube.com/watch?v=bLE7zsJk4AI), but for numbers only.
+
+sample:
+![sample](sample.gif)
 
 ## available rules:
 
 | rule                   | from | to                       |
 | ---------------------- | ---- | ------------------------ |
 | as number              | 55   | 55                       |
-| run length encoding    | 112  | 2:1 1:2                  |
-| as run length encoding | 3211 | 2221                     |
+| run length encoding    | 335  | 2 2 1 5                  |
+| run length decoding    | 3211 | 2221                     |
 | roman numeral          | 123  | CXXIII                   |
 | to english             | 321  | three hundred twenty one |
 | look and say           | 770  | two sevens one zero      |
 
-## e.g. 123 with rules rle & roman:
+## example: 123 with rules "run length encoding" & "roman numeral":
 
-! UDATE THIS !
 - "123"
-  - 111213 , CXXIII
-- "12" "3"
-  - 1112 13 , XII III
-  - 1112 III , XII 13
-- "1" "23"
-  - 11 1213 , I XXIII
-  - 11 XXIII , I 1213
-- "1" "2" "3"
-  - 11 12 13 , I II III
-  - 11 12 III , 11 II 13 , I 12 13
-  - 11 II III , I II 13 , I 12 III
+  - 1 1 1 2 1 3 , CXXIII
+- "12 3"
+  - 1 1 1 2 1 3 , XII III
+  - 1 1 1 2 III , XII 1 3
+- "1 23"
+  - 1 1 1 2 1 3 , I XXIII
+  - 1 1 XXIII , I 1 2 1 3
+- "1 2 3"
+  - 1 1 1 2 1 3 , I II III
+  - 1 1 1 2 III , 1 1 II 1 3 , I 1 2 1 3
+  - 1 1 I I III , I II 1 3 , I 1 2 III
