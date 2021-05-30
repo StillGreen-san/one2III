@@ -64,6 +64,25 @@ constexpr size_t factorial(size_t number) noexcept
  */
 size_t permutationsWithRepetitions(const std::vector<size_t>& partition);
 
+/**
+ * @brief performs an unchecked conversion from std::string_view to (integer) T
+ *
+ * @tparam T the integer type to convert to
+ * @param view the string_view to convert from
+ * @return T the converted number
+ */
+template<typename T>
+T viewToNumber(std::string_view view)
+{
+	T number = 0;
+	for(char chr : view)
+	{
+		number *= 10;
+		number += chr - '0';
+	}
+	return number;
+}
+
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec)
 {

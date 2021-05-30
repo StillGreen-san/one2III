@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "conversionfunctions.hpp"
+#include "helperfunctions.hpp"
 
 std::string runLengthEncode(std::string_view number)
 {
@@ -73,7 +74,7 @@ std::string romanNumerals(std::string_view number)
 		return {};
 	}
 
-	auto integer = std::stoull(std::string(number));
+	auto integer = viewToNumber<size_t>(number);
 	if(integer < MIN_ROMAN_INT || integer > MAX_ROMAN_INT)
 	{
 		return {};
@@ -109,7 +110,7 @@ std::string numberToEnglish(std::string_view number)
 		return {};
 	}
 
-	auto integer = std::stoull(std::string(number)); // TODO replace with strtoull (in roman to)
+	auto integer = viewToNumber<size_t>(number);
 	if(integer > MAX_ENG_INT)
 	{
 		return {};
@@ -155,8 +156,14 @@ std::string lookAndSay(std::string_view number)
 	}
 
 	runLengthEncoded.append(1, ':'); // makes conversion algo easier for last item
-	std::replace(std::begin(runLengthEncoded), std::end(runLengthEncoded), ':', '\000');
-	std::replace(std::begin(runLengthEncoded), std::end(runLengthEncoded), ' ', '\000'); // TODO combine
+	std::for_each(std::begin(runLengthEncoded), std::end(runLengthEncoded),
+	    [](char& chr)
+	    {
+		    if(chr == ':' || chr == ' ')
+		    {
+			    chr = '\000';
+		    }
+	    });
 
 	std::string separator;
 	std::string lookAndSay;
