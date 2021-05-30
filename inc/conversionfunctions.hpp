@@ -3,6 +3,7 @@
 #include <string>
 
 // TODO increase supported number sizes/ranges
+// TODO add example in descriptions?
 
 /**
  * @brief returns a number sequence encoded with RLE, space separated
@@ -10,7 +11,7 @@
  * @param number 1<=len=>inf
  * @return std::string the converted string
  */
-std::string runLengthEncode(std::string_view number); // TODO change RLE formatting from "n i" to "n:i"
+std::string runLengthEncode(std::string_view number);
 
 /**
  * @brief returns a number sequence decoded with RLE

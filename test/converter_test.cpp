@@ -174,7 +174,7 @@ TEST_CASE("singleConversion")
 		rules.add(RuleType::RunLengthEncodingConversion);
 		rules.add(RuleType::LookAndSayConversion);
 		rules.add(RuleType::RunLengthDecodingConversion);
-		CHECK(Converter::singleConversion(rules, "1234", 4096) == "1 1 1 2 444");
+		CHECK(Converter::singleConversion(rules, "1234", 4096) == "1:1 1:2 444");
 		CHECK(Converter::singleConversion(rules, "12345678", 16384) ==
 		      "one one one two one three one four one five one six one seven one eight");
 		CHECK(Converter::singleConversion(rules, "", 1024) == "");

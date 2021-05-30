@@ -21,11 +21,11 @@ std::string runLengthEncode(std::string_view number)
 		}
 		else
 		{
-			encoded.append(std::to_string(groupCount)).append(1, ' ').append(1, number[i - 1]).append(1, ' ');
+			encoded.append(std::to_string(groupCount)).append(1, ':').append(1, number[i - 1]).append(1, ' ');
 			groupCount = 1;
 		}
 	}
-	encoded.append(std::to_string(groupCount)).append(1, ' ').append(1, number[size - 1]);
+	encoded.append(std::to_string(groupCount)).append(1, ':').append(1, number[size - 1]);
 
 	return encoded;
 }
@@ -109,7 +109,7 @@ std::string numberToEnglish(std::string_view number)
 		return {};
 	}
 
-	auto integer = std::stoull(std::string(number));
+	auto integer = std::stoull(std::string(number)); // TODO replace with strtoull (in roman to)
 	if(integer > MAX_ENG_INT)
 	{
 		return {};
@@ -154,8 +154,9 @@ std::string lookAndSay(std::string_view number)
 		return runLengthEncoded;
 	}
 
-	runLengthEncoded.append(1, ' '); // makes conversion algo easier for last item
-	std::replace(std::begin(runLengthEncoded), std::end(runLengthEncoded), ' ', '\000');
+	runLengthEncoded.append(1, ':'); // makes conversion algo easier for last item
+	std::replace(std::begin(runLengthEncoded), std::end(runLengthEncoded), ':', '\000');
+	std::replace(std::begin(runLengthEncoded), std::end(runLengthEncoded), ' ', '\000'); // TODO combine
 
 	std::string separator;
 	std::string lookAndSay;
