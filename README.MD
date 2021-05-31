@@ -13,7 +13,7 @@ sample:
 
 ![sample](sample.gif)
 
-## available rules:
+### available rules:
 
 | rule                   | from | to                       |
 | ---------------------- | ---- | ------------------------ |
@@ -24,7 +24,7 @@ sample:
 | to english             | 321  | three hundred twenty one |
 | look and say           | 770  | two sevens one zero      |
 
-## example: 123 with rules "run length encoding" & "roman numeral":
+### example: 123 with rules "run length encoding" & "roman numeral":
 
 - "123"
   - 1:1 1:2 1:3 , CXXIII
@@ -38,3 +38,14 @@ sample:
   - 1:1 1:2 1:3 , I II III
   - 1:1 1:2 III , 1:1 II 1:3 , I 1:2 1:3
   - 1:1 I I III , I II 1:3 , I 1:2 III
+
+## Code
+
+  - written in/with C++ 17
+  - uses cmake (find_package)
+  - only tested under Windows 10 (2004) x64
+
+### Dependencies
+
+  - CMake : [cpp_starter_project](https://github.com/lefticus/cpp_starter_project/) (submodule)
+  - Testing : [Catch2](https://github.com/catchorg/Catch2)
