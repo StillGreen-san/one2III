@@ -5,64 +5,57 @@
 #include <functional>
 
 /**
- * @brief static Converster struct with functions for converting a string
+ * @brief namespace for converting a string
  *
  */
-struct Converter
+namespace Converter
 {
-	Converter() = delete;
-	Converter(Converter&&) = delete;
-	Converter(const Converter&) = delete;
-	Converter& operator=(Converter&&) = delete;
-	Converter& operator=(const Converter&) = delete;
-	~Converter() = delete;
+/**
+ * @brief estimates the total possible conversions
+ *
+ * @param rules the rules used for conversion
+ * @param string the string to convert
+ * @return size_t the estimated amount of possible conversions (always higher)
+ */
+size_t estimatePossibilities(const RuleBook& rules, std::string_view string);
 
-	/**
-	 * @brief estimates the total possible conversions
-	 *
-	 * @param rules the rules used for conversion
-	 * @param string the string to convert
-	 * @return size_t the estimated amount of possible conversions (always higher)
-	 */
-	static size_t estimatePossibilities(const RuleBook& rules, std::string_view string);
+/**
+ * @brief calculate the total possible conversions
+ *
+ * @param rules the rules used for conversion
+ * @param string the string to convert
+ * @return size_t the calcualated amount of possible conversions
+ */
+size_t calculatePossibilities(const RuleBook& rules, std::string_view string);
 
-	/**
-	 * @brief calculate the total possible conversions
-	 *
-	 * @param rules the rules used for conversion
-	 * @param string the string to convert
-	 * @return size_t the calcualated amount of possible conversions
-	 */
-	static size_t calculatePossibilities(const RuleBook& rules, std::string_view string);
+/**
+ * @brief returns a random conversion of all possible ones
+ *
+ * @param rules the rules used for conversion
+ * @param string the string to convert
+ * @return std::string the converted string
+ */
+std::string randomConversion(const RuleBook& rules, std::string_view string);
 
-	/**
-	 * @brief returns a random conversion of all possible ones
-	 *
-	 * @param rules the rules used for conversion
-	 * @param string the string to convert
-	 * @return std::string the converted string
-	 */
-	static std::string randomConversion(const RuleBook& rules, std::string_view string);
+/**
+ * @brief returns the Nth conversion of all possible ones
+ *
+ * @param rules the rules used for conversion
+ * @param string the string to convert
+ * @param number the number(id) to return from all possible conversions
+ * @return std::string the converted string
+ */
+std::string singleConversion(const RuleBook& rules, std::string_view string, size_t number);
 
-	/**
-	 * @brief returns the Nth conversion of all possible ones
-	 *
-	 * @param rules the rules used for conversion
-	 * @param string the string to convert
-	 * @param number the number(id) to return from all possible conversions
-	 * @return std::string the converted string
-	 */
-	static std::string singleConversion(const RuleBook& rules, std::string_view string, size_t number);
-
-	/**
-	 * @brief returns all conversions possible
-	 *
-	 * @param rules the rules used for conversion
-	 * @param string the string to convert
-	 * @param outputFunc function called everytime a conversion is created (like output iterator),
-	 * returns false to stop conversions
-	 * @return size_t number of conversions
-	 */
-	static size_t allConversions(
-	    const RuleBook& rules, std::string_view string, const std::function<bool(std::string&&)>& outputFunc);
-};
+/**
+ * @brief returns all conversions possible
+ *
+ * @param rules the rules used for conversion
+ * @param string the string to convert
+ * @param outputFunc function called everytime a conversion is created (like output iterator),
+ * returns false to stop conversions
+ * @return size_t number of conversions
+ */
+size_t allConversions(
+    const RuleBook& rules, std::string_view string, const std::function<bool(std::string&&)>& outputFunc);
+}; // namespace Converter
