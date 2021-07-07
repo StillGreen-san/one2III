@@ -69,6 +69,7 @@ std::vector<std::vector<size_t>> integerPartitions(size_t integer, size_t partco
 
 bool isValidNumberSequence(std::string_view sequence)
 {
+	// lengths greater 20 may result in an error due to limitations of the factorial function
 	return !sequence.empty() && sequence.size() < 21 &&
 	       std::all_of(std::begin(sequence), std::end(sequence),
 	           [](char chr)
@@ -84,14 +85,17 @@ std::vector<std::string_view> partitionString(std::string_view string, const std
 	{
 		return {};
 	}
+
 	std::vector<std::string_view> partitioned;
 	partitioned.reserve(partition.size());
 	size_t beginOffset = 0;
+
 	for(size_t count : partition)
 	{
 		partitioned.push_back(string.substr(beginOffset, count));
 		beginOffset += count;
 	}
+
 	return partitioned;
 }
 
@@ -101,6 +105,7 @@ size_t countUnique(const std::vector<size_t>& sorted)
 	{
 		return 0;
 	}
+
 	size_t count = 1;
 	[[maybe_unused]] auto _ = std::adjacent_find(std::begin(sorted), std::end(sorted),
 	    [&](const size_t& lhs, const size_t& rhs)
@@ -108,6 +113,7 @@ size_t countUnique(const std::vector<size_t>& sorted)
 		    count += lhs != rhs;
 		    return false;
 	    });
+
 	return count;
 }
 
@@ -117,6 +123,7 @@ size_t permutationsWithRepetitions(const std::vector<size_t>& partition)
 	{
 		return 0;
 	}
+
 	std::vector<size_t> counts{1};
 	[[maybe_unused]] auto _ = std::adjacent_find(std::begin(partition), std::end(partition),
 	    [&](const size_t& lhs, const size_t& rhs)
@@ -131,11 +138,13 @@ size_t permutationsWithRepetitions(const std::vector<size_t>& partition)
 		    }
 		    return false;
 	    });
+
 	const size_t divisor = std::accumulate(std::begin(counts), std::end(counts), size_t(1),
 	    [](const size_t& total, const size_t& part)
 	    {
 		    return total * factorial(part);
 	    });
 	const size_t dividend = factorial(partition.size());
+
 	return dividend / divisor;
 }

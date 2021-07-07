@@ -32,7 +32,7 @@ public:
 	 *
 	 * @return size_t maximum supported input size for conversion
 	 */
-	size_t getMaxInputSize() const noexcept;
+	size_t getMaxInputSize() const noexcept; // TODO change redundat descriptions to only return desc?
 
 	/**
 	 * @brief returns an iterator to the first rule
@@ -68,7 +68,7 @@ private:
 	 * @brief !INTERNAL! set to store all added rules
 	 *
 	 */
-	std::set<RuleType> rules;
+	std::set<RuleType> rules; // TODO inconsistant private doc comments -> doc all or none
 
 	/**
 	 * @brief !INTERNAL! the minimum supported input size for conversion

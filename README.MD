@@ -49,3 +49,7 @@ sample:
 
   - CMake : [cpp_starter_project](https://github.com/lefticus/cpp_starter_project/) (submodule)
   - Testing : [Catch2](https://github.com/catchorg/Catch2)
+
+### Build and Run
+
+//TODO build instructions, inc submodule init, cmake switches

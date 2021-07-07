@@ -34,25 +34,29 @@ private:
 		 * @param desc the description for this option
 		 * @param screen the screen to transition to after this option was selected,
 		 * use SimpleMenu::Exit/Restart to exit/restart the menu
-		 * @param cllbck a function to call when this option was selected
+		 * @param cllbck an optional function to call when this option was selected
 		 * @return SimpleScreen& this screen
 		 */
 		SimpleScreen& addOption(char key, std::string desc, int screen, std::function<void()> cllbck = nullptr);
 
 	private:
 		friend struct SimpleMenu;
+
 		explicit SimpleScreen(int id) : id{id} {};
+
 		struct Option
 		{
 			Option(char k, std::string&& d, int s, std::function<void()>&& c) :
 			    key{k}, description{std::move(d)}, nextScreen{s}, callback{std::move(c)}
-			{
+			{ // TODO constructor needed?
 			}
+
 			char key;
 			std::string description;
 			int nextScreen;
 			std::function<void()> callback;
 		};
+
 		int id;
 		std::string description;
 		std::vector<Option> options;
@@ -78,7 +82,7 @@ public:
 		Restart,
 
 		/**
-		 * @brief screen id to signal the menu should go to this screen when the option is choosen
+		 * @brief screen id to signal the menu should go back to itself when the option is choosen
 		 *
 		 */
 		This
@@ -98,7 +102,7 @@ public:
 	 * if no options are added this screen will exit the menu
 	 *
 	 * @param id identifier for the screen
-	 * @return SimpleScreen& the new screen
+	 * @return SimpleScreen& the new screen or existing one
 	 */
 	SimpleScreen& addScreen(int id);
 

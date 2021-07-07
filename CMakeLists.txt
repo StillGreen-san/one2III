@@ -6,7 +6,7 @@ set( CMAKE_CXX_STANDARD 17 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE )
 
-find_package( Catch2 CONFIG REQUIRED )
+find_package( Catch2 CONFIG REQUIRED ) #TODO add download if not found
 
 include( ${CMAKE_CURRENT_SOURCE_DIR}/cpp_starter_project/cmake/CompilerWarnings.cmake )
 add_library( project_warnings INTERFACE )

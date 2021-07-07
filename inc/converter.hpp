@@ -20,7 +20,7 @@ namespace Converter
 size_t estimatePossibilities(const RuleBook& rules, std::string_view string);
 
 /**
- * @brief calculate the total possible conversions
+ * @brief calculates the total possible conversions
  *
  * @param rules the rules used for conversion
  * @param string the string to convert
@@ -48,7 +48,7 @@ std::string randomConversion(const RuleBook& rules, std::string_view string);
 std::string singleConversion(const RuleBook& rules, std::string_view string, size_t number);
 
 /**
- * @brief returns all conversions possible
+ * @brief generates all possible conversions and sends them to outputFunc
  *
  * @param rules the rules used for conversion
  * @param string the string to convert
