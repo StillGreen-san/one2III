@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <cstdint>
 
 /**
  * @brief enumeration of all available rule types

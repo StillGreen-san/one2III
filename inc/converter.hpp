@@ -15,7 +15,7 @@ namespace Converter
  *
  * @param rules the rules used for conversion
  * @param string the string to convert
- * @return size_t the estimated amount of possible conversions (always higher)
+ * @return size_t the estimated amount of possible conversions (always higher than actual)
  */
 size_t estimatePossibilities(const RuleBook& rules, std::string_view string);
 

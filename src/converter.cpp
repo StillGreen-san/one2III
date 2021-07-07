@@ -82,9 +82,11 @@ std::string Converter::randomConversion(const RuleBook& rules, std::string_view 
 	{
 		return {};
 	}
+
 	std::uniform_int_distribution<size_t> dist(1, possibilities);
 	std::random_device rd;
 	std::mt19937_64 mt(rd());
+
 	return singleConversion(rules, string, dist(mt));
 }
 

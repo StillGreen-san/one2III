@@ -1,8 +1,8 @@
 #pragma once
 
-#include <set>
-
 #include "ruletype.hpp"
+
+#include <set>
 
 /**
  * @brief class to store multiple rules in on place
@@ -64,21 +64,7 @@ public:
 	RuleType operator[](size_t index) const;
 
 private:
-	/**
-	 * @brief !INTERNAL! set to store all added rules
-	 *
-	 */
-	std::set<RuleType> rules; // TODO inconsistant private doc comments -> doc all or none
-
-	/**
-	 * @brief !INTERNAL! the minimum supported input size for conversion
-	 *
-	 */
+	std::set<RuleType> rules;
 	size_t minInputSize = std::numeric_limits<size_t>::max();
-
-	/**
-	 * @brief !INTERNAL! the maximum supported input size for conversion
-	 *
-	 */
 	size_t maxInputSize = std::numeric_limits<size_t>::min();
 };

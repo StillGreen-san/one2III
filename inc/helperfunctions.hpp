@@ -1,8 +1,14 @@
 #pragma once
 
 #include <ostream>
-#include <string>
+#include <string_view>
 #include <vector>
+
+/**
+ * @brief maximum valid length of an input number sequence (limited by the factorial function (size of size_t))
+ *
+ */
+constexpr size_t MAX_SEQUENCE_LENGTH = sizeof(detail::FACTORIAL_RESULTS) / sizeof(*detail::FACTORIAL_RESULTS);
 
 /**
  * @brief returns a all possible integer partitions of an integer within the give contraints
@@ -49,7 +55,7 @@ static constexpr size_t FACTORIAL_RESULTS[] = {1, 1, 2, 6, 24, 120, 720, 5040, 4
 constexpr size_t factorial(size_t number) noexcept
 {
 	using namespace detail;
-	if(number < ((sizeof(FACTORIAL_RESULTS)) / (sizeof(*FACTORIAL_RESULTS))))
+	if(number < MAX_SEQUENCE_LENGTH)
 	{
 		return FACTORIAL_RESULTS[number];
 	}
@@ -65,41 +71,20 @@ constexpr size_t factorial(size_t number) noexcept
 size_t permutationsWithRepetitions(const std::vector<size_t>& partition);
 
 /**
- * @brief performs an unchecked conversion from std::string_view to (integer) T
+ * @brief performs an unchecked conversion from std::string_view to INTEGER
  *
- * @tparam T the integer type to convert to
+ * @tparam INTEGER the INTEGER type to convert to
  * @param view the string_view to convert from
- * @return T the converted number
+ * @return INTEGER the converted number
  */
-template<typename T>
-T viewToNumber(std::string_view view)
+template<typename INTEGER, std::enable_if_t<std::is_integral_v<INTEGER>, int> = 0>
+INTEGER viewToNumber(std::string_view view)
 {
-	T number = 0;
+	INTEGER number = 0;
 	for(char chr : view)
 	{
 		number *= 10;
 		number += chr - '0';
 	}
 	return number;
-}
-
-template<typename T>
-std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec)
-{
-	os << "[ ";
-	std::string sep = "";
-	for(auto& val : vec)
-	{
-		if constexpr(std::is_same<T, uint8_t>::value || std::is_same<T, int8_t>::value)
-		{
-			os << sep << static_cast<short>(val);
-		}
-		else
-		{
-			os << sep << val;
-		}
-		sep = ", ";
-	}
-	os << " ]";
-	return os;
 }

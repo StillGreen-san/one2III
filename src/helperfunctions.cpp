@@ -70,7 +70,7 @@ std::vector<std::vector<size_t>> integerPartitions(size_t integer, size_t partco
 bool isValidNumberSequence(std::string_view sequence)
 {
 	// lengths greater 20 may result in an error due to limitations of the factorial function
-	return !sequence.empty() && sequence.size() < 21 &&
+	return !sequence.empty() && sequence.size() < MAX_SEQUENCE_LENGTH &&
 	       std::all_of(std::begin(sequence), std::end(sequence),
 	           [](char chr)
 	           {
@@ -110,7 +110,7 @@ size_t countUnique(const std::vector<size_t>& sorted)
 	[[maybe_unused]] auto _ = std::adjacent_find(std::begin(sorted), std::end(sorted),
 	    [&](const size_t& lhs, const size_t& rhs)
 	    {
-		    count += lhs != rhs;
+		    count += static_cast<size_t>(lhs != rhs);
 		    return false;
 	    });
 
@@ -139,12 +139,13 @@ size_t permutationsWithRepetitions(const std::vector<size_t>& partition)
 		    return false;
 	    });
 
-	const size_t divisor = std::accumulate(std::begin(counts), std::end(counts), size_t(1),
+	const size_t divisor = std::accumulate(std::begin(counts), std::end(counts), 1ULL,
 	    [](const size_t& total, const size_t& part)
 	    {
 		    return total * factorial(part);
 	    });
 	const size_t dividend = factorial(partition.size());
 
-	return dividend / divisor;
+	return dividend / divisor; // NOLINT(clang-analyzer-core.DivideZero) factorial will always return at least 1 since,
+	                           // its maximum input is limited elsewhere in this application to never go > 20
 }

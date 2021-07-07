@@ -119,24 +119,26 @@ std::string numberToEnglish(std::string_view number)
 	{
 		return {"zero"};
 	}
-	if(integer < 21)
+	if(integer < 21) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 	{
 		return numeng[integer];
 	}
-
 	std::string english;
-	if(integer > 99)
+	if(integer > 99) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 		english += numeng[integer / 100] + " hundred ";
-		integer = integer % 100;
+		integer = integer % 100; // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 	}
-	if(integer < 21)
+	if(integer < 21) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 	{
 		english += numeng[integer];
 	}
 	else
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 		english += numeng[(integer / 10) + TENTH_OFFSET];
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 		english += " " + numeng[integer % 10];
 	}
 	if(english.back() == ' ')

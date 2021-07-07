@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include "ruletype.hpp"
+
+#include <string>
 
 /**
  * @brief namespace for conversion rules
