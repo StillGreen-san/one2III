@@ -119,18 +119,22 @@ std::string numberToEnglish(std::string_view number)
 	{
 		return {"zero"};
 	}
-	if(integer < 21) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+	if(integer < 21)
 	{
 		return numeng[integer];
 	}
 	std::string english;
-	if(integer > 99) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+	if(integer > 99)
 	{
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 		english += numeng[integer / 100] + " hundred ";
-		integer = integer % 100; // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+		integer = integer % 100;
 	}
-	if(integer < 21) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+	if(integer < 21)
 	{
 		english += numeng[integer];
 	}
@@ -176,11 +180,11 @@ std::string lookAndSay(std::string_view number)
 		const std::string& firstNumber = numberToEnglish(sectionBegin.operator->());
 
 		lookAndSay.append(separator).append(firstNumber);
-		sectionBegin += strlen(sectionBegin.operator->()) + 1;
+		std::advance(sectionBegin, static_cast<ptrdiff_t>(strlen(&*sectionBegin) + 1));
 
 		const std::string& secondNumber = numberToEnglish(sectionBegin.operator->());
 		lookAndSay.append(separator = " ").append(secondNumber);
-		sectionBegin += strlen(sectionBegin.operator->()) + 1;
+		std::advance(sectionBegin, static_cast<ptrdiff_t>(strlen(&*sectionBegin) + 1));
 
 		if(firstNumber != "one")
 		{

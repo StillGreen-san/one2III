@@ -109,7 +109,7 @@ int main()
 	    .addOption('n', "Show N random", SimpleMenu::This,
 	        [&]()
 	        {
-		        size_t number;
+		        size_t number{};
 		        std::cout << "\nHow many to show: ";
 		        std::cin >> number;
 		        std::cin.get();
@@ -133,7 +133,7 @@ int main()
 	    .addOption('s', "Show a single", SimpleMenu::This,
 	        [&]()
 	        {
-		        size_t number;
+		        size_t number{};
 		        std::cout << "\nEnter a number: ";
 		        std::cin >> number;
 		        std::cout << Converter::singleConversion(ruleBook, numberSequence, number) << '\n';

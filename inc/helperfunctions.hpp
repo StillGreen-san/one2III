@@ -4,6 +4,13 @@
 #include <string_view>
 #include <vector>
 
+namespace detail
+{
+static constexpr size_t FACTORIAL_RESULTS[] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800,
+    479001600, 6227020800, 87178291200, 1307674368000, 20922789888000, 355687428096000, 6402373705728000,
+    121645100408832000, 2432902008176640000};
+}
+
 /**
  * @brief maximum valid length of an input number sequence (limited by the factorial function (size of size_t))
  *
@@ -40,12 +47,6 @@ bool isValidNumberSequence(std::string_view sequence);
  */
 std::vector<std::string_view> partitionString(std::string_view string, const std::vector<size_t>& partition);
 
-namespace detail
-{
-static constexpr size_t FACTORIAL_RESULTS[] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800,
-    479001600, 6227020800, 87178291200, 1307674368000, 20922789888000, 355687428096000, 6402373705728000,
-    121645100408832000, 2432902008176640000};
-}
 /**
  * @brief returns factorial for given number
  *

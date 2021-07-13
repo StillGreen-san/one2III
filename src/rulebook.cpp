@@ -50,5 +50,5 @@ RuleType RuleBook::operator[](size_t index) const
 		std::advance(iterator, std::numeric_limits<ptrdiff_t>::max());
 		index -= std::numeric_limits<ptrdiff_t>::max();
 	}
-	return *std::next(iterator, index);
+	return *std::next(iterator, static_cast<ptrdiff_t>(index));
 }
