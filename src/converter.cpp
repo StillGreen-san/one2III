@@ -118,6 +118,7 @@ std::string Converter::singleConversion(const RuleBook& rules, std::string_view 
 	return conversion;
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 size_t Converter::allConversions(
     const RuleBook& rules, std::string_view string, const std::function<bool(std::string&&)>& outputFunc)
 {

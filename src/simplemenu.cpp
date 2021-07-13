@@ -109,5 +109,6 @@ SimpleMenu::SimpleScreen& SimpleMenu::at(int id)
 			return screen;
 		}
 	}
+	// FIXME cannot use 'throw' with exceptions disabled [clang-diagnostic-error] GCC
 	throw std::invalid_argument("No Screen with this ID");
 }
