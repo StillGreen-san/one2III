@@ -6,37 +6,6 @@
 #include "converter.hpp"
 #include "helperfunctions.hpp"
 
-size_t Converter::estimatePossibilities(const RuleBook& rules, std::string_view string)
-{
-	size_t totalPossibilities = 0;
-	const size_t stringLength = string.size();
-	const size_t minPartSize = std::clamp(rules.getMinInputSize(), 1ULL, 255ULL);
-	const size_t maxPartSize = std::clamp(rules.getMaxInputSize(), 1ULL, 255ULL);
-
-	for(size_t partCount = stringLength; partCount > 0; --partCount)
-	{
-		const auto possiblePartitions = integerPartitions(stringLength, partCount, minPartSize, maxPartSize);
-		for(const auto& partition : possiblePartitions)
-		{
-			size_t partitionPossibilities = 1;
-			for(const size_t partSize : partition)
-			{
-				partitionPossibilities *= std::count_if(std::begin(rules), std::end(rules),
-				    [partSize](const RuleType& rule)
-				    {
-					    return partSize >= ConversionRule::minInputSize(rule) &&
-					           partSize <= ConversionRule::maxInputSize(rule);
-				    });
-			}
-
-			size_t permutationPossibilities = permutationsWithRepetitions(partition);
-			totalPossibilities += partitionPossibilities * permutationPossibilities;
-		}
-	}
-
-	return totalPossibilities;
-}
-
 size_t Converter::calculatePossibilities(const RuleBook& rules, std::string_view string)
 {
 	size_t totalPossibilities = 0;

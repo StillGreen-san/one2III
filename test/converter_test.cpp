@@ -2,46 +2,6 @@
 
 #include "converter.hpp"
 
-TEST_CASE("estimatePossibilities")
-{
-	RuleBook rules;
-
-	SECTION("no rule")
-	{
-		CHECK(Converter::estimatePossibilities(rules, "1234") == 0);
-		CHECK(Converter::estimatePossibilities(rules, "") == 0);
-	}
-
-	SECTION("one rule RNC")
-	{
-		rules.add(RuleType::RomanNumeralConversion);
-		CHECK(Converter::estimatePossibilities(rules, "1234") == 8);
-		CHECK(Converter::estimatePossibilities(rules, "12345678") == 108);
-	}
-
-	SECTION("one rule asRLE")
-	{
-		rules.add(RuleType::RunLengthDecodingConversion);
-		CHECK(Converter::estimatePossibilities(rules, "1234") == 2);
-		CHECK(Converter::estimatePossibilities(rules, "") == 0);
-	}
-
-	SECTION("two rules RNC,asRLE")
-	{
-		rules.add(RuleType::RomanNumeralConversion);
-		rules.add(RuleType::RunLengthDecodingConversion);
-		CHECK(Converter::estimatePossibilities(rules, "1234") == 17);
-		CHECK(Converter::estimatePossibilities(rules, "") == 0);
-	}
-
-	SECTION("nullptr view")
-	{
-		CHECK(Converter::estimatePossibilities(rules, {}) == 0);
-		rules.add(RuleType::NumberToEnglishConversion);
-		CHECK(Converter::estimatePossibilities(rules, {}) == 0);
-	}
-}
-
 TEST_CASE("calculatePossibilities")
 {
 	RuleBook rules;

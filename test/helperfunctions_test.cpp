@@ -15,21 +15,3 @@ TEST_CASE("integerPartitions")
 	                                      {4, 3, 2, 1}, {3, 3, 3, 1}, {4, 2, 2, 2}, {3, 3, 2, 2}});
 	CHECK(integerPartitions(10, 4, 2, 3) == ptn{{3, 3, 2, 2}});
 }
-
-TEST_CASE("partitionString")
-{
-	using svv = std::vector<std::string_view>;
-
-	CHECK(partitionString("1234", {}) == svv{});
-	CHECK(partitionString("1234", {1, 1, 1, 1}) == svv{"1", "2", "3", "4"});
-	CHECK(partitionString("1234", {2, 2}) == svv{"12", "34"});
-	CHECK(partitionString("1234", {2, 2, 2, 2}) == svv{});
-	CHECK(partitionString("12345678", {3, 1, 4}) == svv{"123", "4", "5678"});
-}
-
-TEST_CASE("permutationsWithRepetitions")
-{
-	CHECK(permutationsWithRepetitions({}) == 0);
-	CHECK(permutationsWithRepetitions({3, 3, 2, 1}) == 12);
-	CHECK(permutationsWithRepetitions({3, 3, 2, 2}) == 6);
-}

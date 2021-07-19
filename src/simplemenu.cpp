@@ -102,13 +102,15 @@ void SimpleMenu::show(int id)
 
 SimpleMenu::SimpleScreen& SimpleMenu::at(int id)
 {
-	for(auto& screen : screens)
+	auto it = std::find_if(std::begin(screens), std::end(screens),
+	    [id](const SimpleScreen& screen)
+	    {
+		    return screen.id == id;
+	    });
+	if(it == std::end(screens))
 	{
-		if(screen.id == id)
-		{
-			return screen;
-		}
+		// FIXME cannot use 'throw' with exceptions disabled [clang-diagnostic-error] GCC
+		throw std::invalid_argument("No Screen with this ID");
 	}
-	// FIXME cannot use 'throw' with exceptions disabled [clang-diagnostic-error] GCC
-	throw std::invalid_argument("No Screen with this ID");
+	return *it;
 }
