@@ -42,7 +42,7 @@ sample:
 ## Code
 
   - written in/with C++ 17
-  - uses cmake (find_package)
+  - uses cmake (find_package or FetchContent)
   - only tested under Windows 10 (2004) x64
 
 ### Dependencies
@@ -50,6 +50,33 @@ sample:
   - CMake : [cpp_starter_project](https://github.com/lefticus/cpp_starter_project/) (submodule)
   - Testing : [Catch2](https://github.com/catchorg/Catch2)
 
-### Build and Run
+### Build
 
-//TODO build instructions, inc submodule init, cmake switches
+```
+git clone https://github.com/StillGreen-san/one2III
+cd one2III
+git submodule update --init --recursive
+
+# depending on the default generator only one of the Release options is needed
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+
+build/Release/one2III
+# or (depending on default generator)
+build/one2III
+```
+
+building for x86 may result in errors not present with x64!
+
+avaiable cmake targets:
+- one2III : user execuatable
+- one2III-test : test executable
+- one2II-lib : common code lib
+
+avaiable cmake options:
+- ENABLE_CLANG_TIDY
+  - may complain about disabled exceptions due to [LLVM Bug 45356](https://bugs.llvm.org/show_bug.cgi?id=45356)
+  - replace all instances of ```/EHsc``` with ```-EHsc``` in build/ as a workaround
+- ENABLE_CPPCHECK
+  - use cppcheck.ps1 if it doesn't work properly
+- both should be skipped for test target

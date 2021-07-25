@@ -40,7 +40,7 @@ int main()
 
 		        while(!isValidNumberSequence(numberSequence))
 		        {
-			        std::cout << "enter a number sequence with up to 20 digits\n";
+			        std::cout << "enter a number sequence (long ones will be slow)\n";
 			        std::cin >> numberSequence;
 		        }
 		        std::cin.get();
