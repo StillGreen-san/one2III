@@ -6,16 +6,9 @@ set( CMAKE_CXX_STANDARD 17 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE )
 
-find_package( Catch2 CONFIG )
-if( NOT Catch2_FOUND )
-	Include( FetchContent )
-	FetchContent_Declare(
-	Catch2
-	GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-	GIT_TAG        v2.13.1
-	)
-	FetchContent_MakeAvailable( Catch2 )
-endif( )
+include( cmake/FindOrFetch.cmake )
+
+FindOrFetch( Catch2 GIT_REPOSITORY https://github.com/catchorg/Catch2.git GIT_TAG v2.13.7 )
 
 include( ${CMAKE_CURRENT_SOURCE_DIR}/cpp_starter_project/cmake/CompilerWarnings.cmake )
 add_library( project_warnings INTERFACE )
