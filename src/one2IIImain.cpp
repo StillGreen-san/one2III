@@ -22,7 +22,8 @@ int main()
 	{
 		Main = 1,
 		Rules,
-		Convert
+		Convert,
+		About
 	};
 
 	SimpleMenu sm;
@@ -31,6 +32,7 @@ int main()
 	                    "given a string of digits and a list of conversion rules\n"
 	                    "split the string into all possible substrings\n"
 	                    "convert every substring using every possible conversion rule\n")
+	    .addOption('a', "About", ID::About)
 	    .addOption('e', "Exit", SimpleMenu::Exit)
 	    .addOption(SimpleMenu::AnyKey, "press enter to continue", ID::Rules,
 	        [&]()
@@ -45,6 +47,18 @@ int main()
 		        }
 		        std::cin.get();
 	        });
+
+	sm.addScreen(ID::About)
+	    .setDescription("one2III"
+	                    "\nthis program uses the following libraries:"
+	                    "\n"
+	                    "\nCatch2 [BSL] (for testing only)"
+	                    "\nhttps://github.com/catchorg/Catch2"
+	                    "\n"
+	                    "\ncpp_starter_project [Unlincense]"
+	                    "\nhttps://github.com/lefticus/cpp_starter_project"
+	                    "\n")
+	    .addOption(SimpleMenu::AnyKey, "press enter to return", ID::Main);
 
 	sm.addScreen(ID::Rules)
 	    .setDescription("Select a Rule to add")
