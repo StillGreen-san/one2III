@@ -8,7 +8,7 @@ set( CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE )
 
 include( cmake/FindOrFetch.cmake )
 
-FindOrFetch( Catch2 GIT_REPOSITORY https://github.com/catchorg/Catch2.git GIT_TAG v2.13.7 )
+FindOrFetch( Catch2 GIT_REPOSITORY https://github.com/catchorg/Catch2.git GIT_TAG v3.3.2 )
 
 include( ${CMAKE_CURRENT_SOURCE_DIR}/cpp_starter_project/cmake/CompilerWarnings.cmake )
 add_library( project_warnings INTERFACE )
@@ -42,7 +42,6 @@ set( SOURCES_TEST
 	${one2III_TEST_DIR}/converter_test.cpp
 	${one2III_TEST_DIR}/helperfunctions_test.cpp
 	${one2III_TEST_DIR}/rulebook_test.cpp
-	${one2III_TEST_DIR}/testmain.cpp
 )
 
 add_library( ${TARGET_LIB} STATIC ${SOURCES_LIB} )
@@ -52,5 +51,4 @@ add_executable( ${TARGET_MAIN} ${SOURCES_MAIN} )
 target_link_libraries( ${TARGET_MAIN} PRIVATE ${TARGET_LIB} )
 
 add_executable( ${TARGET_TEST} ${SOURCES_TEST} )
-target_include_directories( ${TARGET_TEST} SYSTEM PRIVATE ${Catch2_INCLUDE_DIRS} )
-target_link_libraries( ${TARGET_TEST} PRIVATE ${TARGET_LIB} Catch2::Catch2 )
+target_link_libraries( ${TARGET_TEST} PRIVATE ${TARGET_LIB} Catch2::Catch2WithMain )
